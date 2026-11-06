@@ -1,0 +1,81 @@
+name: Feature ticket
+description: Propose a feature or improvement
+title: "KAB-___: "
+labels: ["feature", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Significant features need an approved specification before implementation.
+        See `docs/specifications/README.md`.
+  - type: input
+    id: ticket
+    attributes:
+      label: Ticket ID
+      placeholder: KAB-123
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What needs to change, in plain language.
+    validations:
+      required: true
+  - type: textarea
+    id: justification
+    attributes:
+      label: Business justification
+      description: Why this matters now.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: In scope
+      placeholder: "- ..."
+    validations:
+      required: true
+  - type: textarea
+    id: out_of_scope
+    attributes:
+      label: Out of scope
+      placeholder: "- ..."
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Observable, testable criteria.
+      placeholder: "- [ ] ..."
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      placeholder: "Tickets, decisions, or services"
+  - type: input
+    id: spec
+    attributes:
+      label: Specification
+      placeholder: SPEC-0001 or "required"
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options: [P0, P1, P2, P3]
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I have read AGENTS.md
+          required: true
+        - label: This is not a duplicate
+          required: true
+        - label: A specification is linked or explicitly requested
+          required: true

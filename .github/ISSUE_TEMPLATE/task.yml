@@ -1,0 +1,56 @@
+name: Task
+description: Engineering, documentation, security, or operations work
+title: "KAB-___: "
+labels: ["task", "needs-triage"]
+body:
+  - type: input
+    id: ticket
+    attributes:
+      label: Ticket ID
+      placeholder: KAB-123
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+    validations:
+      required: true
+  - type: textarea
+    id: justification
+    attributes:
+      label: Justification
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      placeholder: "- [ ] ..."
+    validations:
+      required: true
+  - type: textarea
+    id: out_of_scope
+    attributes:
+      label: Out of scope
+      placeholder: "- ..."
+  - type: dropdown
+    id: type
+    attributes:
+      label: Work type
+      options: [task, documentation, security, improvement, chore, ci]
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options: [P0, P1, P2, P3]
+    validations:
+      required: true
+  - type: checkboxes
+    id: approval
+    attributes:
+      label: Approval
+      options:
+        - label: This task requires human approval (architecture, hosting, cost, scope, destructive change)
