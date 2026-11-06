@@ -100,44 +100,50 @@ Subprofessional practice content until after the Professional launch.
 
 ## 6. MVP definition
 
-**Pending — Checkpoint 3.** The repository currently defines the MVP three ways:
-`product-overview.md` treats materials and AI as MVP, `mvp-scope.md` describes
-three increments with public beta requiring increments 1 and 2, and
-`product-requirements.md` marks AI requirements `MUST`.
+**Proposed — Checkpoint 3, awaiting approval.** The MVP is increment 1: the CSE
+Professional core practice loop, released as a private alpha. Personal materials,
+AI study aids, and flashcards form a fast-follow public beta; launch hardening
+precedes public availability.
 
-**Recommendation (needs approval):** the MVP is increment 1, the core practice
-loop, validated in private alpha. Personal materials and AI study aids follow as
-a fast-follow beta, gated by provider selection and content review.
+| Release | Scope |
+| --- | --- |
+| MVP | F1–F11: accounts, profile, catalogue, question bank, untimed and timed practice, results, analytics, weak topics, flagging, account deletion |
+| Fast-follow beta | Upload and extraction, AI platform, AI summaries and generated items, flashcards |
+| Launch hardening | Verification, abuse controls, observability, backups, legal pages, accessibility audit, load test |
 
-No implementation scope is approved until this section is resolved.
+The feature list, per-feature acceptance criteria, release map, and exclusions are
+in [mvp-scope.md](mvp-scope.md). No implementation scope is approved until that
+document is approved.
 
 ## 7. Functional scope
 
 Functional requirements and stable IDs live in
 [product-requirements.md](product-requirements.md):
 
-| Area | Prefix | MVP status |
+| Area | Prefix | Release |
 | --- | --- | --- |
-| Authentication and profile | `AUTH` | Pending MVP decision |
-| Examination catalogue | `CAT` | Pending MVP decision |
-| Materials and extraction | `MAT` | Pending MVP decision |
-| AI study aids | `AI` | Pending MVP decision |
-| Question bank and review | `QST` | Pending MVP decision |
-| Practice sessions | `PRA` | Pending MVP decision |
-| Analytics | `ANL` | Pending MVP decision |
+| Authentication and profile | `AUTH` | MVP (email verification in hardening) |
+| Examination catalogue | `CAT` | MVP |
+| Materials and extraction | `MAT` | Fast-follow beta |
+| AI study aids | `AI` | Fast-follow beta |
+| Question bank and review | `QST` | MVP (flashcards in beta) |
+| Practice sessions | `PRA` | MVP |
+| Analytics | `ANL` | MVP (score trend if schedule allows) |
 | Recommendations | `REC` | Post-MVP |
-| Content discovery | `DIS` | Post-MVP |
-| Administration | `ADM` | Pending MVP decision |
+| Content discovery | `DIS` | Post-MVP (the no-unlicensed-ingestion rule applies now) |
+| Administration | `ADM` | MVP (generation queues in beta) |
 
-Known requirement conflicts to resolve in Checkpoint 3:
+Conflicts resolved at Checkpoint 3:
 
-- `QST-02` requires a source reference for every question; original items have no
-  external source. Define source as an external citation **or** authoring
-  provenance.
-- `AI-05` and the AI architecture disagree on whether a user may practise their
-  own unreviewed generated items.
-- `PRA-07` (pause/resume) is `SHOULD` while the related ticket promises only
-  resume-after-refresh.
+- `QST-02` requires a source reference for every question. Provenance is defined
+  as an external citation **or** an authoring record (author, coverage area,
+  review date).
+- `PRA-07` pause/resume is not in the MVP. Refresh-based resume (`PRA-03`) is the
+  MVP behaviour; explicit pause is post-MVP.
+
+Still open: `AI-05` and the AI architecture disagree on whether a user may
+practise their own unreviewed generated items. Decide at Checkpoint 5.
+
 
 ## 8. Non-functional requirements
 
@@ -224,7 +230,8 @@ Validation methods are in [target-users.md](target-users.md).
 
 ## 13. Open questions
 
-1. Is the MVP increment 1 only, or increments 1 and 2?
+1. Approve the proposed MVP (increment 1, [mvp-scope.md](mvp-scope.md)), or
+   name the increment 2 features that must ship with it.
 2. Does Subprofessional ship with catalogue-only coverage at launch?
 3. Who is the accountable content reviewer, and what is the correction and
    takedown process?
@@ -244,3 +251,4 @@ Validation methods are in [target-users.md](target-users.md).
 | Date | Change | Approved by |
 | --- | --- | --- |
 | 2026-11-06 | Draft created from existing product documents; exam scope verified | Pending |
+| 2026-11-06 | Checkpoints 1–2 accepted to proceed; Checkpoint 3 MVP proposed | User (directed to proceed) |

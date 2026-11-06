@@ -5,7 +5,10 @@
 **Last updated:** 2026-11-06
 
 Requirement IDs are stable. Add new requirements; do not renumber existing ones.
-`MUST` = MVP blocker, `SHOULD` = MVP if schedule allows, `COULD` = post-MVP.
+Priority is relative to the release that introduces the area: `MUST` = required
+for that release, `SHOULD` = included if schedule allows, `COULD` = later. The
+release assigned to each area is in
+[mvp-scope.md](mvp-scope.md#6-requirement-area-release-map).
 
 ## 1. Functional requirements
 

@@ -61,12 +61,12 @@ See [target-users.md](target-users.md) and
 | --- | --- | --- |
 | Registration, authentication, profile | Yes | SSO, institutional accounts |
 | Examination catalogue (CSE) | Yes | PRC, UPCAT, other government exams |
-| Personal material library | Yes | Sharing, groups |
-| PDF/DOCX upload and extraction | Yes | OCR for scanned files, images |
-| AI summaries and explanations | Yes | Multi-document synthesis |
+| Personal material library | Fast-follow beta | Sharing, groups |
+| PDF/DOCX upload and extraction | Fast-follow beta | OCR for scanned files, images |
+| AI summaries and explanations | Fast-follow beta | Multi-document synthesis |
 | Multiple-choice practice | Yes | Adaptive item selection |
 | Identification exercises | No | Yes |
-| Flashcards | Yes | Generated decks from broad material |
+| Flashcards | Fast-follow beta | Generated decks from broad material |
 | Timed practice examinations | Yes (basic) | Full mock exam simulation |
 | Answer explanations | Yes | Socratic tutoring mode |
 | Progress analytics | Yes (topic accuracy) | Cohorts, predicted readiness |
@@ -86,11 +86,11 @@ does not keep a second copy.
 The MVP is a **CSE Professional study loop**:
 
 1. Create an account and choose CSE Professional.
-2. Upload a personal reviewer (PDF/DOCX) or use seeded CSE topics.
-3. Generate flashcards and multiple-choice practice items from approved sources.
-4. Take an untimed or timed practice set.
-5. See the score, per-question explanations, and weak topics.
-6. Return to the weak topic and practice again.
+2. Practise seeded CSE topics, untimed or timed.
+3. See the score, per-question explanations, and weak topics.
+4. Return to the weak topic and practise again.
+
+Personal reviewer upload and AI study aids follow in the fast-follow beta.
 
 Full detail and explicit exclusions: [mvp-scope.md](mvp-scope.md).
 
@@ -116,8 +116,9 @@ Full detail and explicit exclusions: [mvp-scope.md](mvp-scope.md).
 
 **Needs approval**
 
-- Confirm CSE Professional as the sole launch exam.
-- Confirm whether personal upload is MVP or a fast follow.
+- Confirm CSE Professional as the sole launch content set (Subprofessional
+  catalogue only).
+- Approve the MVP as increment 1, with materials and AI as fast-follow beta.
 - Confirm the free/paid model before building entitlements.
 - Confirm data-retention and AI-provider policies before public launch.
 
