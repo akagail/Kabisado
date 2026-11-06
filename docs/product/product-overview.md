@@ -78,18 +78,8 @@ See [target-users.md](target-users.md) and
 
 ## 7. Success measures (proposed)
 
-These are hypotheses, not commitments.
-
-- **Activation:** a new user completes one practice session within 24 hours.
-- **Learning loop:** median user completes 3 sessions in the first week.
-- **Explanation quality:** ≥ 80% of rated explanations are helpful.
-- **Diagnostic usefulness:** weak-topic labels match user self-report in
-  usability testing.
-- **Retention:** 4-week return rate for activated users.
-- **Trust:** zero unresolved copyright takedowns and zero confirmed cross-user
-  data exposure.
-
-Baselines and targets require product approval after beta data exists.
+The canonical metric set is in [prd.md](prd.md#9-success-metrics). This document
+does not keep a second copy.
 
 ## 8. MVP summary
 

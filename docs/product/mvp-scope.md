@@ -136,14 +136,8 @@ risk.
 
 ## 8. Success criteria for the MVP
 
-- 40% of activated users return within 7 days.
-- Median practice session completion rate ≥ 80%.
-- ≥ 70% of surveyed users rate explanations as helpful.
-- Weak-topic labels are judged useful in usability testing.
-- AI cost per active user stays below the approved threshold.
-- No unresolved high-severity security or privacy issue at launch.
-
-Targets are hypotheses and require approval before being treated as commitments.
+The canonical metric set is in [prd.md](prd.md#9-success-metrics). Targets remain
+hypotheses until approved.
 
 ## 9. Decisions required
 
