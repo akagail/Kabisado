@@ -9,7 +9,7 @@
 **Updated:** 2026-11-06
 **Specification:** not required (foundation)
 **Related ADRs:** ADR-0001 … ADR-0006
-**GitHub issue:** none (repository not yet pushed)
+**GitHub issue:** https://github.com/akagail/Kabisado/issues/30
 
 ## 1. Description
 

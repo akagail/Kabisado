@@ -107,8 +107,8 @@ Draft PRs are encouraged for early feedback. A draft cannot merge.
 
 ## 9. Ticket synchronization
 
-Local Markdown tickets are the working source of truth during the foundation
-phase. If GitHub Issues/Projects are enabled:
+GitHub Issues and the `Kabisado` project board are enabled. Local Markdown
+tickets remain the working source of truth:
 
 - One GitHub issue per local ticket; the title starts with the ticket ID.
 - The local file stores the issue URL.
@@ -117,7 +117,9 @@ phase. If GitHub Issues/Projects are enabled:
   local file or copy the approved text verbatim.
 - Closing an issue requires the ticket to be in `tickets/completed/`.
 
-See `tickets/README.md`.
+See `tickets/README.md` and
+[`github-workflow.md`](github-workflow.md) for labels, project statuses, and the
+issue format.
 
 ## 10. Branch protection (recommended)
 
