@@ -56,6 +56,8 @@ Cross-cutting MVP requirements: NFR-SEC-01..03, NFR-SEC-06; NFR-PERF-01,
 NFR-PERF-02, NFR-PERF-05; NFR-REL-02, NFR-REL-04; NFR-UX-01..05; NFR-MNT-01..05.
 Ticket: KAB-111 for the accessibility and performance baseline.
 
+Journeys, error states, and edge cases per feature: [user-flows.md](user-flows.md).
+
 ### F1 — Accounts
 
 **Purpose.** Let a learner own a persistent practice history securely.

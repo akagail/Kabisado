@@ -112,7 +112,8 @@ precedes public availability.
 | Launch hardening | Verification, abuse controls, observability, backups, legal pages, accessibility audit, load test |
 
 The feature list, per-feature acceptance criteria, release map, and exclusions are
-in [mvp-scope.md](mvp-scope.md). No implementation scope is approved until that
+in [mvp-scope.md](mvp-scope.md). Journeys, error states, and edge cases are in
+[user-flows.md](user-flows.md). No implementation scope is approved until that
 document is approved.
 
 ## 7. Functional scope
