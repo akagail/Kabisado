@@ -268,7 +268,7 @@ flowchart TD
 - Deletion while a practice attempt is open discards the attempt.
 - The email becomes reusable after deletion.
 - Export includes profile, attempts, results, and flags; not other users' data.
-- At alpha, export fulfilment may be manual; the UI must state the expected wait.
+- At alpha, export fulfilment is manual; the UI states that it takes up to 7 days.
 
 ## 9. Flow 7 — Upload and study personal material (Beta, MAT)
 
@@ -385,13 +385,12 @@ flowchart LR
 - Native apps and offline mode beyond retry-on-reconnect.
 - Proctoring and eligibility issuance.
 
-## 14. Open questions
+## 14. Decisions taken
 
-1. Is flagging allowed during an attempt, or only from results? (Proposed:
-   results only, to avoid interrupting the session.)
-2. Should onboarding include a short diagnostic set, or start with the catalogue?
-   (Proposed: catalogue, no diagnostic in the MVP.)
-3. How long may alpha export fulfilment take, and who fulfils it?
-4. Does an attempt snapshot question text and options? (Checkpoint 6.)
-5. May a learner retake the same topic set immediately, or should sets avoid
-   recently seen items? (Proposed: allow retakes; no repetition control in MVP.)
+| Question | Decision |
+| --- | --- |
+| Flag during an attempt or from results? | Results only |
+| Onboarding diagnostic? | No; registration → choose exam → catalogue |
+| Alpha export time | Manual, stated as within 7 days |
+| Snapshot or live question history? | Snapshot at attempt start (ADR-0007) |
+| Retakes | Allowed; no repetition control in the MVP |

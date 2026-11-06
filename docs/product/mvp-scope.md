@@ -397,13 +397,16 @@ work without it. Local development can use the console email backend.
 | Scope creep into AI or mock exams | Delay | Explicit out-of-scope list; scope change requires approval |
 | Small team capacity | Quality loss | Small increments, automated checks, no speculative features |
 
-## 10. Decisions required
+## 10. Decisions taken
 
-1. Approve the MVP as increment 1 only.
-2. Approve Subprofessional as catalogue-only at launch, with Clerical Ability
-   modelled and content deferred.
-3. Approve the 300-item content gate and name the accountable content reviewer.
-4. Confirm that explicit pause/resume is not required (`PRA-07` stays `SHOULD`,
-   scheduled post-MVP); refresh-based resume is the MVP behaviour.
-5. Defer the question-history question (snapshot versus live reference) to the
-   Checkpoint 6 data review, with snapshot recommended.
+| # | Decision | Outcome |
+| --- | --- | --- |
+| 1 | MVP definition | Increment 1 only; materials and AI are fast-follow beta |
+| 2 | Subprofessional | Catalogue and Clerical Ability modelled; content deferred |
+| 3 | Content gate | 300+ reviewed Professional items; owner is accountable reviewer until a curator is appointed |
+| 4 | Pause/resume | Post-MVP; refresh-based resume only |
+| 5 | Attempt history | Snapshot at attempt start (ADR-0007) |
+| 6 | Transactional email | In the MVP for password reset |
+
+Remaining dependency: a named content curator beyond the repository owner, and
+provider selections for beta.

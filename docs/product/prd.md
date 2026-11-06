@@ -1,6 +1,6 @@
 # Product Requirements Document
 
-**Status:** Draft — requires approval
+**Status:** Approved — product decisions delegated by the repository owner, 2026-11-06
 **Owner:** Product
 **Last updated:** 2026-11-06
 **Companion documents:** [product-overview.md](product-overview.md),
@@ -235,25 +235,41 @@ Validation methods are in [target-users.md](target-users.md).
 
 ## 13. Open questions
 
-1. Approve the proposed MVP (increment 1, [mvp-scope.md](mvp-scope.md)), or
-   name the increment 2 features that must ship with it.
-2. Does Subprofessional ship with catalogue-only coverage at launch?
-3. Who is the accountable content reviewer, and what is the correction and
-   takedown process?
-4. What is the per-user generation quota, and who performs AI content review?
-5. Is explicit pause/resume in the MVP, or only resume-after-refresh?
-6. Does an exam-version change duplicate topics, or reuse them with a version
-   link?
-7. Do practice sessions snapshot question text and options, or reference live
-   rows?
-8. Is the interface English-only at launch, with Filipino content where the exam
-   requires it?
-9. Is there a paid tier at launch, and does it gate AI usage?
-10. What is the 2027 exam target if a learner is not taking the 14 March sitting?
+Resolved by the decision log are not repeated here. Remaining:
 
-## 14. Approval log
+1. Who becomes the content curator beyond the repository owner, and when?
+2. How is content reused when a second exam version is seeded (duplicate topics
+   or link versions)? Needs an ADR before the next CSC announcement is modelled.
+3. What does Kabisado promise a learner who is not sitting the 14 March 2027
+   exam? Replacement exams are not yet announced.
+4. Are institutional or school partnerships pursued after the beta?
+5. What team capacity and target dates can be committed without overpromising?
+
+## 14. Decision log
+
+Product decisions were delegated to the agent by the repository owner on
+2026-11-06. Architecture decisions and provider selections remain separate gates.
+
+| ID | Decision | Outcome | Date |
+| --- | --- | --- | --- |
+| D1 | MVP definition | Increment 1, core practice loop, private alpha | 2026-11-06 |
+| D2 | Subprofessional at launch | Catalogue and Clerical Ability modelled; practice content deferred | 2026-11-06 |
+| D3 | Content gate | 300+ reviewed Professional items; repository owner is accountable reviewer until a curator is appointed; authors never review their own items | 2026-11-06 |
+| D4 | Pause/resume | Post-MVP; refresh-based resume only | 2026-11-06 |
+| D5 | Attempt history | Snapshot item content at attempt start (ADR-0007) | 2026-11-06 |
+| D6 | AI review boundary | Two tiers: unverified private (owner only, excluded from diagnosis) and reviewed shared | 2026-11-06 |
+| D7 | AI quality gates | Accept proposed thresholds: 100% citations resolve, ≥95% validation, ≥90% factual, ≥80% helpful, 100% injection, 0 exposure | 2026-11-06 |
+| D8 | AI quota (provisional) | 20 generation jobs per user per day, 200 per month; global cap set with provider pricing | 2026-11-06 |
+| D9 | Language | English UI; Filipino source and topic content; English AI output in beta | 2026-11-06 |
+| D10 | Pricing | Free through alpha and beta; no payments | 2026-11-06 |
+| D11 | Practice UX | Flag from results only; no onboarding diagnostic; retakes allowed | 2026-11-06 |
+| D12 | Data export | Manual fulfilment at alpha, stated as within 7 days | 2026-11-06 |
+| D13 | Export format | JSON archive plus CSV, documented format | 2026-11-06 |
+| D14 | Catalogue access | Authenticated only; no public catalogue in the MVP | 2026-11-06 |
+| D15 | History view | Pagination only; no filters in the MVP | 2026-11-06 |
 
 | Date | Change | Approved by |
 | --- | --- | --- |
-| 2026-11-06 | Draft created from existing product documents; exam scope verified | Pending |
-| 2026-11-06 | Checkpoints 1–2 accepted to proceed; Checkpoint 3 MVP proposed | User (directed to proceed) |
+| 2026-11-06 | Draft created from existing product documents; exam scope verified | Repository owner (proceeded) |
+| 2026-11-06 | Checkpoint 3 MVP proposed; Checkpoint 4 flows; Checkpoint 5 AI policy | Repository owner (proceeded) |
+| 2026-11-06 | D1–D12 decided; PRD, MVP scope, flows, and AI policy approved | Repository owner (delegated) |

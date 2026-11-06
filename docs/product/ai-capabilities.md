@@ -1,6 +1,7 @@
 # AI Capabilities and Limitations
 
-**Status:** Proposed — requires approval (Phase 2, Checkpoint 5)
+**Status:** Approved — product decisions delegated by the repository owner,
+2026-11-06. Provider-dependent items remain gated.
 **Owner:** Product / AI
 **Last updated:** 2026-11-06
 
@@ -250,17 +251,19 @@ commit. Prompt files are versioned; a prompt change is a reviewed change.
 | Suspected injection | Request refused and logged; user notified generically |
 | Provider incident | Global kill switch disables AI; the product remains usable |
 
-## 17. Open questions
+## 17. Decisions and remaining questions
 
-1. Which provider and model meet the training-prohibition and retention terms?
-   (`KAB-003`)
-2. What is the per-user daily generation quota at beta?
-3. Is Filipino-language generation in scope for beta, or English-only with
-   Filipino source text?
-4. Who performs AI content review, and at what volume?
-5. What is the retention period for unverified private items?
-6. Do we need a separate consent step before the first upload, beyond the privacy
-   notice?
+| Question | Decision |
+| --- | --- |
+| Provider and model with training prohibition | **Open** — `KAB-003`; blocks beta |
+| Per-user generation quota | 20 jobs per user per day, 200 per month; provisional until provider pricing is known (D8) |
+| Filipino-language generation | English output in beta; Filipino source passages are quoted, not paraphrased |
+| Who reviews AI content | The repository owner until a curator is appointed; same rule as content review (D3) |
+| Retention of unverified private items | Kept until the source material or account is deleted; no automatic expiry in beta |
+| Consent before first upload | Privacy notice plus an explicit acknowledgement at first upload |
+
+Remaining unknowns: provider terms, real cost per generation, and review volume at
+beta.
 
 ## 18. Traceability
 

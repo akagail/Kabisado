@@ -1,13 +1,13 @@
 # Roadmap
 
-**Status:** Proposed — requires approval
+**Status:** Approved — delegated by repository owner, 2026-11-06
 **Owner:** Product / Engineering
 **Last updated:** 2026-11-06
 
 No calendar dates are committed. The roadmap is ordered by dependency and risk.
 Dates require team capacity, content readiness, and funding decisions.
 
-## Phase 0 — Engineering foundation (current)
+## Phase 0 — Engineering foundation (complete)
 
 **Goal:** make the repository safe and predictable to build in.
 
@@ -20,6 +20,9 @@ Dates require team capacity, content readiness, and funding decisions.
 
 **Exit criteria:** initialization report reviewed; architecture and MVP approved;
 CI green on the initial commit.
+
+**Outstanding from Phase 0:** Docker Compose has not been run (Docker not
+installed), and remote CI has not run because the repository is unpushed.
 
 ## Phase 1 — Core practice loop (private alpha)
 
@@ -44,9 +47,10 @@ CI green on the initial commit.
 
 **Epic E4 — Practice and results**
 
-- Practice set generation by topic/material.
+- Practice set generation by topic.
 - Untimed and timed sessions.
 - Answer persistence, idempotent submit, auto-submit.
+- Per-attempt content snapshot (ADR-0007).
 - Results and explanations.
 
 **Epic E5 — Progress analytics**
@@ -54,6 +58,10 @@ CI green on the initial commit.
 - Attempt and response history.
 - Accuracy by subject/topic.
 - Weak-topic rule and display.
+
+**Content readiness (parallel, blocking):** 300+ reviewed CSE Professional items
+across all four subjects, with a named accountable reviewer. Engineering can
+finish before content does; the alpha cannot start.
 
 **Exit criteria:** increment 1 exit criteria in
 [mvp-scope.md](mvp-scope.md) are met.
@@ -79,6 +87,7 @@ CI green on the initial commit.
 - Summaries and flashcards with source citations.
 - MCQ generation and review queue.
 - Provenance panel and flagging.
+- Unverified private practice, excluded from weak-topic diagnosis (`AI-10`).
 
 **Epic E9 — Flashcard study**
 
@@ -161,10 +170,18 @@ Phase 0 ──► Phase 1 ──► Phase 2 ──► Phase 3
 
 ## Open decisions
 
-- Launch exam and exam version.
-- Whether personal upload is required for public beta.
-- AI provider(s) and data-processing terms.
-- Object storage and email providers.
+Resolved on 2026-11-06 (see [prd.md](prd.md#14-decision-log)):
+
+- Launch exam and version: CSE Professional content, 14 March 2027 CSE-PPT;
+  Subprofessional catalogue only.
+- Personal upload for public beta: yes, increment 2; not MVP.
+- Free/paid model: free through the private alpha and beta; no payments.
+- MVP scope: increment 1 only.
+
+Still open:
+
+- AI provider(s) and data-processing terms (`KAB-003`).
+- Object storage and transactional email providers.
 - Production backend host.
-- Free/paid model and limits.
-- Team capacity and target beta date.
+- Team capacity and target dates.
+- Named content curator beyond the repository owner.

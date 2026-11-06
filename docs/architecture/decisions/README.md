@@ -14,6 +14,7 @@ supersedes it and update the index.
 | [0004](0004-authentication.md) | Session authentication through a same-origin proxy | Proposed |
 | [0005](0005-ai-provider-abstraction.md) | Provider-independent AI adapter and RAG | Proposed |
 | [0006](0006-file-uploads.md) | Presigned direct-to-object-storage uploads | Proposed |
+| [0007](0007-practice-attempt-snapshot.md) | Snapshot question content when a practice attempt starts | Approved (delegated 2026-11-06) |
 
 ## Creating an ADR
 
