@@ -305,7 +305,7 @@ retention beyond a documented legal minimum.
 | Capability | Requirements | Gate |
 | --- | --- | --- |
 | PDF/DOCX upload, validation, private storage, async extraction | MAT-01..07, NFR-PERF-03, NFR-SEC-05 | Storage provider selected; KAB-005 threat model |
-| Provider-independent AI adapter, prompts, RAG, quotas | AI-01..09, NFR-COST-01..03, NFR-PERF-04, NFR-SEC-08 | KAB-003 provider decision and data-processing terms |
+| Provider-independent AI adapter, prompts, RAG, quotas | AI-01..12, NFR-COST-01..03, NFR-PERF-04, NFR-SEC-08 | KAB-003 provider decision and data-processing terms; see [ai-capabilities.md](ai-capabilities.md) |
 | AI summaries, generated items, review queue | AI-03..05, ADM-04 | AI platform; content review capacity |
 | Flashcards | QST-04 | Materials or curated decks |
 | Email verification before upload or AI use | AUTH-06 | Email provider (already required for password reset) |
@@ -351,7 +351,7 @@ risk.
 | `ANL` | 01–04 | 05 (if schedule allows) | 06 |
 | `ADM` | 01–03 | 04 | — |
 | `MAT` | — | 01–07 | 08 |
-| `AI` | — | 01–09 | — |
+| `AI` | — | 01–12 | — |
 | `REC` | — | — | 01–03 |
 | `DIS` | 03 (policy) | — | 01, 02 |
 

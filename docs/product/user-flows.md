@@ -330,8 +330,9 @@ flowchart TD
 
 - Deleting the source material removes derived AI content.
 - A generated item cannot enter a shared pool without review.
-- A user may practise their own unreviewed items only if Checkpoint 5 approves
-  that boundary; until then, they are view-only.
+- A user may practise their own unreviewed items in a labelled set; those
+  attempts are excluded from weak-topic diagnosis (`AI-10`, see
+  [ai-capabilities.md](ai-capabilities.md)).
 
 ## 11. Flow 9 — Author, review, publish content (MVP, F4, internal)
 

@@ -4,6 +4,9 @@
 **Owner:** Backend / AI
 **Last updated:** 2026-11-06
 
+> Product-level policy (what AI may do, disclosure, review boundary, quality
+> gates): [ai-capabilities.md](../product/ai-capabilities.md).
+
 ## 1. Goals
 
 - Use AI to turn approved source material into grounded study aids.
@@ -330,7 +333,9 @@ Logs: IDs, status, error category, token counts. No prompt text.
 1. First provider(s) and approved data-processing terms.
 2. Embedding model and dimension.
 3. pgvector vs. an external vector database.
-4. Whether user-private generated items can be shared after review.
+4. ~~Whether user-private generated items can be shared after review.~~ Resolved
+   by product policy: reviewed items may enter shared pools; see
+   [ai-capabilities.md](../product/ai-capabilities.md) §7.
 5. Content-filter approach.
 6. Evaluation budget and cadence.
 7. Whether to support a local/open-weight model for cost or privacy.

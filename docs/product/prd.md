@@ -5,7 +5,9 @@
 **Last updated:** 2026-11-06
 **Companion documents:** [product-overview.md](product-overview.md),
 [target-users.md](target-users.md), [product-requirements.md](product-requirements.md),
-[mvp-scope.md](mvp-scope.md), [cse-exam-reference.md](cse-exam-reference.md)
+[mvp-scope.md](mvp-scope.md), [user-flows.md](user-flows.md),
+[ai-capabilities.md](ai-capabilities.md),
+[cse-exam-reference.md](cse-exam-reference.md)
 
 This PRD is the entry point for product definition. Requirement IDs stay in
 [product-requirements.md](product-requirements.md); this document does not
@@ -142,8 +144,10 @@ Conflicts resolved at Checkpoint 3:
 - `PRA-07` pause/resume is not in the MVP. Refresh-based resume (`PRA-03`) is the
   MVP behaviour; explicit pause is post-MVP.
 
-Still open: `AI-05` and the AI architecture disagree on whether a user may
-practise their own unreviewed generated items. Decide at Checkpoint 5.
+Still open: none at product level. The `AI-05` review boundary is resolved in
+[ai-capabilities.md](ai-capabilities.md): users may practise their own unreviewed
+items privately and labelled, and such attempts are excluded from weak-topic
+diagnosis.
 
 
 ## 8. Non-functional requirements
@@ -236,7 +240,7 @@ Validation methods are in [target-users.md](target-users.md).
 2. Does Subprofessional ship with catalogue-only coverage at launch?
 3. Who is the accountable content reviewer, and what is the correction and
    takedown process?
-4. May a user practise their own unreviewed AI-generated items, clearly labelled?
+4. What is the per-user generation quota, and who performs AI content review?
 5. Is explicit pause/resume in the MVP, or only resume-after-refresh?
 6. Does an exam-version change duplicate topics, or reuse them with a version
    link?

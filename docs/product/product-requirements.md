@@ -61,6 +61,9 @@ release assigned to each area is in
 | AI-07 | MUST | Token, cost, and rate limits are enforced per user and globally. |
 | AI-08 | SHOULD | Generated content is cached by input hash and prompt version. |
 | AI-09 | COULD | Streaming responses and multi-document synthesis. |
+| AI-10 | MUST | A user may study their own unreviewed generated items only privately and clearly labelled; attempts on them are excluded from weak-topic diagnosis. |
+| AI-11 | MUST | AI generation can be disabled globally and per user without disabling study features. |
+| AI-12 | MUST | A model or prompt change requires a passing evaluation run before release. |
 
 ### Questions and flashcards (`QST`)
 
