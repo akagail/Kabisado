@@ -12,19 +12,6 @@ def api_exception_handler(exc: Exception, context: dict[str, Any]) -> Any:
         return None
 
     code = getattr(exc, "default_code", "error")
-    status_code = response.status_code
-    if status_code == 400:
-        code = "validation_error"
-    elif status_code == 401:
-        code = "unauthorized"
-    elif status_code == 403 and code != "csrf_error":
-        code = "forbidden"
-    elif status_code == 404:
-        code = "not_found"
-    elif status_code == 409:
-        code = "conflict"
-    elif status_code == 429:
-        code = "rate_limited"
     message = "Request could not be processed."
     fields = None
 

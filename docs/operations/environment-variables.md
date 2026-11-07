@@ -22,11 +22,7 @@
 | `DJANGO_SECRET_KEY` | Yes (prod) | dev-only fallback | Signing key; unique per environment |
 | `DJANGO_DEBUG` | No | `false` | Debug mode; must be false in production |
 | `DJANGO_ALLOWED_HOSTS` | Yes (prod) | `localhost,127.0.0.1` | Comma-separated hostnames |
-| `DJANGO_CSRF_TRUSTED_ORIGINS` | No | `FRONTEND_URL` | Comma-separated trusted origins; defaults to the app origin for the same-origin proxy |
-| `FRONTEND_URL` | No | `http://localhost:3000` | Base URL used in password-reset links |
-| `SESSION_INACTIVITY_SECONDS` | No | `1800` | Sliding inactivity timeout (ADR-0004) |
-| `ENABLE_BREACHED_PASSWORD_CHECK` | No | `false` | HIBP k-anonymity validator; enable before alpha |
-| `PASSWORD_RESET_TIMEOUT` | No | `259200` | Reset-token lifetime in seconds |
+| `DJANGO_CSRF_TRUSTED_ORIGINS` | Yes (prod) | empty | Comma-separated trusted origins |
 | `DATABASE_URL` | No | SQLite file | PostgreSQL connection URL |
 | `REDIS_URL` | No | empty | Celery broker/cache (when enabled) |
 | `CORS_ALLOWED_ORIGINS` | No | empty | Only if a cross-origin client is added |
@@ -101,8 +97,6 @@ Minimum required before a production deploy:
 - `DATABASE_URL` with TLS
 - `S3_*` for uploads
 - `EMAIL_*` for verification/reset
-- `FRONTEND_URL` (password-reset link origin)
-- `ENABLE_BREACHED_PASSWORD_CHECK=true` before public alpha
 - AI provider variables if generation is enabled
 - `REDIS_URL` if workers are enabled
 

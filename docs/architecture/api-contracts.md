@@ -103,10 +103,6 @@ Errors: `400`, `401` invalid/expired/used token, `429`.
 
 Response `200`: `{ "csrfToken": "…" }`
 
-**KAB-101 note:** until KAB-102 introduces `catalog.Exam`, `profile.target_exam`
-is returned as the slug string (`"professional"` / `"subprofessional"`) or
-`null`, not the object shown in §2.1.
-
 ### GET / `PATCH / `DELETE `/me/`, export endpoints
 
 | Method | Path | Purpose |

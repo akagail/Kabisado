@@ -79,9 +79,6 @@ Rules:
 - Mutations use server actions or route handlers, not ad-hoc `fetch` in
   components.
 - Never expose `BACKEND_INTERNAL_URL` or any secret with `NEXT_PUBLIC_`.
-- The proxy must preserve trailing slashes
-  (`skipTrailingSlashRedirect: true`). Django API routes end in `/`; Next's
-  default 308 normalization would loop with Django's `APPEND_SLASH`.
 
 ## 5. Authentication handling
 

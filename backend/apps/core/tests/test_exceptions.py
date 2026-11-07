@@ -13,7 +13,7 @@ def test_validation_error_uses_error_envelope():
     assert response.status_code == 400
     assert response.data == {
         "error": {
-            "code": "validation_error",
+            "code": "invalid",
             "message": "Validation failed.",
             "fields": {"email": ["Enter a valid email address."]},
         }
