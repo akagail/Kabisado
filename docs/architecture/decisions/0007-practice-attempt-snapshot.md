@@ -1,11 +1,14 @@
 # ADR-0007: Snapshot question content when a practice attempt starts
 
-**Status:** Approved — delegated by repository owner, 2026-11-06
+**Status:** Approved
 **Date:** 2026-11-06
-**Deciders:** Product and Backend (decisions delegated by the repository owner)
+**Approved:** 2026-11-07
+**Deciders:** Product, Backend, Repository Owner
 **Supersedes:** none
 **Related:** [KAB-104](../../../tickets/backlog/KAB-104-practice-sessions.md),
 SPEC-0004 (planned), [database-design.md](../database-design.md)
+
+**Approval condition:** Implementation must preserve historical question content, answers, scoring, and relevant examination context so future edits cannot alter previous results.
 
 ## Context
 

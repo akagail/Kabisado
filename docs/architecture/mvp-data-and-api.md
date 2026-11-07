@@ -5,7 +5,8 @@
 **Last updated:** 2026-11-06
 
 Technical requirements for the MVP (increment 1) and the deltas the beta adds.
-Companion: [database-design.md](database-design.md) (direction),
+Companion: [database-design.md](database-design.md) (canonical ERD, fields,
+constraints, indexes, ownership, migrations),
 [system-architecture.md](system-architecture.md) (boundaries),
 [mvp-scope.md](../product/mvp-scope.md) (features), and
 [ADR-0007](decisions/0007-practice-attempt-snapshot.md) (snapshot decision).
@@ -22,47 +23,31 @@ features, proctoring.
 
 ## 2. Entities
 
-```mermaid
-erDiagram
-    USER ||--|| PROFILE : has
-    USER ||--o{ PRACTICE_SESSION : starts
-    USER ||--o{ CONTENT_FLAG : reports
-    USER ||--o{ EXPORT_REQUEST : requests
-    USER ||--o{ AUDIT_EVENT : acts
+The canonical entity definitions, ERD, fields, constraints, indexes, and
+ownership rules are in [database-design.md](database-design.md). This section
+summaries the MVP entities and their relationships for API design purposes.
 
-    EXAM_FAMILY ||--o{ EXAM : contains
-    EXAM ||--o{ EXAM_VERSION : versions
-    EXAM_VERSION ||--o{ SUBJECT : has
-    SUBJECT ||--o{ TOPIC : has
-    TOPIC ||--o{ QUESTION : contains
-    QUESTION ||--o{ QUESTION_OPTION : has
-    QUESTION ||--o{ CONTENT_FLAG : receives
-
-    PRACTICE_SESSION ||--o{ SESSION_ITEM : contains
-    QUESTION ||--o{ SESSION_ITEM : snapshots
-    SESSION_ITEM ||--o| ATTEMPT_ANSWER : answered_by
-```
-
-| Entity | Key fields | Notes |
+| Entity | Purpose | Key relationships |
 | --- | --- | --- |
-| `User` | email, password hash, is_active, is_staff, timestamps | Django auth user; email is the identifier |
-| `Profile` | user (1:1), display_name, target_exam, preference | Created on registration |
-| `ExamFamily` | name, slug | `Civil Service` for the MVP |
-| `Exam` | family, name, level, slug | CSE Professional, CSE Subprofessional |
-| `ExamVersion` | exam, effective_date, source_url, published_on, accessed_on, passing_grade | One row for the 14 March 2027 announcement |
-| `Subject` | version, name, language, display_order | Version-scoped |
-| `Topic` | subject, name, parent (nullable), display_order | Version-scoped; parent supports grouping |
-| `Question` | topic, stem, difficulty, explanation, provenance, status, author, reviewer, timestamps | Never hard-deleted; `retired` instead |
-| `QuestionOption` | question, text, is_correct, display_order | Exactly one correct |
-| `PracticeSession` | user, exam_version, mode, status, item_count, started_at, deadline_at, submitted_at, score fields | `untimed` or `timed` |
-| `SessionItem` | session, position, question, snapshot fields | Snapshot per ADR-0007 |
-| `AttemptAnswer` | session_item (1:1), selected option snapshot, answered_at, is_correct | Saved as the learner answers |
-| `ContentFlag` | question, user (nullable), reason, note, status, resolution, resolved_by, timestamps | One open flag per user and question |
-| `AuditEvent` | actor, action, object type, object id, summary, created_at | Append-only |
-| `ExportRequest` | user, status, requested_at, completed_at | Manual fulfilment at alpha |
+| `User` | Authentication identity | 1:1 Profile, 1:N PracticeSession, ContentFlag, ExportRequest, AuditEvent |
+| `Profile` | Learner preferences | target_exam, preference (JSON) |
+| `ExamFamily` | Exam grouping | 1:N Exam |
+| `Exam` | Specific exam | family, level (Professional/Subprofessional) |
+| `ExamVersion` | Bulletin snapshot | exam, source_url, published_on; scopes Subject/Topic/Question |
+| `Subject` | Subject within a version | version, name, display_order |
+| `Topic` | Topic within a subject | subject, parent (self-ref), display_order |
+| `Question` | Practice item | topic, stem, explanation, provenance, status (draft→retired) |
+| `QuestionOption` | Answer choice | question, text, is_correct (exactly one) |
+| `PracticeSession` | Practice attempt | user, exam_version, mode (untimed/timed), deadline, score |
+| `SessionItem` | Item in a session | session, question (snapshot per ADR-0007), position |
+| `AttemptAnswer` | Learner's answer | session_item, selected option, is_correct |
+| `ContentFlag` | Quality report | question, user, reason, status, resolution |
+| `AuditEvent` | Append-only log | actor, action, object_type, object_id, summary |
+| `ExportRequest` | Data export job | user, status, completed_at |
 
-`SessionItem` snapshot fields: stem, ordered options, correct option, explanation,
-provenance, difficulty. The live `question` link is retained for reporting only.
+`SessionItem` stores a snapshot of question content (stem, options, correct
+answer, explanation, provenance, difficulty) so future edits cannot alter past
+results. The live `question` FK is retained for reporting only.
 
 ## 3. Constraints and indexes
 
