@@ -153,6 +153,8 @@ Not activated because:
 - The MVP has no deployable domain yet.
 - The owner has not approved production deployment.
 
+Deployment-stage alignment is defined in [deployment-hosting-requirements.md](../operations/deployment-hosting-requirements.md): Stage 2 (Closed Alpha) provisions managed containers and private services, while Stage 3–4 introduce paid tiers when measured consumption warrants them.
+
 ## 10. Migrations in deployment
 
 - Run `migrate` once per release, not per replica.

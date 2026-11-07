@@ -110,7 +110,7 @@ cannot start. MVP unaffected.
 
 ## O3 — Transactional email provider
 
-**Status:** Unresolved
+**Status:** Requirements defined; provider not selected
 **Classification:** Blocking (for MVP / Increment 1)
 **Affected:** KAB-101 (accounts), SPEC-0001, AUTH-04, NFR-SEC-03
 
@@ -121,6 +121,23 @@ cannot start. MVP unaffected.
   handling, and a DPA.
 - Local development uses the console backend; production needs a real provider
   before the first alpha user registers.
+
+### Requirements (provider-independent)
+
+1. **API or SMTP** — a simple, documented interface for sending password reset
+   links.
+2. **DPA and privacy** — contractual prohibition on training on user content;
+   retention limits for sent message metadata.
+3. **PH/SG deliverability** — good deliverability to common Philippine ISPs
+   (Globe, Smart, Gmail).
+4. **Bounce/complaint handling** — webhooks or polling to detect delivery
+   failures; no sender reputation damage.
+5. **Rate limiting** — respects the app's rate-limit policy (auth endpoints
+   must not trigger provider throttling).
+6. **Cost** — per-email pricing that fits the alpha budget (expected < 100
+   emails/month at MVP volume).
+7. **Testing** — a local/test mode that does not send real email (console
+   backend or a sandbox API).
 
 ### Recommended approach
 
@@ -144,8 +161,18 @@ blocking decision — decide it first.
 
 ### Required approval
 
-**Yes.** Provider selection requires approval, but the scope is narrow and
-reversible.
+**Clarified — approval required only for a real provider before alpha.**
+
+Local development uses Django's console email backend (`EMAIL_BACKEND` =
+`django.core.mail.backends.locmem.EmailBackend`), so AUTH-04 (password reset)
+works locally without any external provider. A real transactional email
+provider must be selected, configured behind the existing Django email backend
+abstraction, and tested before enabling email-dependent functionality for
+alpha users. This unblocks the MVP login/reset flow at closed alpha; no
+provider selection is needed for MVP development or public beta preview.
+
+The decision is effectively resolved (console backend + pre-alpha provider), but
+the provider itself remains a Phase 4 implementation gate.
 
 ---
 
@@ -423,12 +450,14 @@ roadmap.
 
 | Decision | Classification | Must be resolved before | Recommended next action |
 | --- | --- | --- | --- |
-| **O3 Transactional email** | Blocking (MVP) | KAB-101 / SPEC-0001 | Pick provider; configure Django email backend |
+| **O3 Transactional email** | Blocking (MVP) | KAB-101 / SPEC-0001 | Provider-independent config first; selection deferred to Phase 4 |
 | **O5 Content curator** | Blocking (MVP alpha) | KAB-004 / KAB-103 / SPEC-0003 | Confirm owner-as-curator or appoint contractor |
 | **O1 AI provider + DPA** | Blocking (Beta) | KAB-107 / SPEC-0007 | Shortlist, obtain DPAs, evaluate, present comparison |
 | **O2 Object storage** | Blocking (Beta) | KAB-106 / SPEC-0006 | Evaluate S3-compatible options, pick one |
 | **O7 Exam-version reuse** | Requires ADR | Second version modelling / SPEC-0002 v2 | Write ADR-0008 with duplication as default |
 | **O4 Production host** | Blocking (Launch) | KAB-112 / `deployment.md` | Define NFRs, evaluate 2–3 platforms, pick one |
+
+Free-first infrastructure tracking is documented in [deployment-hosting-requirements.md](../operations/deployment-hosting-requirements.md): four stages with upgrade triggers, provider replacement paths, and unresolved decisions table.
 
 The remaining decisions (O6, O8, O9, O10) can be deferred without blocking code.
 O9 is already decided for beta scope.

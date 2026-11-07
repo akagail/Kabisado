@@ -7,7 +7,7 @@
 **Owner:** unassigned
 **Created:** 2026-11-06
 **Updated:** 2026-11-06
-**Specification:** required before implementation
+**Specification:** SPEC-0001 (draft, awaiting approval)
 **Related ADRs:** ADR-0004
 **GitHub issue:** https://github.com/akagail/Kabisado/issues/14
 
@@ -102,6 +102,8 @@ Not started.
 
 ## 10. References
 
+- `docs/specifications/SPEC-0001-accounts-and-profile.md`
+- `docs/architecture/api-contracts.md` §Auth
 - `docs/architecture/backend-architecture.md` §7
 - `docs/architecture/decisions/0004-authentication.md`
 - `docs/product/mvp-scope.md` increment 1

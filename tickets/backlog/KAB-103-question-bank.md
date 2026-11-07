@@ -7,7 +7,7 @@
 **Owner:** unassigned
 **Created:** 2026-11-06
 **Updated:** 2026-11-06
-**Specification:** required before implementation
+**Specification:** SPEC-0003 (draft, awaiting approval)
 **Related ADRs:** ADR-0003
 **GitHub issue:** https://github.com/akagail/Kabisado/issues/16
 
@@ -96,5 +96,6 @@ Not started.
 
 ## 10. References
 
+- `docs/specifications/SPEC-0003-question-bank-and-review.md`
+- `docs/architecture/api-contracts.md` §Question bank
 - `docs/architecture/database-design.md`
-- `docs/product/content-sourcing-plan.md` (KAB-004)

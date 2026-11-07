@@ -91,10 +91,14 @@ Not started. Production deployment is intentionally inactive.
 
 - Do not activate production before hosting, credentials, privacy, and approval
   gates are complete.
+- Production deployment follows Stage 2–4 in `deployment-hosting-requirements.md`:
+  Stage 2 provisions managed containers; Stage 3–4 introduce paid tiers when
+  measured consumption warrants them.
 - A failed migration can cause data loss; back up first.
 - Keep the previous image deployable.
 
 ## 10. References
 
-- `docs/operations/deployment.md`
+- `docs/operations/deployment.md` (primary)
+- `docs/operations/deployment-hosting-requirements.md` — free-first infra stages, upgrade triggers, provider replacement paths (supplements §1 of deployment.md)
 - `docs/engineering/ci-cd.md` §9–11
