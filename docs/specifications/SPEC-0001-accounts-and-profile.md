@@ -1,11 +1,11 @@
 # SPEC-0001: Accounts and Profile
 
-**Status:** Draft
+**Status:** Approved
 **Owner:** Backend / Frontend
 **Ticket:** KAB-101
 **Related ADRs:** ADR-0003, ADR-0004
-**Approved by:** —
-**Approved on:** —
+**Approved by:** Repository owner
+**Approved on:** 2026-11-07
 **Last updated:** 2026-11-07
 
 ## 1. Problem

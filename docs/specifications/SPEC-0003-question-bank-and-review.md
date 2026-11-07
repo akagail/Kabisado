@@ -1,11 +1,11 @@
 # SPEC-0003: Question Bank & Review
 
-**Status:** Draft
+**Status:** Approved
 **Owner:** Backend / Frontend / Product
 **Ticket:** KAB-103
 **Related ADRs:** ADR-0003, ADR-0004
-**Approved by:** —
-**Approved on:** —
+**Approved by:** Repository owner
+**Approved on:** 2026-11-07
 **Last updated:** 2026-11-07
 
 ## 1. Problem

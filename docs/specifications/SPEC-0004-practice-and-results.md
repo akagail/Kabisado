@@ -1,11 +1,11 @@
 # SPEC-0004: Practice & Results
 
-**Status:** Draft
+**Status:** Approved
 **Owner:** Backend / Frontend
 **Ticket:** KAB-104
 **Related ADRs:** ADR-0003, ADR-0004, ADR-0007
-**Approved by:** —
-**Approved on:** —
+**Approved by:** Repository owner
+**Approved on:** 2026-11-07
 **Last updated:** 2026-11-07
 
 ## 1. Problem
