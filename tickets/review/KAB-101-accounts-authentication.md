@@ -112,9 +112,20 @@ Frontend (`cd frontend`, Node 26.13.0):
 ```text
 npm run lint                   0 errors
 npm run typecheck              passed
-npm test -- --run              9 passed (4 files)
+npm test -- --run              10 passed (5 files)
 npm run build                  passed; 9 routes built
 npx playwright test            2 passed (home, auth flow)
+```
+
+Live proxy verification against the running Django API (not mocked):
+
+```text
+GET  /api/v1/auth/csrf/                200 (no redirect)
+POST /api/v1/auth/register/            201
+GET  /api/v1/me/                       200
+POST /api/v1/auth/logout/              204
+GET  /api/v1/me/                       401
+Playwright live register -> onboarding -> profile -> sign out   passed
 ```
 
 ## 9. Deviations
@@ -142,7 +153,24 @@ Recorded in `docs/specifications/SPEC-0001-accounts-and-profile.md` §19:
   modules exist.
 - Do not add social login before the core flow is stable.
 
-## 11. References
+## 11. Review fixes (2026-11-07)
+
+Found while testing registration manually through the real proxy (mocked tests
+did not cover it):
+
+1. **Trailing-slash redirect loop.** Next 16 normalized `/api/v1/.../` to
+   `/api/v1/...` before the rewrite, Django's `APPEND_SLASH` redirected back,
+   and every API call looped. Fixed in `frontend/next.config.ts` with
+   `skipTrailingSlashRedirect: true` and a trailing slash in the rewrite
+   destination. Guarded by `src/tests/proxy-config.test.ts`.
+2. **CSRF origin rejected by the proxy.** The browser sends
+   `Origin: http://localhost:3000`, while Django sees its own host, so CSRF
+   failed unless the env var was set. `CSRF_TRUSTED_ORIGINS` now defaults to
+   `FRONTEND_URL` even outside DEBUG; it still rejects any other origin.
+3. **Local database not migrated** (environment only): `manage.py migrate` is
+   required before registration works.
+
+## 12. References
 
 - `docs/specifications/SPEC-0001-accounts-and-profile.md`
 - `docs/architecture/api-contracts.md` §Auth

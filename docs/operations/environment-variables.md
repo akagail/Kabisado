@@ -22,7 +22,7 @@
 | `DJANGO_SECRET_KEY` | Yes (prod) | dev-only fallback | Signing key; unique per environment |
 | `DJANGO_DEBUG` | No | `false` | Debug mode; must be false in production |
 | `DJANGO_ALLOWED_HOSTS` | Yes (prod) | `localhost,127.0.0.1` | Comma-separated hostnames |
-| `DJANGO_CSRF_TRUSTED_ORIGINS` | Yes (prod) | empty | Comma-separated trusted origins |
+| `DJANGO_CSRF_TRUSTED_ORIGINS` | No | `FRONTEND_URL` | Comma-separated trusted origins; defaults to the app origin for the same-origin proxy |
 | `FRONTEND_URL` | No | `http://localhost:3000` | Base URL used in password-reset links |
 | `SESSION_INACTIVITY_SECONDS` | No | `1800` | Sliding inactivity timeout (ADR-0004) |
 | `ENABLE_BREACHED_PASSWORD_CHECK` | No | `false` | HIBP k-anonymity validator; enable before alpha |

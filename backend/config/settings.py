@@ -168,7 +168,10 @@ CSRF_TRUSTED_ORIGINS = [
     for origin in os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",")
     if origin.strip()
 ]
-if DEBUG and not CSRF_TRUSTED_ORIGINS:
+# The same-origin proxy forwards the browser's Origin (the app URL), which
+# differs from Django's host. Trust the app origin by default; an unset value
+# still rejects any other origin, so a production misconfiguration fails closed.
+if not CSRF_TRUSTED_ORIGINS:
     CSRF_TRUSTED_ORIGINS = [FRONTEND_URL]
 
 if not DEBUG:
