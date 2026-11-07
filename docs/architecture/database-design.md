@@ -88,6 +88,11 @@ erDiagram
 | `study_preference` | jsonb | `{mode, size}` defaults |
 | `created_at`, `updated_at` | timestamptz | |
 
+**KAB-101 temporary deviation:** `accounts_profile.target_exam` is a validated
+`varchar` (`professional` / `subprofessional`) until `catalog_exam` exists in
+KAB-102. KAB-102 adds the FK and migrates the stored slug. `display_name` stays
+on `accounts_user` as specified above.
+
 ## 4. Core tables — Catalogue
 
 ### `catalog_exam_family`

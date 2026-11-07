@@ -287,10 +287,10 @@ export fulfilment time (alpha: manual, target ≤7 days).
 
 | Item | Type | Status |
 | --- | --- | --- |
-| ADR-0004 (session auth) | Architecture | **Proposed — needs security design review** |
-| Transactional email provider (O3) | External | Requirements defined; provider not selected |
+| ADR-0004 (session auth) | Architecture | **Approved** (2026-11-07) |
+| Transactional email provider (O3) | External | Requirements defined; console backend locally |
 | ADR-0002 (stack) | Architecture | Approved |
-| SPEC-0002 (catalogue) | Spec | Draft (for target_exam FK) |
+| SPEC-0002 (catalogue) | Spec | **Approved**; `catalog.Exam` model lands in KAB-102 |
 
 **Risks:**
 
@@ -311,3 +311,26 @@ export fulfilment time (alpha: manual, target ≤7 days).
 2. Session age: 14 days or shorter for alpha?
 3. Export format: JSON + CSV confirmed; any other formats needed?
 4. Should staff be able to trigger export on behalf of user (support)?
+
+## 19. Implementation notes — KAB-101 (2026-11-07)
+
+Approved deviations recorded during implementation:
+
+1. **`target_exam` is a `CharField`** (`professional` / `subprofessional`) until
+   `catalog.Exam` exists in KAB-102. The API returns the slug string, not the
+   object shape shown in §8. KAB-102 replaces it with an FK via data migration.
+2. **`display_name` lives on `accounts_user`** per the approved database design,
+   not on `accounts_profile`. The API still exposes it as `profile.display_name`
+   so the contract shape is unchanged.
+3. **Breached-password validation is env-gated**
+   (`ENABLE_BREACHED_PASSWORD_CHECK`, off by default) so local development and
+   CI never depend on HaveIBeenPwned. Minimum length (12) and the other Django
+   validators are always on.
+4. **Account deletion is immediate**, matching §5.3. The ticket's "grace period"
+   wording is not implemented because a scheduled purge would require a queue.
+5. **Export requests are recorded only.** File generation and the seven-day
+   archive are manual at alpha; `download_url` is `null` until a file is
+   produced.
+6. **Existing sessions are invalidated on password reset** by deleting matching
+   session rows. This is an alpha-scale scan; revisit if sessions move to a
+   shared store.
