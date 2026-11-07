@@ -1,16 +1,19 @@
-# User Flows
+# User Flows — DEPRECATED
 
-**Status:** Proposed — requires approval (Phase 2, Checkpoint 4)
+**Status:** Deprecated (2026-11-07)
 **Owner:** Product
-**Last updated:** 2026-11-06
+**Last updated:** 2026-11-07
 
-Primary journeys for the MVP and the fast-follow beta, including error states and
-edge cases. Feature IDs refer to [mvp-scope.md](mvp-scope.md); requirement IDs to
-[product-requirements.md](product-requirements.md).
-
-**Reading the status labels:** `MVP` = increment 1 (private alpha). `Beta` =
-increment 2 (fast-follow). `Later` = post-MVP. Do not implement `Beta` flows
-before their gates are approved.
+> **This document is deprecated.** User flows, error states, and edge cases are
+> now owned by the feature specifications:
+>
+> - SPEC-0001: Accounts & Profile (F1, F2, F11)
+> - SPEC-0002: CSE Catalogue (F3)
+> - SPEC-0003: Question Bank & Review (F4, F10)
+> - SPEC-0004: Practice & Results (F5, F6, F7)
+> - SPEC-0005: Progress Analytics & Weak Topics (F8, F9)
+>
+> This file is retained for historical reference only. Do not update it.
 
 ## 1. Roles and permissions
 

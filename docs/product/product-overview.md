@@ -1,47 +1,19 @@
 # Product Overview
 
-**Status:** Draft — requires approval
+**Status:** Draft
 **Owner:** Product
-**Last updated:** 2026-11-06
+**Last updated:** 2026-11-07
 
-## 1. Problem
-
-Preparing for Philippine government and professional examinations is expensive,
-fragmented, and hard to personalize. Reviewers are often static PDFs or
-unstructured social-media material. Learners cannot easily tell what they do not
-know, why an answer is wrong, or what to study next. High-quality review content
-is scattered across books, handouts, and unofficial sources with unclear
-ownership.
-
-## 2. Vision
+## Vision
 
 Kabisado turns a learner's own review materials and a curated examination
 catalogue into a personalized study loop: **study → practice → understand the
 mistake → focus on the weak topic → repeat**.
 
 The platform should feel like a competent review coach, not a PDF viewer with a
-chat box. Answers must be explainable, progress must be visible, and sources must
-be attributable.
+chat box. Answers must be explainable, progress visible, and sources attributable.
 
-## 3. Initial audience
-
-Students and applicants preparing for the Philippine Civil Service Examination
-(CSE), starting with the Professional level. The architecture and taxonomy must
-support additional examinations without a rewrite.
-
-See [target-users.md](target-users.md) and
-[cse-exam-reference.md](cse-exam-reference.md).
-
-## 4. Value proposition
-
-| For | Kabisado provides |
-| --- | --- |
-| CSE candidates | A structured CSE study path with practice, explanations, and weak-topic feedback |
-| Self-directed learners | Their own notes and reviewers turned into flashcards and practice questions |
-| Repeat takers | Diagnosis of weak areas instead of restarting from page one |
-| Content curators | A traceable pipeline from source material to approved learning items |
-
-## 5. Product principles
+## Product Principles
 
 1. **Learning outcome over engagement.** Do not optimize for streaks or time in
    app at the expense of understanding.
@@ -55,35 +27,17 @@ See [target-users.md](target-users.md) and
 6. **No dark patterns.** No fake urgency, hidden subscriptions, or manipulative
    notifications.
 
-## 6. Capability map
+## Initial Audience
 
-| Capability | MVP | Later |
-| --- | --- | --- |
-| Registration, authentication, profile | Yes | SSO, institutional accounts |
-| Examination catalogue (CSE) | Yes | PRC, UPCAT, other government exams |
-| Personal material library | Fast-follow beta | Sharing, groups |
-| PDF/DOCX upload and extraction | Fast-follow beta | OCR for scanned files, images |
-| AI summaries and explanations | Fast-follow beta | Multi-document synthesis |
-| Multiple-choice practice | Yes | Adaptive item selection |
-| Identification exercises | No | Yes |
-| Flashcards | Fast-follow beta | Generated decks from broad material |
-| Timed practice examinations | Yes (basic) | Full mock exam simulation |
-| Answer explanations | Yes | Socratic tutoring mode |
-| Progress analytics | Yes (topic accuracy) | Cohorts, predicted readiness |
-| Weak-topic identification | Yes (rule-based) | Model-based diagnosis |
-| Study recommendations | No | Personalized plans |
-| Spaced repetition | No | FSRS-based scheduler |
-| External material discovery | No | Licensed partner content |
-| Offline mode | No | PWA cache |
+Students and applicants preparing for the Philippine Civil Service Examination
+(CSE), starting with the Professional level. The architecture and taxonomy must
+support additional examinations without a rewrite.
 
-## 7. Success measures (proposed)
+See [target-users.md](target-users.md) and [cse-exam-reference.md](cse-exam-reference.md).
 
-The canonical metric set is in [prd.md](prd.md#9-success-metrics). This document
-does not keep a second copy.
+## MVP Summary
 
-## 8. MVP summary
-
-The MVP is a **CSE Professional study loop**:
+The MVP is a **CSE Professional study loop** (private alpha):
 
 1. Create an account and choose CSE Professional.
 2. Practise seeded CSE topics, untimed or timed.
@@ -94,7 +48,7 @@ Personal reviewer upload and AI study aids follow in the fast-follow beta.
 
 Full detail and explicit exclusions: [mvp-scope.md](mvp-scope.md).
 
-## 9. Non-goals for the MVP
+## Non-goals for the MVP
 
 - Replacing official CSC registration or eligibility records.
 - Guaranteeing a passing score.
@@ -104,30 +58,9 @@ Full detail and explicit exclusions: [mvp-scope.md](mvp-scope.md).
 - Paid subscriptions and payment processing.
 - Republishing copyrighted reviewers without permission.
 
-## 10. Assumptions and open decisions
+## Key References
 
-**Assumptions**
-
-- Users have a browser and an email address.
-- Most initial content will be English and Filipino; Tagalog UI copy may be
-  needed later.
-- CSE Professional is the highest-demand initial segment.
-- Users will upload their own reviewers if the privacy story is clear.
-
-**Needs approval**
-
-- Confirm CSE Professional as the sole launch content set (Subprofessional
-  catalogue only).
-- Approve the MVP as increment 1, with materials and AI as fast-follow beta.
-- Confirm the free/paid model before building entitlements.
-- Confirm data-retention and AI-provider policies before public launch.
-
-## 11. Research sources
-
-- Civil Service Commission official site: <https://www.csc.gov.ph/>
-- CSC examination announcements (current bulletin is authoritative)
-- CSC 2026 examination schedule announcement:
-  <https://www.csc.gov.ph/2026-civil-service-exam-schedule-and-application-timelines-released>
-
-Competitor and learner research is not yet documented. Do not cite invented
-research.
+- Master requirements: [prd.md](prd.md)
+- Feature definitions: [mvp-scope.md](mvp-scope.md)
+- User journeys: [specifications/](../specifications/)
+- Verified exam scope: [cse-exam-reference.md](cse-exam-reference.md)

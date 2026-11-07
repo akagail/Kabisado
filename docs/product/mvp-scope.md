@@ -56,7 +56,12 @@ Cross-cutting MVP requirements: NFR-SEC-01..03, NFR-SEC-06; NFR-PERF-01,
 NFR-PERF-02, NFR-PERF-05; NFR-REL-02, NFR-REL-04; NFR-UX-01..05; NFR-MNT-01..05.
 Ticket: KAB-111 for the accessibility and performance baseline.
 
-Journeys, error states, and edge cases per feature: [user-flows.md](user-flows.md).
+Journeys, error states, and edge cases per feature are in the feature specifications:
+[SPEC-0001](../specifications/SPEC-0001-accounts-and-profile.md) (F1, F2, F11),
+[SPEC-0002](../specifications/SPEC-0002-cse-catalogue.md) (F3),
+[SPEC-0003](../specifications/SPEC-0003-question-bank-and-review.md) (F4, F10),
+[SPEC-0004](../specifications/SPEC-0004-practice-and-results.md) (F5, F6, F7),
+[SPEC-0005](../specifications/SPEC-0005-progress-analytics.md) (F8, F9).
 
 ### F1 — Accounts
 
