@@ -379,17 +379,24 @@ area. `NFR-COST` applies from increment 2.
 
 | Dependency | Needed by | Status |
 | --- | --- | --- |
-| Approved PRD and exam reference | MVP | Draft, verified scope |
-| Approved architecture and ADRs | MVP | Proposed |
-| CSE content sourcing and review plan (KAB-004) plus a named reviewer | MVP | Not started |
-| Threat model and privacy review (KAB-005) | MVP alpha | Not started |
-| Transactional email provider | MVP (password reset) | Not selected |
-| Alpha hosting environment | MVP alpha | Not selected |
-| Object storage provider | Increment 2 | Not selected |
-| AI provider and data-processing terms | Increment 2 | Not selected |
+| SPEC-0001..0005 individually reviewed & approved | All implementation | **Approved** (2026-11-07) |
+| Database design | All implementation | **Approved** (2026-11-07); 2 additive gaps documented |
+| API contracts finalized from DB design | All implementation | **Finalized** (2026-11-07) |
+| Initial threat model + data map (KAB-005) | Auth, uploads, AI | **Initial pass complete** (2026-11-07); full sign-off before public beta |
+| Content sourcing plan (KAB-004) + named curator | Catalogue, question bank | **Running in parallel**; owner is initial curator |
+| AI provider + DPA (O1) | Increment 2 (AI features) | Deferred — Category C gate |
+| Object storage provider (O2) | Increment 2 (uploads) | Deferred — Category C gate |
+| Production hosting evaluation | Launch hardening (KAB-112) | Deferred — Category C gate |
+| Provider-independent email config | Password reset (local dev only) | Console backend for dev; real provider before alpha |
 
 Transactional email moves into the MVP because password reset (`AUTH-04`) cannot
-work without it. Local development can use the console email backend.
+work without it. Local development can use the console email backend. Local dev
+does not require any real provider. Provider selection remains a separate gate
+(Category C) for enabling real email at alpha.
+
+See [Phase 4 Clearance Model](../engineering/phase-4-clearance-model.md) for the
+staged approval structure: Category A foundational prerequisites, Category B
+parallel planning, Category C release gates.
 
 ## 9. Risks
 

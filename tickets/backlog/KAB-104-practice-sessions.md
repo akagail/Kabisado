@@ -98,3 +98,4 @@ Not started.
 - `docs/specifications/SPEC-0004-practice-and-results.md`
 - `docs/architecture/api-contracts.md` §Practice
 - `docs/architecture/database-design.md`
+- `docs/engineering/phase-4-clearance-model.md` — Category A gate dependency

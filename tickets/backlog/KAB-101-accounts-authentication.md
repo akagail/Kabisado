@@ -107,3 +107,4 @@ Not started.
 - `docs/architecture/backend-architecture.md` §7
 - `docs/architecture/decisions/0004-authentication.md`
 - `docs/product/mvp-scope.md` increment 1
+- `docs/engineering/phase-4-clearance-model.md` — Category A gate dependency

@@ -93,3 +93,4 @@ Not started.
 - `docs/specifications/SPEC-0005-progress-analytics-and-weak-topics.md`
 - `docs/architecture/api-contracts.md` §Analytics
 - `docs/architecture/database-design.md` §3
+- `docs/engineering/phase-4-clearance-model.md` — Category A gate dependency

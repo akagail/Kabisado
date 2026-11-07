@@ -99,3 +99,4 @@ Not started.
 - `docs/specifications/SPEC-0003-question-bank-and-review.md`
 - `docs/architecture/api-contracts.md` §Question bank
 - `docs/architecture/database-design.md`
+- `docs/engineering/phase-4-clearance-model.md` — Category A gate dependency

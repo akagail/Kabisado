@@ -60,7 +60,9 @@ Out:
 - [ ] A takedown and correction workflow is documented.
 - [ ] The increment 1 seed target and quality bar are stated.
 - [ ] AI-assisted authoring disclosure rules are stated.
-- [ ] A named accountable content reviewer is recorded.
+- [ ] A named accountable content reviewer is recorded. — **Repository owner
+      confirmed as initial alpha curator (2026-11-07), subject to manageable
+      workload.**
 
 ## 6. Implementation checklist
 

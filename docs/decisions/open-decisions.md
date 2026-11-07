@@ -221,10 +221,16 @@ beta can run on any staging environment.
 
 ## O5 — Named content curator and content-review responsibility
 
-**Status:** Repository owner is accountable until a curator is appointed
-**Classification:** Blocking (for MVP alpha gate)
+**Status:** Resolved — repository owner acts as initial alpha curator (2026-11-07)
+**Classification:** Blocking (for MVP alpha gate) — resolved for initial alpha
 **Affected:** KAB-004 (content plan), KAB-103 (question bank), KAB-108 (AI
 review), SPEC-0003, `ai-capabilities.md` §17, D3
+
+The repository owner has confirmed willingness to act as the initial alpha
+content curator, subject to a manageable review workload. Before alpha, confirm
+this remains sustainable or appoint a part-time curator with a defined SLA
+(e.g., 20 items/week reviewed). Workflow (SPEC-0003): draft → review (not by
+author) → publish → audit.
 
 ### Technical and product implications
 
@@ -450,12 +456,14 @@ roadmap.
 
 | Decision | Classification | Must be resolved before | Recommended next action |
 | --- | --- | --- | --- |
-| **O3 Transactional email** | Blocking (MVP) | KAB-101 / SPEC-0001 | Provider-independent config first; selection deferred to Phase 4 |
-| **O5 Content curator** | Blocking (MVP alpha) | KAB-004 / KAB-103 / SPEC-0003 | Confirm owner-as-curator or appoint contractor |
-| **O1 AI provider + DPA** | Blocking (Beta) | KAB-107 / SPEC-0007 | Shortlist, obtain DPAs, evaluate, present comparison |
-| **O2 Object storage** | Blocking (Beta) | KAB-106 / SPEC-0006 | Evaluate S3-compatible options, pick one |
-| **O7 Exam-version reuse** | Requires ADR | Second version modelling / SPEC-0002 v2 | Write ADR-0008 with duplication as default |
-| **O4 Production host** | Blocking (Launch) | KAB-112 / `deployment.md` | Define NFRs, evaluate 2–3 platforms, pick one |
+| **O3 Transactional email** | Resolved for local dev (console backend); real provider = Category C gate for alpha | KAB-101 / SPEC-0001 | Select real provider before alpha; console backend for dev only |
+| **O5 Content curator** | Resolved for initial alpha — repository owner acts as curator (2026-11-07) | KAB-004 / KAB-103 / SPEC-0003 | Confirm workload remains manageable at alpha; appoint contractor later if needed |
+| **O1 AI provider + DPA** | Category C gate — block on feature release, not local development | KAB-107 / SPEC-0007 | Shortlist, obtain DPAs, evaluate, present comparison |
+| **O2 Object storage** | Category C gate — block on feature release, not local development | KAB-106 / SPEC-0006 | Evaluate S3-compatible options, pick one |
+| **O7 Exam-version reuse** | Requires ADR — before second version modelling | Second version / SPEC-0002 v2 | Write ADR-0008 with duplication as default |
+| **O4 Production host** | Blocking (Launch hardening) — Category C gate for production deployment | KAB-112 / `deployment.md` | Define NFRs, evaluate 2–3 platforms, pick one |
+
+Phase 4 clearance follows a staged model defined in [phase-4-clearance-model.md](../engineering/phase-4-clearance-model.md): Category A foundational prerequisites (specs, DB design, API contracts, threat model), Category B parallel planning, and Category C release gates.
 
 Free-first infrastructure tracking is documented in [deployment-hosting-requirements.md](../operations/deployment-hosting-requirements.md): four stages with upgrade triggers, provider replacement paths, and unresolved decisions table.
 
