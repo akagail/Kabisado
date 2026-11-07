@@ -107,6 +107,8 @@ manage.py check                System check identified no issues
 makemigrations --check          No changes detected
 pytest                         35 passed
 OpenAPI schema generation      no errors (DRF 3.18.3 + drf-spectacular 0.30.0)
+
+## Status: completed; gap audit fix (20ed450) applied on top of PR #33
 ```
 
 Frontend (`cd frontend`, Node 26.13.0):
@@ -117,6 +119,7 @@ npm run typecheck              passed
 npm test -- --run              20 passed (9 files)
 npm run build                  passed; 9 routes built
 npx playwright test            2 passed (home, auth flow)
+Live proxy verification against the running Django API: csrf 200 → register 201 → me 200 → logout 204 → me 401; browser register → onboarding → profile → sign out — passed
 ```
 
 Live proxy verification against the running Django API (not mocked):
