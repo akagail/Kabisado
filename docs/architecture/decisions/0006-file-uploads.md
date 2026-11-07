@@ -1,7 +1,8 @@
 # ADR-0006: Presigned Direct-to-Object-Storage Uploads
 
-**Status:** Proposed
+**Status:** Approved — with conditions
 **Date:** 2026-11-06
+**Approved:** 2026-11-07
 **Deciders:** Engineering, Security
 **Supersedes:** none
 
@@ -24,9 +25,32 @@ Flow:
    `pending_upload`, and returns a presigned upload URL plus required headers.
 3. Browser uploads directly to storage.
 4. Client calls `POST /materials/{id}/complete`.
-5. API verifies the object exists, size and checksum match, and magic bytes are
-   acceptable; then enqueues extraction.
-6. Downloads use short-lived presigned GET URLs; the bucket is private.
+5. API verifies the object exists, size and checksum match, magic bytes are
+   acceptable, ownership is confirmed, and extraction is enqueued **idempotently**.
+6. Downloads use short-lived presigned GET URLs; the bucket is private;
+   ownership is re-checked before issuing any download URL.
+
+Security controls (see also [`file-upload-architecture.md`](../file-upload-architecture.md)):
+
+- **Ownership**: every read or write to a `Material` (completion, download URL
+  generation, deletion) requires the authenticated user to own the material.
+- **Idempotent completion**: `POST /materials/{id}/complete` uses
+  `(material_id, input_hash)` as an idempotency key; completing twice yields the
+  same extraction job without duplication.
+- **Expiration and orphan cleanup**: uploads older than a configurable period
+  (default 7 days) are eligible for orphan cleanup; a background job deletes
+  expired pending objects and marks the row `deleted`, with retries for transient
+  storage errors.
+- **Malware scanning**: if the provider supports server-side scanning, the scan
+  result blocks extraction; otherwise, manual review/content moderation is queued
+  and held before parsing begins — the deferred-moderation path is documented
+  security control and is resolved before public launch.
+- **Presigned URL reuse**: S3 presigned PUT/GET URLs can be reused until their
+  expiration unless an application-level protection (single-use assertion of the
+  storage signature on completion) is enforced. Application-level protections:
+  completion hashes the uploaded object against the stored `checksum_sha256`;
+  a completed-but-reuploaded attempt is rejected at completion, preventing a
+  replay that could bypass extraction.
 
 ## Alternatives considered
 
@@ -53,18 +77,17 @@ Negative:
 - Presigned URL configuration is provider-specific.
 - CORS rules on the bucket must be maintained.
 
-## Security requirements
+## Open decisions
 
-- Bucket is private; no public ACLs.
-- Presigned URLs expire in minutes and are scoped to one object/key.
-- Maximum file size and allowed types enforced before signing and after upload.
-- Verify magic bytes, not only the declared MIME type.
-- Store objects under a non-guessable key; never trust the client filename.
-- Antivirus/malware scanning is required before parsing if the provider supports
-  it; otherwise document the residual risk and add it before public launch.
-- Deleting a material deletes the object and derived rows.
-- CORS allows only the application origin.
+- Object storage provider: **selected under O2**; not yet chosen. Provider
+  selection remains a separate open decision and does not change this design.
 
 ## Approval
 
-Requires human approval and selection of the storage provider.
+Approved in principle on 2026-11-07 with conditions:
+
+- Ownership verification on completion and download URL generation.
+- Idempotent completion for extraction jobs.
+- Upload expiration, orphan cleanup, retry handling.
+- Malware scanning or documented alternative before parsing.
+- Documentation of presigned URL reuse and application-level protections.

@@ -5,7 +5,10 @@
 **Last updated:** 2026-11-06
 
 Requirement IDs are stable. Add new requirements; do not renumber existing ones.
-`MUST` = MVP blocker, `SHOULD` = MVP if schedule allows, `COULD` = post-MVP.
+Priority is relative to the release that introduces the area: `MUST` = required
+for that release, `SHOULD` = included if schedule allows, `COULD` = later. The
+release assigned to each area is in
+[mvp-scope.md](mvp-scope.md#6-requirement-area-release-map).
 
 ## 1. Functional requirements
 
@@ -58,6 +61,9 @@ Requirement IDs are stable. Add new requirements; do not renumber existing ones.
 | AI-07 | MUST | Token, cost, and rate limits are enforced per user and globally. |
 | AI-08 | SHOULD | Generated content is cached by input hash and prompt version. |
 | AI-09 | COULD | Streaming responses and multi-document synthesis. |
+| AI-10 | MUST | A user may study their own unreviewed generated items only privately and clearly labelled; attempts on them are excluded from weak-topic diagnosis. |
+| AI-11 | MUST | AI generation can be disabled globally and per user without disabling study features. |
+| AI-12 | MUST | A model or prompt change requires a passing evaluation run before release. |
 
 ### Questions and flashcards (`QST`)
 

@@ -12,6 +12,10 @@ what was not, and which decisions still need a human before product work starts.
 This report is evidence, not a marketing summary: anything not executed is listed
 as not executed.
 
+**Update 2026-11-06:** All tickets were migrated to GitHub Issues and the
+`Kabisado` project board. See
+[`github-migration-report.md`](github-migration-report.md).
+
 ## 2. Starting point
 
 | Item | Finding |
@@ -156,8 +160,8 @@ treated as a starting point, not a permanent commitment.
 ## 7. Known gaps
 
 - The Compose stack has not run; expect small fixes on first execution.
-- No GitHub issue exists for KAB-001 until the first push; `tickets/` remains the
-  local source of truth and GitHub issues must link back to ticket IDs.
+- GitHub issues exist, but the repository has no pushed code, so issue bodies
+  reference local ticket paths that are not yet on the remote.
 - `docs/product/cse-reference.md` cites official CSC pages but every format
   detail must be re-verified against the current bulletin before content work.
 - Accessibility and performance have standards but no automated checks yet;
@@ -169,5 +173,5 @@ treated as a starting point, not a permanent commitment.
 2. Approve or amend MVP scope (KAB-002).
 3. Select providers and record costs (KAB-003).
 4. Run the Compose stack on a machine with Docker; record the result in KAB-001.
-5. Push the repository, enable branch protection, and open the first issues from
-   `tickets/ready/`.
+5. Push the repository and enable branch protection. Issues are already open;
+   link the first pull request to its ticket.

@@ -7,9 +7,9 @@
 **Owner:** unassigned
 **Created:** 2026-11-06
 **Updated:** 2026-11-06
-**Specification:** required before implementation
-**Related ADRs:** ADR-0003
-**GitHub issue:** none
+**Specification:** SPEC-0005 (draft, awaiting approval)
+**Related ADRs:** ADR-0003, ADR-0007
+**GitHub issue:** https://github.com/akagail/Kabisado/issues/18
 
 ## 1. Description
 
@@ -90,5 +90,6 @@ Not started.
 
 ## 10. References
 
+- `docs/specifications/SPEC-0005-progress-analytics-and-weak-topics.md`
+- `docs/architecture/api-contracts.md` §Analytics
 - `docs/architecture/database-design.md` §3
-- `docs/product/product-requirements.md` ANL-01…ANL-05

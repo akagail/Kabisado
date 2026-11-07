@@ -9,7 +9,7 @@
 **Updated:** 2026-11-06
 **Specification:** not required (operations)
 **Related ADRs:** none
-**GitHub issue:** none
+**GitHub issue:** https://github.com/akagail/Kabisado/issues/23
 
 ## 1. Description
 

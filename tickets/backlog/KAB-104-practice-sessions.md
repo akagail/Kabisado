@@ -7,9 +7,9 @@
 **Owner:** unassigned
 **Created:** 2026-11-06
 **Updated:** 2026-11-06
-**Specification:** required before implementation
-**Related ADRs:** ADR-0003
-**GitHub issue:** none
+**Specification:** SPEC-0004 (draft, awaiting approval)
+**Related ADRs:** ADR-0003, ADR-0007
+**GitHub issue:** https://github.com/akagail/Kabisado/issues/17
 
 ## 1. Description
 
@@ -95,5 +95,6 @@ Not started.
 
 ## 10. References
 
+- `docs/specifications/SPEC-0004-practice-and-results.md`
+- `docs/architecture/api-contracts.md` §Practice
 - `docs/architecture/database-design.md`
-- `docs/product/mvp-scope.md` increment 1

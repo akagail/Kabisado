@@ -8,12 +8,14 @@ supersedes it and update the index.
 
 | ID | Title | Status |
 | --- | --- | --- |
-| [0001](0001-modular-monolith.md) | Modular monolith over microservices | Proposed |
-| [0002](0002-technology-stack.md) | Initial technology stack and versions | Proposed |
-| [0003](0003-rest-api.md) | REST API with Django REST Framework | Proposed |
-| [0004](0004-authentication.md) | Session authentication through a same-origin proxy | Proposed |
-| [0005](0005-ai-provider-abstraction.md) | Provider-independent AI adapter and RAG | Proposed |
-| [0006](0006-file-uploads.md) | Presigned direct-to-object-storage uploads | Proposed |
+| [0001](0001-modular-monolith.md) | Modular monolith over microservices | **Approved** |
+| [0002](0002-technology-stack.md) | Initial technology stack and versions | **Approved** |
+| [0003](0003-rest-api.md) | REST API with Django REST Framework | **Approved** |
+| [0004](0004-authentication.md) | Session authentication through a same-origin proxy | **Approved** — CSRF via JSON endpoint, session expiry/inactivity, SSR caching (2026-11-07) |
+| [0005](0005-ai-provider-abstraction.md) | Provider-independent AI adapter and RAG | **Approved in Principle** — conditions apply |
+| [0006](0006-file-uploads.md) | Presigned direct-to-object-storage uploads | **Approved** — ownership, idempotent completion, orphan cleanup, malware scanning (2026-11-07) |
+| [0007](0007-practice-attempt-snapshot.md) | Snapshot question content when a practice attempt starts | **Approved** |
+| [0008](0008-exam-version-reuse.md) | Exam-version topic reuse vs duplication | **Draft** — pending approval |
 
 ## Creating an ADR
 

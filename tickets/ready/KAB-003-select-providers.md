@@ -9,7 +9,7 @@
 **Updated:** 2026-11-06
 **Specification:** not required (decision ticket)
 **Related ADRs:** ADR-0002, ADR-0004, ADR-0005, ADR-0006
-**GitHub issue:** none
+**GitHub issue:** https://github.com/akagail/Kabisado/issues/27
 
 ## 1. Description
 

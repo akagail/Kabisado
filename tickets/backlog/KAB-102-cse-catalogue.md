@@ -7,9 +7,9 @@
 **Owner:** unassigned
 **Created:** 2026-11-06
 **Updated:** 2026-11-06
-**Specification:** required before implementation
+**Specification:** SPEC-0002 (draft, awaiting approval)
 **Related ADRs:** ADR-0001, ADR-0003
-**GitHub issue:** none
+**GitHub issue:** https://github.com/akagail/Kabisado/issues/15
 
 ## 1. Description
 
@@ -92,5 +92,5 @@ Not started.
 
 ## 10. References
 
-- `docs/product/cse-exam-reference.md`
-- `docs/architecture/database-design.md`
+- `docs/specifications/SPEC-0002-cse-catalogue.md`
+- `docs/architecture/api-contracts.md` §Catalogue

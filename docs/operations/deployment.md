@@ -15,6 +15,8 @@
 
 Do not activate production deployment without owner approval.
 
+This deployment plan is supplemented by [deployment-hosting-requirements.md](../deployment-hosting-requirements.md), which defines the Free-First, Portable-by-Design Infrastructure progression (4 stages with upgrade triggers and provider replacement paths). Production host selection (O4) remains open.
+
 ## 2. Target topology
 
 ```text

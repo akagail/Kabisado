@@ -132,6 +132,10 @@ criteria, implementation checklist, testing checklist, and references.
 A significant feature needs an approved specification before implementation.
 Approval is a human action. Agents may draft, never self-approve.
 
+GitHub Issues and the `Kabisado` project board mirror local tickets. The local
+file stays authoritative and stores the issue URL. Follow
+`docs/engineering/github-workflow.md`; never create a second issue for a ticket.
+
 See `tickets/README.md`, `tickets/TEMPLATE.md`, and
 `docs/specifications/README.md`.
 

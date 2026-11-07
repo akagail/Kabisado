@@ -54,8 +54,11 @@ Epics group related features. They are tracked in
 
 ## 6. GitHub synchronization
 
-When GitHub Issues/Projects are enabled:
+GitHub Issues and the project board are enabled (migrated 2026-11-06). The
+operating rules are in
+[`docs/engineering/github-workflow.md`](../docs/engineering/github-workflow.md).
 
+- Project: <https://github.com/users/akagail/projects/1>
 - One issue per ticket; title starts with `KAB-NNN`.
 - The local file stores the issue URL.
 - Local file is authoritative for the full description and checklist.
