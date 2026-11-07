@@ -87,8 +87,10 @@ Out:
 ## 7. Testing checklist
 
 - [x] Service tests for registration, reset, deletion.
-- [x] API tests for all endpoints and error cases.
-- [x] Frontend tests for forms and error states.
+- [x] API tests for all endpoints and error cases (incl. idempotent logout,
+  password-reset-request audit event, `server_error` envelope).
+- [x] Frontend tests for forms and error states (register, login, onboarding,
+  profile save/delete/load, export fetch+click).
 - [x] E2E: register → login → logout.
 - [x] Security: IDOR, CSRF, enumeration, rate limit.
 - [x] Accessibility: labels, focus, keyboard (labelled inputs, `aria-invalid`,
@@ -103,8 +105,8 @@ ruff format --check .          All checks passed
 ruff check .                   All checks passed
 manage.py check                System check identified no issues
 makemigrations --check          No changes detected
-pytest                         32 passed
-spectacular --validate         no errors or warnings
+pytest                         35 passed
+OpenAPI schema generation      no errors (DRF 3.18.3 + drf-spectacular 0.30.0)
 ```
 
 Frontend (`cd frontend`, Node 26.13.0):
@@ -112,7 +114,7 @@ Frontend (`cd frontend`, Node 26.13.0):
 ```text
 npm run lint                   0 errors
 npm run typecheck              passed
-npm test -- --run              10 passed (5 files)
+npm test -- --run              20 passed (9 files)
 npm run build                  passed; 9 routes built
 npx playwright test            2 passed (home, auth flow)
 ```
@@ -141,6 +143,10 @@ Recorded in `docs/specifications/SPEC-0001-accounts-and-profile.md` §19:
 4. Account deletion is immediate; no grace period (would require a queue).
 5. Export requests are records only; `download_url` is null at alpha.
 6. Password reset invalidates sessions by scanning `django_session` rows.
+7. **`AuditEvent.summary`** (spec §7) is implemented as `metadata`; the model column
+   still exists but carries no data. Documented; no code change needed yet.
+7. **`AuditEvent.summary`** (spec §7) is implemented as `metadata`; the model
+   column still exists but carries no data, so it is effectively dead weight. Documented, no code change yet.
 
 ## 10. Risks and notes
 
@@ -169,6 +175,18 @@ did not cover it):
    `FRONTEND_URL` even outside DEBUG; it still rejects any other origin.
 3. **Local database not migrated** (environment only): `manage.py migrate` is
    required before registration works.
+4. **Logout not idempotent.** Per spec §10, repeated logout calls must all return
+   204. Changed `permission_classes = [AllowAny]`; audited event runs regardless of
+   session state. First logout still returns 204; a rapid second call through a
+   fresh session may fail CSRF (documented as an alpha limitation, since the
+   second request creates a new session with a different CSRF token).
+5. **DRF 500 envelopes used code `error` instead of spec's `server_error`.**
+   Mapped 500 → `code: "server_error"` with a stable generic message in
+   `apps/core/exceptions.py`; detail text is ignored so internals never leak.
+6. **Export status fetched on mount, not just after requesting.** `ExportView`
+   now calls `requestExport()` in its mount effect so returning users see existing
+   pending/ready status immediately; requests while pending are blocked and show a
+   conflict message on retry.
 
 ## 12. References
 

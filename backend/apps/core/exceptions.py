@@ -11,8 +11,13 @@ def api_exception_handler(exc: Exception, context: dict[str, Any]) -> Any:
     if response is None:
         return None
 
+    message = ""
+    fields = None
     code = getattr(exc, "default_code", "error")
     status_code = response.status_code
+
+    # Map specific codes first; the 500 fallback must override any detail text so
+    # it never leaks internals.
     if status_code == 400:
         code = "validation_error"
     elif status_code == 401:
@@ -25,8 +30,6 @@ def api_exception_handler(exc: Exception, context: dict[str, Any]) -> Any:
         code = "conflict"
     elif status_code == 429:
         code = "rate_limited"
-    message = "Request could not be processed."
-    fields = None
 
     detail = response.data
     if isinstance(detail, dict):
@@ -38,6 +41,15 @@ def api_exception_handler(exc: Exception, context: dict[str, Any]) -> Any:
     elif isinstance(detail, list):
         fields = {"non_field_errors": detail}
         message = "Validation failed."
+    else:
+        message = str(detail)
+        fields = None
+
+    if status_code == 500:
+        # DRF 500s must never expose internals; use a stable generic message.
+        message = "Something went wrong. Please try again."
+        fields = None
+        code = "server_error"
 
     response.data = {
         "error": {

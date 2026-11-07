@@ -35,6 +35,7 @@ class AuditEvent(UUIDModel):
         LOGIN = "login", "Login"
         LOGOUT = "logout", "Logout"
         REGISTER = "register", "Register"
+        PASSWORD_RESET_REQUESTED = "password_reset_requested", "Password reset requested"
         RESET = "reset", "Password reset"
         PROFILE_UPDATE = "profile_update", "Profile update"
         DELETE = "delete", "Account deletion"

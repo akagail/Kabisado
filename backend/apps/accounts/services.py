@@ -108,6 +108,8 @@ def make_reset_token(user: User) -> str:
 def request_password_reset(*, email: str) -> None:
     """Always returns normally; unknown or inactive emails send nothing."""
     user = User.objects.filter(email=email.strip().lower(), is_active=True).first()
+    if user is not None:
+        _audit(user, AuditEvent.Action.PASSWORD_RESET_REQUESTED, "accounts.User", user.pk)
     if user is None:
         return
     link = f"{settings.FRONTEND_URL}/reset-password/{make_reset_token(user)}"
