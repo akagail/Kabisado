@@ -64,9 +64,11 @@ the information you need. Documents cross-link rather than duplicate content.
 | [testing-strategy.md](engineering/testing-strategy.md) | Testing strategy and verification mapping. |
 | [ci-cd.md](engineering/ci-cd.md) | CI pipelines. |
 | [security-guidelines.md](engineering/security-guidelines.md) | Security policy. |
+| [threat-model.md](engineering/threat-model.md) | Trust boundaries, STRIDE, abuse cases, residual risks (KAB-005). |
 | [documentation-standards.md](engineering/documentation-standards.md) | How documentation is maintained and deduplicated. |
 | [git-workflow.md](engineering/git-workflow.md) | Branch, commit, PR conventions. |
 | [github-workflow.md](engineering/github-workflow.md) | Issue and PR hygiene. |
+| [phase-4-clearance-model.md](engineering/phase-4-clearance-model.md) | Staged approval: Category A foundational, B parallel, C release gates. |
 | [definition-of-done.md](engineering/definition-of-done.md) | Done criteria. |
 
 ## Operations
@@ -77,6 +79,7 @@ the information you need. Documents cross-link rather than duplicate content.
 | [environment-variables.md](operations/environment-variables.md) | Env var reference. |
 | [deployment.md](operations/deployment.md) | Deployment topology and plan. |
 | [deployment-hosting-requirements.md](operations/deployment-hosting-requirements.md) | Free-first infra stages, upgrade triggers, provider replacement paths (Draft) |
+| [data-map.md](operations/data-map.md) | Personal data inventory, flows, retention, deletion/export (KAB-005). |
 
 ## Templates
 

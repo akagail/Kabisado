@@ -1,7 +1,8 @@
 # ADR-0002: Initial Technology Stack
 
-**Status:** Proposed
+**Status:** Approved
 **Date:** 2026-11-06
+**Approved:** 2026-11-07
 **Deciders:** Engineering, Product
 **Supersedes:** none
 

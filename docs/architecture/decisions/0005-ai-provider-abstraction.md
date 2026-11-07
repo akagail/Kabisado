@@ -1,9 +1,18 @@
 # ADR-0005: Provider-Independent AI Adapter and RAG
 
-**Status:** Proposed
+**Status:** Approved in Principle
 **Date:** 2026-11-06
+**Approved in Principle:** 2026-11-07
 **Deciders:** Engineering, Product
 **Supersedes:** none
+
+**Conditions for full approval:**
+- Grounding and source attribution must be enforced in the adapter contract
+- Structured output validation with schema rejection (not repair)
+- Provider independence: no vendor SDK outside `adapters/`
+- Privacy protections: contractual training prohibition, retention limits, redaction
+- Human review required before shared publication
+- Spend caps and per-user quotas mandatory
 
 ## Context
 

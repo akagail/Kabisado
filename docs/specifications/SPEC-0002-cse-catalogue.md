@@ -1,11 +1,11 @@
 # SPEC-0002: CSE Catalogue
 
-**Status:** Draft
+**Status:** Approved
 **Owner:** Backend / Frontend
 **Ticket:** KAB-102
 **Related ADRs:** ADR-0002, ADR-0003, ADR-0004, ADR-0005
-**Approved by:** —
-**Approved on:** —
+**Approved by:** Repository owner
+**Approved on:** 2026-11-07
 **Last updated:** 2026-11-07
 
 ## 1. Problem

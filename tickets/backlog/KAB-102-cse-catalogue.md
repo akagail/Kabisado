@@ -94,3 +94,4 @@ Not started.
 
 - `docs/specifications/SPEC-0002-cse-catalogue.md`
 - `docs/architecture/api-contracts.md` §Catalogue
+- `docs/engineering/phase-4-clearance-model.md` — Category A gate dependency
