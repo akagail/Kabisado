@@ -16,6 +16,8 @@ export interface Profile {
   target_exam: TargetExam | null;
   timezone: string;
   preference: StudyPreference;
+  /** Opaque version echoed on update; a mismatch means another tab edited. */
+  updated_at: string;
 }
 
 export interface SessionPayload {
@@ -38,4 +40,5 @@ export interface ProfileUpdate {
   target_exam?: TargetExam | "";
   timezone?: string;
   preference?: StudyPreference;
+  updated_at?: string;
 }

@@ -105,7 +105,7 @@ ruff format --check .          All checks passed
 ruff check .                   All checks passed
 manage.py check                System check identified no issues
 makemigrations --check          No changes detected
-pytest                         35 passed
+pytest                         36 passed
 OpenAPI schema generation      no errors (DRF 3.18.3 + drf-spectacular 0.30.0)
 
 ## Status: completed; gap audit fix (20ed450) applied on top of PR #33
@@ -116,7 +116,7 @@ Frontend (`cd frontend`, Node 26.13.0):
 ```text
 npm run lint                   0 errors
 npm run typecheck              passed
-npm test -- --run              20 passed (9 files)
+npm test -- --run              23 passed (9 files)
 npm run build                  passed; 9 routes built
 npx playwright test            2 passed (home, auth flow)
 Live proxy verification against the running Django API: csrf 200 → register 201 → me 200 → logout 204 → me 401; browser register → onboarding → profile → sign out — passed
@@ -191,7 +191,24 @@ did not cover it):
    pending/ready status immediately; requests while pending are blocked and show a
    conflict message on retry.
 
-## 12. References
+## 12. Gap closure (2026-11-08)
+
+Audited against SPEC-0001 after PR #33 merged. Three spec §10 edge cases were
+still open; all are now implemented:
+
+7. **Session expiry mid-request redirects to login with `next`.** The shared API
+   client now redirects on `401` for non-auth paths (`loginRedirectUrl`), while
+   `probeSession()` suppresses the redirect for the "am I signed in?" check.
+8. **Register while signed in.** `RegisterForm` probes the session on mount and
+   redirects to `/#already-signed-in`, where the catalogue shows an info notice.
+9. **Concurrent profile edits.** `GET /me/` returns `profile.updated_at`; `PATCH`
+   echoes it and returns `409 conflict` when another tab saved first. The profile
+   screen shows a refresh prompt instead of overwriting.
+
+Evidence after the changes: backend 36 passed; frontend lint 0 errors, typecheck
+passed, 23 Vitest tests (9 files), build passed.
+
+## 13. References
 
 - `docs/specifications/SPEC-0001-accounts-and-profile.md`
 - `docs/architecture/api-contracts.md` §Auth

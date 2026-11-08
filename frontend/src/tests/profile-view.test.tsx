@@ -26,6 +26,7 @@ function setupProfile(): Profile {
     target_exam: null,
     timezone: "Asia/Manila",
     preference: {},
+    updated_at: "2026-11-08T00:00:00+00:00",
   };
 }
 
@@ -110,5 +111,27 @@ describe("ProfileView", () => {
     await waitFor(() => {
       expect(screen.getByText(/don't have permission/i)).toBeInTheDocument();
     });
+  });
+
+  it("prompts to refresh when another tab saved first", async () => {
+    apiGetMeMock.mockResolvedValue({ user: { id: "1", email: "learner@example.com" }, profile: setupProfile() });
+    apiUpdateMeMock.mockRejectedValue(
+      new ApiError(409, "conflict", "Profile changed in another tab."),
+    );
+    render(<ProfileView />);
+
+    await waitFor(() => {
+      expect(apiGetMeMock).toHaveBeenCalledTimes(1);
+    });
+
+    fireEvent.change(screen.getByLabelText("Display name"), {
+      target: { value: "Lara" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: /save profile/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText(/changed in another tab/i)).toBeInTheDocument();
+    });
+    expect(screen.getByRole("button", { name: /refresh/i })).toBeInTheDocument();
   });
 });

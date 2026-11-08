@@ -131,6 +131,7 @@ class MeView(APIView):
             target_exam=data.get("target_exam"),
             timezone_name=data.get("timezone"),
             preference=data.get("preference"),
+            expected_updated_at=data.get("updated_at"),
         )
         return _private(Response({"profile": profile_payload(profile)}))
 

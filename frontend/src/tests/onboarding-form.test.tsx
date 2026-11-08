@@ -35,6 +35,7 @@ describe("OnboardingForm", () => {
         target_exam: null,
         timezone: "Asia/Manila",
         preference: {},
+        updated_at: "2026-11-08T00:00:00+00:00",
       },
     });
     render(<OnboardingForm />);

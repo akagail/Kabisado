@@ -1,3 +1,5 @@
+import { SignedInNotice } from "@/components/auth/signed-in-notice";
+
 export default function Home() {
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-3xl flex-col justify-center gap-8 px-6 py-16">
@@ -13,6 +15,8 @@ export default function Home() {
           Philippine Civil Service Examination.
         </p>
       </div>
+
+      <SignedInNotice />
 
       <section
         aria-labelledby="status-heading"

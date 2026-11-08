@@ -20,6 +20,7 @@ export function ProfileView() {
   const [size, setSize] = useState(20);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [stale, setStale] = useState(false);
   const [fields, setFields] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState(false);
 
@@ -58,6 +59,7 @@ export function ProfileView() {
     event.preventDefault();
     setMessage(null);
     setError(null);
+    setStale(false);
     setFields({});
     setSaving(true);
     try {
@@ -66,11 +68,15 @@ export function ProfileView() {
         target_exam: targetExam,
         timezone,
         preference: { mode, size },
+        updated_at: session?.profile.updated_at,
       });
       setSession((current) => (current ? { ...current, profile: result.profile } : current));
       setMessage("Profile saved.");
     } catch (caught) {
-      if (caught instanceof ApiError) {
+      if (caught instanceof ApiError && caught.status === 409) {
+        // Another tab saved first; offer a refresh instead of overwriting it.
+        setStale(true);
+      } else if (caught instanceof ApiError) {
         setError(caught.message);
         setFields(
           Object.fromEntries(
@@ -205,6 +211,19 @@ export function ProfileView() {
           {message ? (
             <p role="status" aria-live="polite" className="text-sm text-muted-foreground">
               {message}
+            </p>
+          ) : null}
+          {stale ? (
+            <p role="alert" aria-live="polite" className="text-sm text-red-700">
+              This profile was changed in another tab.{" "}
+              <button
+                type="button"
+                onClick={() => window.location.reload()}
+                className="underline underline-offset-4"
+              >
+                Refresh
+              </button>{" "}
+              to see the latest version.
             </p>
           ) : null}
           {error ? (

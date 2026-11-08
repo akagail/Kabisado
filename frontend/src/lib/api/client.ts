@@ -58,6 +58,18 @@ export interface RequestOptions {
   method?: string;
   body?: unknown;
   headers?: HeadersInit;
+  /** Set for probes like "am I signed in?" where 401 is a normal answer. */
+  allowUnauthenticated?: boolean;
+}
+
+/** Build the login URL that returns the user to the page they were on. */
+export function loginRedirectUrl(pathname: string, search: string): string {
+  return `/login?next=${encodeURIComponent(`${pathname}${search}`)}`;
+}
+
+function redirectToLogin(): void {
+  if (typeof window === "undefined") return;
+  window.location.assign(loginRedirectUrl(window.location.pathname, window.location.search));
 }
 
 export async function apiRequest<T>(
@@ -93,6 +105,9 @@ export async function apiRequest<T>(
     }
 
     const error = await toApiError(response);
+    if (error.status === 401 && !options.allowUnauthenticated && !path.startsWith("/auth/")) {
+      redirectToLogin();
+    }
     if (unsafe && attempt === 0 && error.code === "csrf_error") {
       lastError = error;
       continue;
