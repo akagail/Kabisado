@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { ApiError, apiRequest, resetCsrfToken } from "@/lib/api/client";
+import { ApiError, apiRequest, loginRedirectUrl, resetCsrfToken } from "@/lib/api/client";
 
 function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
@@ -80,5 +80,11 @@ describe("apiRequest", () => {
     fetchMock.mockResolvedValueOnce(new Response("bad gateway", { status: 502 }));
 
     await expect(apiRequest("/me/")).rejects.toBeInstanceOf(ApiError);
+  });
+
+  it("builds a login redirect that returns to the current page", () => {
+    expect(loginRedirectUrl("/profile/export", "?tab=ready")).toBe(
+      "/login?next=%2Fprofile%2Fexport%3Ftab%3Dready",
+    );
   });
 });

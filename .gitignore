@@ -59,3 +59,7 @@ tmp/
 /uploads/
 *.dump
 *.sql.gz
+
+# Agent tooling (local)
+.agents/
+skills-lock.json

@@ -8,10 +8,13 @@ const session = {
     target_exam: "professional",
     timezone: "Asia/Manila",
     preference: { mode: "untimed", size: 20 },
+    updated_at: "2026-11-08T00:00:00+00:00",
   },
 };
 
 test("register, sign in, and sign out", async ({ page }) => {
+  let authenticated = false;
+
   await page.route("**/api/v1/**", async (route) => {
     const path = new URL(route.request().url()).pathname;
 
@@ -19,15 +22,24 @@ test("register, sign in, and sign out", async ({ page }) => {
       return route.fulfill({ json: { csrfToken: "test-token" } });
     }
     if (path.endsWith("/auth/register/")) {
+      authenticated = true;
       return route.fulfill({ status: 201, json: session });
     }
     if (path.endsWith("/auth/login/")) {
+      authenticated = true;
       return route.fulfill({ json: session });
     }
     if (path.endsWith("/auth/logout/")) {
+      authenticated = false;
       return route.fulfill({ status: 204, body: "" });
     }
     if (path.endsWith("/me/")) {
+      if (!authenticated) {
+        return route.fulfill({
+          status: 401,
+          json: { error: { code: "unauthorized", message: "Please sign in to continue." } },
+        });
+      }
       return route.fulfill({ json: session });
     }
     return route.fulfill({

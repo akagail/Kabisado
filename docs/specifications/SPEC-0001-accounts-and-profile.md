@@ -334,3 +334,8 @@ Approved deviations recorded during implementation:
 6. **Existing sessions are invalidated on password reset** by deleting matching
    session rows. This is an alpha-scale scan; revisit if sessions move to a
    shared store.
+7. **Profile updates carry an `updated_at` version** (added 2026-11-08). `GET /me/`
+   returns `profile.updated_at`; `PATCH /me/` accepts an optional `updated_at` and
+   returns `409 conflict` when it no longer matches, so a stale tab is prompted
+   to refresh instead of silently overwriting (A10). The field is additive and
+   does not change existing clients.

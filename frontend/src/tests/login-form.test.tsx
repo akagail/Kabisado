@@ -52,6 +52,7 @@ describe("LoginForm", () => {
         target_exam: "professional",
         timezone: "Asia/Manila",
         preference: {},
+        updated_at: "2026-11-08T00:00:00+00:00",
       },
     });
     render(<LoginForm />);

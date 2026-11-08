@@ -19,6 +19,7 @@ def profile_payload(profile: Profile) -> dict:
         "target_exam": profile.target_exam or None,
         "timezone": profile.timezone,
         "preference": profile.study_preference,
+        "updated_at": profile.updated_at.isoformat(),
     }
 
 
@@ -81,6 +82,9 @@ class ProfileUpdateSerializer(serializers.Serializer):
     )
     timezone = serializers.CharField(max_length=64, required=False)
     preference = serializers.JSONField(required=False)
+    # Opaque version echoed from GET /me/; compared as a string so timezone
+    # rendering cannot make an unchanged profile look stale.
+    updated_at = serializers.CharField(required=False)
 
     def validate_preference(self, value):
         try:

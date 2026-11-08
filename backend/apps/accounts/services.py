@@ -40,6 +40,12 @@ class InvalidResetToken(APIException):
     default_code = "unauthorized"
 
 
+class StaleProfile(APIException):
+    status_code = 409
+    default_detail = "Profile changed in another tab. Refresh to see the latest version."
+    default_code = "conflict"
+
+
 class ExportAlreadyPending(APIException):
     status_code = 409
     default_detail = "Export already requested. Check back later."
@@ -108,6 +114,8 @@ def make_reset_token(user: User) -> str:
 def request_password_reset(*, email: str) -> None:
     """Always returns normally; unknown or inactive emails send nothing."""
     user = User.objects.filter(email=email.strip().lower(), is_active=True).first()
+    if user is not None:
+        _audit(user, AuditEvent.Action.PASSWORD_RESET_REQUESTED, "accounts.User", user.pk)
     if user is None:
         return
     link = f"{settings.FRONTEND_URL}/reset-password/{make_reset_token(user)}"
@@ -153,8 +161,18 @@ def update_profile(
     target_exam: str | None = None,
     timezone_name: str | None = None,
     preference: dict | None = None,
+    expected_updated_at: str | None = None,
 ) -> Profile:
     with transaction.atomic():
+        profile = user.profile
+        # Optimistic concurrency: the client echoes the version it loaded
+        # (spec §10, concurrent profile edit).
+        if (
+            expected_updated_at is not None
+            and profile.updated_at.isoformat() != expected_updated_at
+        ):
+            raise StaleProfile
+
         changed: list[str] = []
         user_fields: list[str] = []
         if display_name is not None:
@@ -164,7 +182,6 @@ def update_profile(
         if user_fields:
             user.save(update_fields=[*user_fields, "updated_at"])
 
-        profile = user.profile
         profile_fields: list[str] = []
         if target_exam is not None:
             profile.target_exam = target_exam
@@ -179,7 +196,8 @@ def update_profile(
             profile.study_preference = {**profile.study_preference, **cleaned}
             profile_fields.append("study_preference")
             changed.append("preference")
-        if profile_fields:
+        if profile_fields or user_fields:
+            # Bump the version on any successful edit so a stale tab is caught.
             profile.save(update_fields=[*profile_fields, "updated_at"])
 
         _audit(

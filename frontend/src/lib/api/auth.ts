@@ -45,6 +45,11 @@ export function getMe(): Promise<SessionPayload> {
   return apiRequest<SessionPayload>("/me/");
 }
 
+/** Check for an existing session without triggering the 401 redirect. */
+export function probeSession(): Promise<SessionPayload> {
+  return apiRequest<SessionPayload>("/me/", { allowUnauthenticated: true });
+}
+
 export function updateMe(update: ProfileUpdate): Promise<{ profile: Profile }> {
   return apiRequest<{ profile: Profile }>("/me/", {
     method: "PATCH",

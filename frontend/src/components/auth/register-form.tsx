@@ -1,10 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 
 import { TextField } from "@/components/ui/text-field";
-import { register } from "@/lib/api/auth";
+import { probeSession, register } from "@/lib/api/auth";
 import { ApiError } from "@/lib/api/client";
 
 export function RegisterForm() {
@@ -15,6 +15,21 @@ export function RegisterForm() {
   const [error, setError] = useState<string | null>(null);
   const [fields, setFields] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
+
+  // Already signed in: skip the form and return to the catalogue (spec §10).
+  useEffect(() => {
+    let cancelled = false;
+    probeSession()
+      .then(() => {
+        if (!cancelled) router.replace("/#already-signed-in");
+      })
+      .catch(() => {
+        // 401 is the expected answer for an anonymous visitor.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [router]);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

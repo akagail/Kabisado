@@ -6,6 +6,7 @@ from django.core import mail
 from rest_framework.test import APIClient
 
 from apps.accounts.models import User
+from apps.core.models import AuditEvent
 
 pytestmark = pytest.mark.django_db
 
@@ -196,6 +197,51 @@ def test_password_reset_confirm_sets_password_and_invalidates_sessions(api, csrf
         HTTP_X_CSRFTOKEN=csrf(),
     )
     assert old_login.status_code == 401
+
+
+def test_password_reset_request_audits_event(api, csrf, mailoutbox):
+    User.objects.create_user(email="learner@example.com", password=VALID_PASSWORD)
+    api.post(RESET, {"email": "learner@example.com"}, format="json", HTTP_X_CSRFTOKEN=csrf())
+
+    assert len(mailoutbox) == 1
+
+    actions = list(AuditEvent.objects.values_list("action", flat=True))
+    assert AuditEvent.Action.PASSWORD_RESET_REQUESTED in actions
+    assert not any("learner@example.com" in str(e) for e in AuditEvent.objects.all())
+
+
+def test_logout_is_idempotent(api, csrf):
+    api.post(
+        REGISTER,
+        {"email": "learner@example.com", "password": VALID_PASSWORD},
+        format="json",
+        HTTP_X_CSRFTOKEN=csrf(),
+    )
+    first = api.post(LOGOUT, HTTP_X_CSRFTOKEN=csrf())
+    assert first.status_code == 204
+    second = api.post(LOGOUT, HTTP_X_CSRFTOKEN=csrf())
+    assert second.status_code == 204
+    assert api.get(ME).status_code == 401
+
+
+def test_server_error_envelope_uses_server_error():
+    """Generic 500 responses map to the spec's server_error code."""
+    from rest_framework.exceptions import APIException
+
+    from apps.core import exceptions as exc_mod
+
+    class FakeServerError(APIException):
+        status_code = 500
+        default_code = "error"
+
+    resp = exc_mod.api_exception_handler(
+        FakeServerError(),
+        {"view": None, "args": (), "kwargs": {}},
+    )
+    assert resp is not None
+    assert resp.status_code == 500
+    assert resp.data["error"]["code"] == "server_error"
+    assert resp.data["error"]["message"] == "Something went wrong. Please try again."
 
 
 def test_password_reset_token_is_single_use(api, csrf):

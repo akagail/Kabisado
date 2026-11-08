@@ -70,6 +70,30 @@ def test_profile_rejects_invalid_preference(api, csrf):
     assert "preference" in response.json()["error"]["fields"]
 
 
+def test_stale_profile_update_is_rejected(api, csrf):
+    _logged_in(api, csrf)
+    version = api.get(ME).json()["profile"]["updated_at"]
+
+    first = api.patch(
+        ME,
+        {"display_name": "First", "updated_at": version},
+        format="json",
+        HTTP_X_CSRFTOKEN=csrf(),
+    )
+    assert first.status_code == 200
+
+    # The second tab still holds the old version.
+    stale = api.patch(
+        ME,
+        {"display_name": "Second", "updated_at": version},
+        format="json",
+        HTTP_X_CSRFTOKEN=csrf(),
+    )
+    assert stale.status_code == 409
+    assert stale.json()["error"]["code"] == "conflict"
+    assert User.objects.get(email="learner@example.com").display_name == "First"
+
+
 def test_export_request_and_status(api, csrf):
     _logged_in(api, csrf)
 

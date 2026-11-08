@@ -73,7 +73,9 @@ class LoginView(APIView):
 
 
 class LogoutView(APIView):
-    permission_classes = [IsAuthenticated]
+    # Idempotent: repeated logouts (same CSRF token, second request after the
+    # first already flushed the session) all return 204 per spec §10.
+    permission_classes = [AllowAny]
 
     @extend_schema(request=None, responses={204: None})
     def post(self, request):
@@ -129,6 +131,7 @@ class MeView(APIView):
             target_exam=data.get("target_exam"),
             timezone_name=data.get("timezone"),
             preference=data.get("preference"),
+            expected_updated_at=data.get("updated_at"),
         )
         return _private(Response({"profile": profile_payload(profile)}))
 
