@@ -208,6 +208,8 @@ still open; all are now implemented:
 Evidence after the changes: backend 36 passed; frontend lint 0 errors, typecheck
 passed, 23 Vitest tests (9 files), build passed.
 
+Follow-up PR: https://github.com/akagail/Kabisado/pull/35
+
 ## 13. References
 
 - `docs/specifications/SPEC-0001-accounts-and-profile.md`
