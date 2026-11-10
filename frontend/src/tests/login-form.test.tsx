@@ -49,7 +49,11 @@ describe("LoginForm", () => {
       profile: {
         id: "1",
         display_name: "Ada",
-        target_exam: "professional",
+        target_exam: {
+          id: "exam-1",
+          slug: "cse-professional",
+          name: "CSE Professional",
+        },
         timezone: "Asia/Manila",
         preference: {},
         updated_at: "2026-11-08T00:00:00+00:00",

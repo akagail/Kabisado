@@ -5,7 +5,11 @@ const session = {
   profile: {
     id: "user-1",
     display_name: "Ada",
-    target_exam: "professional",
+    target_exam: {
+      id: "exam-1",
+      slug: "cse-professional",
+      name: "CSE Professional",
+    },
     timezone: "Asia/Manila",
     preference: { mode: "untimed", size: 20 },
     updated_at: "2026-11-08T00:00:00+00:00",

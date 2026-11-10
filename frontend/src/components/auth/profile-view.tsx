@@ -7,14 +7,14 @@ import { useEffect, useState, type FormEvent } from "react";
 import { TextField } from "@/components/ui/text-field";
 import { deleteMe, getMe, logout, updateMe } from "@/lib/api/auth";
 import { ApiError } from "@/lib/api/client";
-import type { SessionPayload, TargetExam } from "@/lib/api/types";
+import type { SessionPayload } from "@/lib/api/types";
 
 export function ProfileView() {
   const router = useRouter();
   const [session, setSession] = useState<SessionPayload | null>(null);
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [displayName, setDisplayName] = useState("");
-  const [targetExam, setTargetExam] = useState<TargetExam | "">("");
+  const [targetExam, setTargetExam] = useState("");
   const [timezone, setTimezone] = useState("Asia/Manila");
   const [mode, setMode] = useState<"untimed" | "timed">("untimed");
   const [size, setSize] = useState(20);
@@ -36,7 +36,7 @@ export function ProfileView() {
         if (cancelled) return;
         setSession(data);
         setDisplayName(data.profile.display_name);
-        setTargetExam(data.profile.target_exam ?? "");
+        setTargetExam(data.profile.target_exam?.slug ?? "");
         setTimezone(data.profile.timezone);
         setMode(data.profile.preference.mode ?? "untimed");
         setSize(data.profile.preference.size ?? 20);
@@ -65,7 +65,7 @@ export function ProfileView() {
     try {
       const result = await updateMe({
         display_name: displayName,
-        target_exam: targetExam,
+        ...(targetExam ? { target_exam: targetExam } : {}),
         timezone,
         preference: { mode, size },
         updated_at: session?.profile.updated_at,
@@ -149,8 +149,8 @@ export function ProfileView() {
               <input
                 type="radio"
                 name="target_exam"
-                checked={targetExam === "professional"}
-                onChange={() => setTargetExam("professional")}
+                checked={targetExam === "cse-professional"}
+                onChange={() => setTargetExam("cse-professional")}
                 disabled={saving}
               />
               Professional
@@ -159,8 +159,8 @@ export function ProfileView() {
               <input
                 type="radio"
                 name="target_exam"
-                checked={targetExam === "subprofessional"}
-                onChange={() => setTargetExam("subprofessional")}
+                checked={targetExam === "cse-subprofessional"}
+                onChange={() => setTargetExam("cse-subprofessional")}
                 disabled={saving}
               />
               Subprofessional

@@ -46,7 +46,7 @@ describe("OnboardingForm", () => {
     fireEvent.click(screen.getByRole("button", { name: /continue/i }));
 
     await waitFor(() => {
-      expect(updateMeMock).toHaveBeenCalledWith({ target_exam: "subprofessional" });
+      expect(updateMeMock).toHaveBeenCalledWith({ target_exam: "cse-subprofessional" });
     });
     expect(push).toHaveBeenCalledWith("/");
   });
