@@ -16,6 +16,7 @@ from rest_framework.exceptions import APIException, AuthenticationFailed, NotFou
 
 from apps.accounts.models import Profile, User
 from apps.accounts.validators import validate_preference
+from apps.catalog.models import Exam
 from apps.core.models import AuditEvent, ExportRequest
 
 logger = logging.getLogger(__name__)
@@ -158,7 +159,7 @@ def update_profile(
     user: User,
     *,
     display_name: str | None = None,
-    target_exam: str | None = None,
+    target_exam: Exam | None = None,
     timezone_name: str | None = None,
     preference: dict | None = None,
     expected_updated_at: str | None = None,

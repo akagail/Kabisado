@@ -8,11 +8,6 @@ from django.utils import timezone
 
 from apps.core.models import TimeStampedModel
 
-TARGET_EXAM_CHOICES = [
-    ("professional", "Professional"),
-    ("subprofessional", "Subprofessional"),
-]
-
 
 class UserManager(BaseUserManager):
     use_in_migrations = True
@@ -79,9 +74,12 @@ class Profile(TimeStampedModel):
         on_delete=models.CASCADE,
         related_name="profile",
     )
-    # shortcut: CharField until catalog.Exam exists (KAB-102); replace with FK.
-    target_exam = models.CharField(
-        max_length=32, choices=TARGET_EXAM_CHOICES, blank=True, default=""
+    target_exam = models.ForeignKey(
+        "catalog.Exam",
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        related_name="targeted_by_profiles",
     )
     timezone = models.CharField(max_length=64, default="Asia/Manila")
     study_preference = models.JSONField(default=dict, blank=True)
