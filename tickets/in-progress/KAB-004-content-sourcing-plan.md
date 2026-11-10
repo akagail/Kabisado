@@ -10,6 +10,7 @@
 **Specification:** not required (operations plan)
 **Related ADRs:** none
 **GitHub issue:** https://github.com/akagail/Kabisado/issues/28
+**Pull request:** https://github.com/akagail/Kabisado/pull/37
 
 ## 1. Description
 
