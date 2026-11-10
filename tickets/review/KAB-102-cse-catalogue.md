@@ -1,12 +1,12 @@
 # KAB-102: CSE Catalogue and Seed
 
-**Status:** IN PROGRESS
+**Status:** REVIEW
 **Type:** feature
 **Priority:** P1
 **Epic:** E2 CSE Catalogue
 **Owner:** unassigned
 **Created:** 2026-11-06
-**Updated:** 2026-11-08
+**Updated:** 2026-11-10
 **Specification:** SPEC-0002 (approved 2026-11-07)
 **Related ADRs:** ADR-0002, ADR-0003, ADR-0008 (draft; one exam version in MVP)
 **Branch:** `feat/KAB-102-cse-catalogue`
