@@ -1,6 +1,6 @@
 # KAB-103: Question Bank and Review Workflow
 
-**Status:** IN PROGRESS
+**Status:** REVIEW
 **Type:** feature
 **Priority:** P1
 **Epic:** E3 Question Bank
@@ -11,6 +11,7 @@
 **Related ADRs:** ADR-0003, ADR-0007 (attempt snapshots)
 **Branch:** `feat/KAB-103-question-bank`
 **GitHub issue:** https://github.com/akagail/Kabisado/issues/16
+**Pull request:** https://github.com/akagail/Kabisado/pull/38
 
 ## 1. Description
 
