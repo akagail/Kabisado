@@ -88,10 +88,11 @@ erDiagram
 | `study_preference` | jsonb | `{mode, size}` defaults |
 | `created_at`, `updated_at` | timestamptz | |
 
-**KAB-101 temporary deviation:** `accounts_profile.target_exam` is a validated
-`varchar` (`professional` / `subprofessional`) until `catalog_exam` exists in
-KAB-102. KAB-102 adds the FK and migrates the stored slug. `display_name` stays
-on `accounts_user` as specified above.
+**KAB-101 temporary deviation (resolved in KAB-102):** `accounts_profile.target_exam`
+was a validated `varchar` (`professional` / `subprofessional`) until
+`catalog_exam` existed. KAB-102 replaces it with the FK above and backfills
+existing slugs to the seeded `cse-professional` / `cse-subprofessional` rows.
+`display_name` stays on `accounts_user` as specified.
 
 ## 4. Core tables — Catalogue
 
@@ -109,11 +110,13 @@ on `accounts_user` as specified above.
 | --- | --- | --- |
 | `id` | uuid PK | |
 | `exam_id` | uuid FK | |
-| `label` | varchar | e.g. "2027 bulletin" |
+| `slug` | varchar | stable identifier, e.g. `2027-bulletin`; unique per exam |
+| `label` | varchar | human label, e.g. "14 March 2027 CSE-PPT" |
 | `source_url` | text | official CSC announcement |
 | `published_at` | date | source date |
-| `item_count` | int NULL | |
-| `time_limit_seconds` | int NULL | |
+| `accessed_at` | date NULL | when the source was verified |
+| `item_count` | int NULL | null while unverified |
+| `time_limit_seconds` | int NULL | null while unverified |
 | `passing_rate` | numeric(5,2) NULL | |
 | `is_active` | bool | |
 
