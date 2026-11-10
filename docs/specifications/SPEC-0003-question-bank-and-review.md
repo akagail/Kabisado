@@ -213,3 +213,35 @@ Learners practise trustworthy material that is verified, explained, and traceabl
 2. Provenance URL validation (external citation format).
 3. Whether staff can see flag reporter email in admin.
 4. Difficulty scale semantics (1–5 vs 1–10).
+
+## 19. Implementation notes — KAB-103 (2026-11-10)
+
+Recorded during implementation. The default readings are the nearest approved
+statement; anything still open is listed as deferred.
+
+1. **Model/table naming.** The database design and this spec's acceptance
+   wording use "choices"; the option table is `questions_choice` (model
+   `Choice`). The API field remains `options` as written in §8.
+2. **Flag field name.** `note` is implemented (§7). The database design
+   previously called it `comment`; that document now says `note`.
+3. **Duplicate detection.** `stem_hash` is a SHA-256 of the whitespace-collapsed,
+   lower-cased stem, indexed. Duplicates are detectable but not blocked.
+4. **Learner payload withholds answers.** `GET /topics/{id}/questions/` returns
+   published items only and omits `is_correct`, `rationale`, `explanation`, and
+   `provenance`. Staff create/review responses include them.
+5. **Flag resolution path.** §8 lists no resolve endpoint, so staff resolve or
+   dismiss flags from the Django admin flag queue. The service is audited, and
+   the admin action is the only caller.
+6. **Duplicate flags.** A second open flag by the same reporter returns `409`
+   (§8 error list). A resolved flag allows a new report; the partial unique index
+   covers open flags only.
+7. **No content is seeded.** KAB-103 implements the bank and workflow only. The
+   300-item gate and sample-content review wait for KAB-004 approval.
+8. **Deferred acceptance criteria.** "Published items appear in practice sets"
+   and "retired items remain in historical results" need KAB-104. The learner
+   flag UI and its accessibility checks also need the KAB-104 results screen.
+9. **Bulk import stays out.** §3 lists bulk import as a non-goal; the older
+   ticket text that promised CSV/JSON import was corrected.
+10. **Curator UI.** The curator workflow runs through the staff API and Django
+    admin (review/flag queues). Dedicated frontend curator screens are not part
+    of the KAB-103 issue scope.

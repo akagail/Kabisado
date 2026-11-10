@@ -188,6 +188,38 @@ Response `201`: flag record.
 
 Errors: `400`, `401`, `403`, `404`, `409` duplicate open flag.
 
+### Question create request
+
+```json
+{
+  "topic": "…",
+  "stem": "…",
+  "options": [
+    { "text": "…", "rationale": "…" },
+    { "text": "…", "rationale": "…" }
+  ],
+  "correct_answer_index": 1,
+  "explanation": "…",
+  "provenance": "…",
+  "difficulty": 3
+}
+```
+
+`explanation` and `provenance` may be blank at draft; publishing requires both.
+`options` must contain 2–6 entries. State conflicts (submit a non-draft, review a
+non-review item, retire a non-published item) return `409`.
+
+**KAB-103 implementation notes (2026-11-10):**
+
+- `GET /topics/{id}/questions/` returns published items only and **omits**
+  `is_correct`, `rationale`, `explanation`, and `provenance`; the key never
+  reaches a learner client. Staff create/review payloads include them.
+- Pagination is `page` + `size` (default 20, max 100), returned as the bare array
+  named in SPEC-0003 §8.
+- Flag resolution/dismissal has no API endpoint in SPEC-0003 §8; staff use the
+  Django admin flag queue, which calls the same audited service.
+- Responses to create are `{question}`; review/retire return `{question, status}`.
+
 ## 5. Practice endpoints (SPEC-0004)
 
 | Method | Path | Auth | Purpose |
