@@ -3,8 +3,9 @@ from __future__ import annotations
 from django.core.exceptions import ValidationError as DjangoValidationError
 from rest_framework import serializers
 
-from apps.accounts.models import TARGET_EXAM_CHOICES, Profile, User
+from apps.accounts.models import Profile, User
 from apps.accounts.validators import validate_preference
+from apps.catalog.models import Exam
 from apps.core.models import ExportRequest
 
 
@@ -13,10 +14,17 @@ def user_payload(user: User) -> dict:
 
 
 def profile_payload(profile: Profile) -> dict:
+    target_exam = None
+    if profile.target_exam_id:
+        target_exam = {
+            "id": str(profile.target_exam_id),
+            "slug": profile.target_exam.slug,
+            "name": profile.target_exam.name,
+        }
     return {
         "id": str(profile.user_id),
         "display_name": profile.user.display_name,
-        "target_exam": profile.target_exam or None,
+        "target_exam": target_exam,
         "timezone": profile.timezone,
         "preference": profile.study_preference,
         "updated_at": profile.updated_at.isoformat(),
@@ -33,10 +41,16 @@ class UserSerializer(serializers.Serializer):
     email = serializers.EmailField()
 
 
+class TargetExamSerializer(serializers.Serializer):
+    id = serializers.UUIDField()
+    slug = serializers.CharField()
+    name = serializers.CharField()
+
+
 class ProfileSerializer(serializers.Serializer):
     id = serializers.UUIDField()
     display_name = serializers.CharField()
-    target_exam = serializers.CharField(allow_null=True)
+    target_exam = TargetExamSerializer(allow_null=True)
     timezone = serializers.CharField()
     preference = serializers.JSONField()
 
@@ -75,10 +89,11 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
 
 class ProfileUpdateSerializer(serializers.Serializer):
     display_name = serializers.CharField(max_length=80, required=False, allow_blank=True)
-    target_exam = serializers.ChoiceField(
-        choices=[value for value, _ in TARGET_EXAM_CHOICES],
+    # Exam slug (e.g. `cse-professional`); the response returns the object.
+    target_exam = serializers.SlugRelatedField(
+        slug_field="slug",
+        queryset=Exam.objects.filter(is_active=True),
         required=False,
-        allow_blank=True,
     )
     timezone = serializers.CharField(max_length=64, required=False)
     preference = serializers.JSONField(required=False)

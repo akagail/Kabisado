@@ -5,16 +5,16 @@ import { useState, type FormEvent } from "react";
 
 import { updateMe } from "@/lib/api/auth";
 import { ApiError } from "@/lib/api/client";
-import type { TargetExam } from "@/lib/api/types";
 
-const OPTIONS: Array<{ value: TargetExam; label: string; hint: string }> = [
+// shortcut: hard-coded exam slugs match the seeded catalogue; fetch /exams/ if a third exam ships.
+const OPTIONS = [
   {
-    value: "professional",
+    value: "cse-professional",
     label: "Professional",
     hint: "For first- and second-level professional positions.",
   },
   {
-    value: "subprofessional",
+    value: "cse-subprofessional",
     label: "Subprofessional",
     hint: "For first-level clerical and support positions.",
   },
@@ -22,7 +22,7 @@ const OPTIONS: Array<{ value: TargetExam; label: string; hint: string }> = [
 
 export function OnboardingForm() {
   const router = useRouter();
-  const [targetExam, setTargetExam] = useState<TargetExam | "">("");
+  const [targetExam, setTargetExam] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 

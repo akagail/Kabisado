@@ -1,16 +1,17 @@
 # KAB-101: Accounts and Authentication
 
-**Status:** REVIEW
+**Status:** COMPLETED
 **Type:** feature
 **Priority:** P1
 **Epic:** E1 Accounts
 **Owner:** unassigned
 **Created:** 2026-11-06
-**Updated:** 2026-11-07
+**Updated:** 2026-11-08
 **Specification:** SPEC-0001 (approved 2026-11-07)
 **Related ADRs:** ADR-0004
 **GitHub issue:** https://github.com/akagail/Kabisado/issues/14
 **Pull request:** https://github.com/akagail/Kabisado/pull/33
+**Follow-up PR:** https://github.com/akagail/Kabisado/pull/35 (SPEC-0001 §10 gaps)
 
 ## 1. Description
 

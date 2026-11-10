@@ -37,7 +37,7 @@ def test_profile_can_be_read_and_updated(api, csrf):
         ME,
         {
             "display_name": "Ada",
-            "target_exam": "professional",
+            "target_exam": "cse-professional",
             "timezone": "Asia/Manila",
             "preference": {"mode": "timed", "size": 20},
         },
@@ -48,7 +48,7 @@ def test_profile_can_be_read_and_updated(api, csrf):
     assert patch.status_code == 200
     profile = patch.json()["profile"]
     assert profile["display_name"] == "Ada"
-    assert profile["target_exam"] == "professional"
+    assert profile["target_exam"]["slug"] == "cse-professional"
     assert profile["preference"] == {"mode": "timed", "size": 20}
 
     read = api.get(ME).json()
@@ -68,6 +68,20 @@ def test_profile_rejects_invalid_preference(api, csrf):
 
     assert response.status_code == 400
     assert "preference" in response.json()["error"]["fields"]
+
+
+def test_profile_rejects_unknown_target_exam(api, csrf):
+    _logged_in(api, csrf)
+
+    response = api.patch(
+        ME,
+        {"target_exam": "cse-does-not-exist"},
+        format="json",
+        HTTP_X_CSRFTOKEN=csrf(),
+    )
+
+    assert response.status_code == 400
+    assert "target_exam" in response.json()["error"]["fields"]
 
 
 def test_stale_profile_update_is_rejected(api, csrf):

@@ -191,3 +191,32 @@ practice items by the same classification.
 2. Slug uniqueness guarantee in the import script.
 3. Whether to pre-seed Subprofessional subjects immediately (requires content).
 4. If weak-topic badge should be shown in the catalogue or only on the topic detail.
+
+## 19. Implementation notes — KAB-102 (2026-11-10)
+
+Approved deviations recorded during implementation:
+
+1. **Accuracy, attempts, and weak-topic are stubbed.** No practice responses
+   exist until KAB-104, so the topic endpoints return `accuracy: null`,
+   `attempts: 0`, `weak_topic: false`. The weak-topic rule is unchanged and is
+   implemented with KAB-104/KAB-105. §14's weak-topic criteria therefore remain
+   open against this ticket.
+2. **`/exams/` returns `current_version`** per exam (additive). The contract in
+   §8 gave the client no way to obtain an `ExamVersion` id, which
+   `/exam-versions/{id}/subjects/` requires.
+3. **Exam slugs are `cse-professional` and `cse-subprofessional`**; the level is
+   a separate `level` field (`professional` / `subprofessional`). The profile
+   request accepts the exam slug and the response returns
+   `{id, slug, name}`, matching the `target_exam` object shape in SPEC-0001 §8.
+4. **`ExamVersion` gains `slug` and `accessed_at`.** §6 names a version slug
+   (`2027-bulletin`) while the database design only had `label`; both are kept.
+   `accessed_at` records when the bulletin was verified.
+5. **Item count and time limit stay null** for the 2027 bulletin because the CSC
+   announcement does not publish them (see `cse-exam-reference.md` §5).
+6. **Seeding is a management command**, not a data migration:
+   `manage.py seed_cse_catalogue`. It is idempotent and refuses to run outside
+   `DEBUG` without `--force`. The migration only creates the two `Exam` rows the
+   profile FK needs.
+7. **"Attempts reference an immutable exam version"** cannot be verified until
+   practice sessions exist (KAB-104); the schema supports it, the test does not
+   yet.

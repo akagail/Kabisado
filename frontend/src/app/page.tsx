@@ -31,6 +31,9 @@ export default function Home() {
       </section>
 
       <nav aria-label="Account" className="flex flex-wrap gap-3">
+        <a href="/exams" className="rounded-lg border px-4 py-2.5 text-sm font-semibold">
+          Browse the catalogue
+        </a>
         <a
           href="/register"
           className="rounded-lg bg-foreground px-4 py-2.5 text-sm font-semibold text-background"

@@ -160,6 +160,12 @@ Responses use snake_case arrays; topic rows include:
 
 `weak_topic` computed by the documented rule: `attempts ≥ 3 AND accuracy < 70`.
 
+**KAB-102 implementation notes:** `/exams/` also returns `current_version`
+(`{id, slug, label, source_url, published_at, passing_rate}` or `null`) per exam
+so the client can call `/exam-versions/{id}/subjects/` without guessing. Until
+practice responses exist (KAB-104), `accuracy` is `null`, `attempts` is `0`, and
+`weak_topic` is `false`.
+
 ## 4. Question bank endpoints (SPEC-0003)
 
 | Method | Path | Auth | Purpose |
