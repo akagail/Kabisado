@@ -40,6 +40,17 @@ class AuditEvent(UUIDModel):
         PROFILE_UPDATE = "profile_update", "Profile update"
         DELETE = "delete", "Account deletion"
         EXPORT = "export", "Export request"
+        QUESTION_CREATED = "question_created", "Question created"
+        QUESTION_SUBMITTED_FOR_REVIEW = (
+            "question_submitted_for_review",
+            "Question submitted for review",
+        )
+        QUESTION_PUBLISHED = "question_published", "Question published"
+        QUESTION_REVIEW_REJECTED = "question_review_rejected", "Question review rejected"
+        QUESTION_RETIRED = "question_retired", "Question retired"
+        FLAG_CREATED = "flag_created", "Flag created"
+        FLAG_RESOLVED = "flag_resolved", "Flag resolved"
+        FLAG_DISMISSED = "flag_dismissed", "Flag dismissed"
 
     actor = models.ForeignKey(
         settings.AUTH_USER_MODEL,
