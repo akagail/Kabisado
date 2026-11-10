@@ -11,6 +11,7 @@
 **Related ADRs:** ADR-0002, ADR-0003, ADR-0008 (draft; one exam version in MVP)
 **Branch:** `feat/KAB-102-cse-catalogue`
 **GitHub issue:** https://github.com/akagail/Kabisado/issues/15
+**Pull request:** https://github.com/akagail/Kabisado/pull/36
 
 ## 1. Description
 
