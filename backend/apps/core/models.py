@@ -51,6 +51,9 @@ class AuditEvent(UUIDModel):
         FLAG_CREATED = "flag_created", "Flag created"
         FLAG_RESOLVED = "flag_resolved", "Flag resolved"
         FLAG_DISMISSED = "flag_dismissed", "Flag dismissed"
+        PRACTICE_SESSION_STARTED = "practice_session_started", "Practice session started"
+        PRACTICE_SESSION_SUBMITTED = "practice_session_submitted", "Practice session submitted"
+        PRACTICE_SESSION_EXPIRED = "practice_session_expired", "Practice session expired"
 
     actor = models.ForeignKey(
         settings.AUTH_USER_MODEL,
