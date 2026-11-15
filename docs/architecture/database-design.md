@@ -145,15 +145,21 @@ Unique: `(subject_id, parent_id, slug)`.
 | `source_material_id` | uuid NULL FK | `SET_NULL` (beta) |
 | `source_chunk_id` | uuid NULL FK | `SET_NULL` (beta) |
 | `stem` | text | |
+| `stem_hash` | char(64) | SHA-256 of the normalized stem; indexed for duplicate detection |
 | `explanation` | text | required if published |
+| `provenance` | text | external citation or authoring record; required if published |
 | `difficulty` | smallint | 1–5 |
 | `status` | varchar | `draft`, `in_review`, `published`, `retired` |
 | `origin` | varchar | `human`, `ai_assisted`, `ai_generated` |
+| `author_id` | uuid FK | `PROTECT`; set on create |
+| `reviewer_id` | uuid NULL FK | `SET_NULL`; set on review, never the author |
+| `reviewed_at` | timestamptz NULL | |
 | `generated_by_user_id` | uuid NULL FK | private generated items |
 | `ai_generation_id` | uuid NULL FK | provenance |
 | `created_at`, `updated_at` | timestamptz | |
 
-Indexes: `(topic_id, status)`, `(status, difficulty)`, `(source_material_id)`.
+Indexes: `(topic_id, status)`, `(status, difficulty)`, `stem_hash`,
+`(source_material_id)`.
 
 ### `questions_choice`
 
@@ -165,11 +171,24 @@ a database partial unique index.
 
 ### `questions_content_flag`
 
-`id`, `reporter_id` FK (nullable), `question_id` FK, `reason`, `comment`,
+`id`, `reporter_id` FK (nullable), `question_id` FK, `reason`, `note`,
 `status` (`open`, `resolved`, `dismissed`), `resolution_note`,
 `resolved_by` FK, `resolved_at`, `created_at`, `updated_at`.
 
-Unique: one open flag per `(reporter_id, question_id)`.
+Unique: one open flag per `(reporter_id, question_id)`; a resolved flag allows a
+new report. Index: `(status, created_at)`.
+
+**KAB-103 implementation notes (2026-11-10):**
+
+- The option table is `questions_choice` (model `Choice`), matching this design
+  and the SPEC-0003 acceptance wording; the API JSON calls them `options`.
+- `provenance`, `author_id`, `reviewer_id`, and `reviewed_at` are implemented.
+  `provenance` and `author_id` are the additive gaps recorded in §15.
+- `stem_hash` was added for the duplicate-detection acceptance criterion.
+- `note` is the field name (this design previously said `comment`); SPEC-0003 §7
+  and the API use `note`.
+- `source_material_id`, `source_chunk_id`, `generated_by_user_id`, and
+  `ai_generation_id` remain unimplemented beta fields.
 
 ## 6. Core tables — Practice (MVP)
 
@@ -365,6 +384,6 @@ Resolved as implementation defaults (revisit only if a concrete issue appears):
 
 ## 15. Approval
 
-**Approved 2026-11-07** as the implementation baseline. Documented additive gaps:
+**Approved 2026-11-07** as the implementation baseline. Additive gaps:
 `questions_question.author_id` and `questions_question.provenance` (required by
-SPEC-0003 §7) are added via the first questions migration.
+SPEC-0003 §7) were added by the first questions migration (KAB-103, 2026-11-10).
