@@ -299,6 +299,33 @@ Response `204`. After deadline: `409` with `error.code = "session_expired"`.
 
 Score is an estimate, labelled as such. Computed once, stored.
 
+**KAB-104 implementation notes (2026-11-15):**
+
+- The practice endpoints are implemented in `apps.practice` under `/api/v1/`.
+- `POST /practice-sessions/` returns the session object (id, mode, status,
+  `time_limit_seconds`, `started_at`, `expires_at`, `submitted_at`,
+  `score_correct`, `score_total`, `items`) rather than a wrapped `{session}`.
+- `GET /practice-sessions/{id}/` returns the same session object with `items`
+  containing snapshot content and `saved_answer` (if any). Option `is_correct`
+  is withheld until the session is submitted.
+- `PUT /practice-sessions/{id}/answers/{position}/` returns `204`; after the
+  server deadline it returns `409`.
+- `POST /practice-sessions/{id}/submit/` returns the session object (status,
+  `submitted_at`, `score_correct`, `score_total`). The response is not yet
+  wrapped in `{result}`; the results endpoint returns the detailed result.
+- A timed session past its deadline auto-submits when it is next read or
+  submitted; saved answers are scored and unanswered items count as incorrect.
+- `GET /practice-sessions/{id}/results/` returns `{session_id,
+  score_correct, score_total, items}` where each item includes the snapshot
+  question, selected option, correctness, explanation, and provenance.
+- `GET /practice-sessions/` returns a flat list of sessions (history) ordered by
+  `-started_at`; it accepts `page` and `page_size` but does not yet return the
+  standard pagination envelope.
+- Timed sessions currently use a fixed 60-second limit; the limit is stored on
+  the session and exposed via `expires_at`.
+- Snapshot content is copied at session start (ADR-0007) and results are
+  computed once at submission.
+
 ## 6. Analytics endpoints (SPEC-0005)
 
 | Method | Path | Auth | Purpose |

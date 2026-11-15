@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "apps.accounts",
     "apps.catalog",
     "apps.questions",
+    "apps.practice",
 ]
 
 AUTH_USER_MODEL = "accounts.User"
@@ -163,6 +164,14 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "Kabisado examination preparation API.",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
+    "ENUM_NAME_OVERRIDES": {
+        "PracticeSessionStatusEnum": [
+            "in_progress",
+            "submitted",
+            "expired",
+            "abandoned",
+        ],
+    },
 }
 
 CSRF_TRUSTED_ORIGINS = [
