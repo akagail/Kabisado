@@ -45,8 +45,10 @@ frontend/src/app/
 │   │   ├── page.tsx
 │   │   └── [id]/page.tsx
 │   ├── practice/
-│   │   ├── page.tsx
-│   │   └── [id]/page.tsx
+│   │   ├── page.tsx             # session history
+│   │   └── [id]/
+│   │       ├── page.tsx         # active session
+│   │       └── results/page.tsx
 │   ├── flashcards/page.tsx
 │   └── progress/page.tsx
 ├── api/
