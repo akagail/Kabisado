@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { StartPractice } from "@/components/practice/start-practice";
 import { getTopic } from "@/lib/api/catalogue";
 import type { Topic } from "@/lib/api/types";
 
@@ -58,16 +59,7 @@ export function TopicDetail({ topicId }: { topicId: string }) {
         </p>
       </div>
 
-      <button
-        type="button"
-        disabled
-        className="w-full rounded-lg bg-foreground px-4 py-3 text-sm font-semibold text-background disabled:opacity-60 sm:w-auto"
-      >
-        Start practice
-      </button>
-      <p className="text-xs text-muted-foreground">
-        Practice sessions are not enabled yet.
-      </p>
+      <StartPractice topicId={topic.id} />
 
       <p>
         <Link href="/exams" className="text-sm underline underline-offset-4">

@@ -91,3 +91,77 @@ export interface ProfileUpdate {
   preference?: StudyPreference;
   updated_at?: string;
 }
+
+export type PracticeMode = "untimed" | "timed";
+export type PracticeStatus = "in_progress" | "submitted" | "expired" | "abandoned";
+
+export interface PracticeOption {
+  id: string;
+  text: string;
+  /** Only present after the session is submitted. */
+  is_correct?: boolean;
+}
+
+export interface PracticeItem {
+  position: number;
+  question: {
+    id: string;
+    stem: string;
+    options: PracticeOption[];
+  };
+  saved_answer: { selected_option_id: string } | null;
+}
+
+export interface PracticeSession {
+  id: string;
+  mode: PracticeMode;
+  status: PracticeStatus;
+  time_limit_seconds: number | null;
+  started_at: string;
+  expires_at: string | null;
+  submitted_at: string | null;
+  score_correct: number | null;
+  score_total: number | null;
+  items: PracticeItem[];
+}
+
+export interface PracticeResultItem {
+  position: number;
+  question: {
+    id: string;
+    stem: string;
+    options: PracticeOption[];
+    explanation: string;
+    provenance: string;
+    difficulty: string;
+  };
+  selected_option_id: string | null;
+  is_correct: boolean | null;
+  explanation: string;
+  provenance: string;
+}
+
+export interface PracticeResults {
+  session_id: string;
+  score_correct: number;
+  score_total: number;
+  items: PracticeResultItem[];
+}
+
+export interface PracticeSubmitResult {
+  id: string;
+  status: PracticeStatus;
+  submitted_at: string | null;
+  score_correct: number | null;
+  score_total: number | null;
+}
+
+export interface PracticeHistoryEntry {
+  id: string;
+  status: PracticeStatus;
+  mode: PracticeMode;
+  started_at: string;
+  submitted_at: string | null;
+  score_correct: number | null;
+  score_total: number | null;
+}
