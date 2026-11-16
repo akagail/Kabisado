@@ -10,6 +10,7 @@
 **Specification:** SPEC-0004 (approved 2026-11-07)
 **Related ADRs:** ADR-0003, ADR-0007
 **GitHub issue:** none (create when moved to READY)
+**Pull request:** https://github.com/akagail/Kabisado/pull/49
 
 ## 1. Description
 
