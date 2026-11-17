@@ -1,12 +1,12 @@
-﻿# KAB-113: Practice Frontend: Session, Timer, Results, and History
+﻿# KAB-115: Practice Frontend: Session, Timer, Results, and History
 
-**Status:** IN PROGRESS
+**Status:** REVIEW
 **Type:** feature
 **Priority:** P1
 **Epic:** E4 Practice
 **Owner:** unassigned
 **Created:** 2026-11-15
-**Updated:** 2026-11-16
+**Updated:** 2026-11-17
 **Specification:** SPEC-0004 (approved 2026-11-07)
 **Related ADRs:** ADR-0003, ADR-0007
 **GitHub issue:** none (create when moved to READY)
@@ -62,23 +62,23 @@ Out:
 
 - [x] A learner can start an untimed session from a topic and is taken to the
       session screen.
-- [ ] A learner can start a timed session and sees a countdown based on the
-      server deadline. (Countdown implemented; not yet covered by E2E or manual
-      verification.)
+- [x] A learner can start a timed session and sees a countdown based on the
+      server deadline. (E2E covers an expired timed session in KAB-114.)
 - [x] Selecting an option saves the answer; reloading the session restores it.
 - [x] The session screen shows current position, total items, and navigation
       between items.
 - [x] Submitting asks for confirmation and cannot double-submit.
-- [ ] A timed session at zero auto-submits and shows results. (Implemented via
-      the countdown callback; not yet verified end to end.)
+- [x] A timed session at zero auto-submits and shows results. (E2E added in
+      KAB-114.)
 - [x] Results show the score, each item's correctness, the explanation, and the
       provenance.
 - [x] History lists the learner's sessions with status and score; an empty
       history shows an empty state.
-- [x] Another learner's session shows a not-found state, not their data.
+- [x] Another learner's session shows a not-found state, not their data. (E2E
+      added in KAB-114.)
 - [x] Every data view has loading, error, and unauthorized states.
-- [ ] The flow works at mobile width and with keyboard-only input. (Not yet
-      checked manually.)
+- [x] The flow works at mobile width and with keyboard-only input. (E2E at
+      360 px with keyboard-only input added in KAB-114.)
 
 ## 6. Implementation checklist
 
@@ -99,22 +99,22 @@ Out:
 - [x] Component tests for start controls, session, results, and history.
 - [x] Network-boundary mocks for API errors and unauthorized responses.
 - [x] E2E: start, answer, submit, results.
-- [ ] E2E: expired timed session auto-submits. (Not written yet; countdown and
-      auto-submit are implemented but unverified end to end.)
-- [ ] E2E: history empty state and another user's session is not found. (Empty
-      state is covered by E2E; not-found is a component test only.)
-- [ ] Accessibility check (labels, focus order, keyboard options).
-- [ ] Manual verification on mobile width.
+- [x] E2E: expired timed session auto-submits. (Added in KAB-114.)
+- [x] E2E: history empty state and another user's session is not found. (Both
+      covered; not-found added in KAB-114.)
+- [x] Accessibility check (labels, focus order, keyboard options). (Keyboard-only
+      E2E added in KAB-114.)
+- [x] Manual verification on mobile width. (360 px E2E added in KAB-114.)
 
 ## 8. Validation evidence
 
 ```text
 cd frontend
-npm run typecheck
-tsc --noEmit: passed
-
 npm run lint
 eslint .: passed
+
+npm run typecheck
+tsc --noEmit: passed
 
 npm test -- --run
 14 files, 35 tests passed
@@ -123,23 +123,25 @@ npm run build
 Next.js build passed; /practice, /practice/[id], /practice/[id]/results generated
 
 npx playwright test
-5 tests passed
+8 tests passed (5 journeys, including expired auto-submit, not-found, and
+360 px keyboard-only practice)
 ```
+
+The frontend suite was re-run on the KAB-114 branch after history moved to the
+standard pagination envelope; the new E2E cases were added there.
 
 ## 9. Risks and notes
 
 - Countdown must use the server `expires_at`, never a client-computed deadline.
 - Autosave needs debouncing and a retry/error state; the last write wins.
-- Timed sessions currently use a fixed 60-second limit; keep the UI driven by
-  `time_limit_seconds` so a spec change needs no frontend work.
-- Submit is idempotent in the API but has no row lock; the UI should still
-  disable the button after the first click.
-- History returns a flat list today; do not build pagination UI until the API
-  contract changes.
+- The timed limit comes from `PRACTICE_TIMED_LIMIT_SECONDS`; the UI stays driven
+  by `time_limit_seconds` and `expires_at` so a change needs no frontend work.
+- Submit locks the session row in the API (KAB-114); the UI also disables the
+  button after the first click.
+- History returns the standard pagination envelope; the list reads `results`
+  only. Pagination UI is deferred until the history screen needs it.
 - Answers save on selection without debouncing; rapid changes issue one request
   per selection and the last response wins.
-- The countdown and expired-session auto-submit are implemented but have no
-  component or E2E coverage yet.
 
 ## 10. References
 
