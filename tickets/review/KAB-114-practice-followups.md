@@ -10,6 +10,7 @@
 **Specification:** SPEC-0004 (approved 2026-11-07)
 **Related ADRs:** ADR-0003, ADR-0007
 **GitHub issue:** none (maintainer creates; agents do not)
+**Pull request:** https://github.com/akagail/Kabisado/pull/53
 
 ## 1. Description
 
