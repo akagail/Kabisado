@@ -346,10 +346,35 @@ Response examples:
 ```json
 {
   "topics": [
-    { "topic": { "id": "…", "slug": "percentages", "name": "Percentages" }, "accuracy": 60.0, "attempts": 3, "weak_topic": true }
+    {
+      "topic": { "id": "…", "slug": "percentages", "name": "Percentages" },
+      "accuracy": 60.0,
+      "attempts": 3,
+      "weak_topic": true,
+      "weak_reason": "Below 70% accuracy over at least 3 attempts."
+    }
   ]
 }
 ```
+
+**KAB-105 implementation notes (2026-11-17):**
+
+- Both responses are wrapped as shown (`{"subjects": […]}` / `{"topics": […]}`).
+- Only answered items from **submitted** sessions count. `attempts` is the number
+  of answered items for that subject/topic; unanswered items are not attempts.
+- `accuracy` is `correct / attempts * 100`, rounded to two decimals.
+- The weak-topic rule is `attempts >= ANALYTICS_WEAK_TOPIC_MIN_ATTEMPTS` (default
+  `3`) **and** `accuracy < ANALYTICS_WEAK_TOPIC_ACCURACY_THRESHOLD` (default
+  `70.0`), configured in `config/settings.py`. The comparison uses the exact
+  ratio, so 70.0% is not weak.
+- `weak_reason` is additive to the earlier example: a sentence for weak topics,
+  `null` otherwise. It lets the UI show the rule without hard-coding it.
+- Results are scoped to the profile's `target_exam`; a learner with no target
+  exam, or with sessions for another exam, gets empty lists.
+- Aggregates are computed on the fly (no aggregate tables) in two queries per
+  endpoint. No new indexes were added; existing foreign-key indexes and unique
+  constraints cover the joins.
+- These lists are one row per attempted subject/topic, so they are not paginated.
 
 ## 7. Health endpoints (shared)
 

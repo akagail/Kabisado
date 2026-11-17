@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "apps.catalog",
     "apps.questions",
     "apps.practice",
+    "apps.analytics",
 ]
 
 AUTH_USER_MODEL = "accounts.User"
@@ -129,6 +130,10 @@ CSRF_COOKIE_HTTPONLY = True
 CSRF_FAILURE_VIEW = "apps.core.csrf.csrf_failure"
 
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
+
+# Weak-topic rule (SPEC-0005): attempts >= minimum AND accuracy < threshold.
+ANALYTICS_WEAK_TOPIC_MIN_ATTEMPTS = 3
+ANALYTICS_WEAK_TOPIC_ACCURACY_THRESHOLD = 70.0
 
 EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "noreply@localhost")
