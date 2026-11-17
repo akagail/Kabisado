@@ -104,7 +104,8 @@ Out:
       covered; not-found added in KAB-114.)
 - [x] Accessibility check (labels, focus order, keyboard options). (Keyboard-only
       E2E added in KAB-114.)
-- [x] Manual verification on mobile width. (360 px E2E added in KAB-114.)
+- [x] Mobile-width verification. (360 px E2E added in KAB-114; no separate
+      manual pass.)
 
 ## 8. Validation evidence
 
@@ -117,13 +118,13 @@ npm run typecheck
 tsc --noEmit: passed
 
 npm test -- --run
-14 files, 35 tests passed
+15 files, 38 tests passed
 
 npm run build
 Next.js build passed; /practice, /practice/[id], /practice/[id]/results generated
 
 npx playwright test
-8 tests passed (5 journeys, including expired auto-submit, not-found, and
+10 tests passed (6 journeys, including expired auto-submit, not-found, and
 360 px keyboard-only practice)
 ```
 

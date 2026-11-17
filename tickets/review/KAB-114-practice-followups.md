@@ -145,9 +145,9 @@ pytest apps/practice  31 passed, 1 skipped
 cd frontend
 npm run lint          passed
 npm run typecheck     passed
-npm test -- --run     14 files, 35 tests passed
+npm test -- --run     15 files, 38 tests passed
 npm run build         passed
-npx playwright test   8 passed
+npx playwright test   10 passed
 ```
 
 ## 9. Risks and notes
