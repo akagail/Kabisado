@@ -1,12 +1,12 @@
 # KAB-104: Practice Sessions and Scoring
 
-**Status:** IN PROGRESS
+**Status:** REVIEW
 **Type:** feature
 **Priority:** P1
 **Epic:** E4 Practice
 **Owner:** unassigned
 **Created:** 2026-11-06
-**Updated:** 2026-11-15
+**Updated:** 2026-11-17
 **Specification:** SPEC-0004 (approved 2026-11-07)
 **Related ADRs:** ADR-0003, ADR-0007
 **GitHub issue:** https://github.com/akagail/Kabisado/issues/17
@@ -52,12 +52,12 @@ Out:
 ## 5. Acceptance criteria
 
 - [x] A user can start an untimed session by topic.
-- [ ] A user can start a timed session with a visible countdown. (API supports
-      timed sessions and returns `expires_at`; the countdown UI is not built.)
+- [x] A user can start a timed session with a visible countdown. (Countdown UI
+      built in KAB-115; expired auto-submit covered by E2E in KAB-114.)
 - [x] Answers survive refresh.
 - [x] Submission is idempotent.
-- [ ] Submission is race-safe. (No row lock/`select_for_update` yet; concurrent
-      submits are untested.)
+- [x] Submission is race-safe. (`select_for_update` added with a PostgreSQL-only
+      concurrency test in KAB-114.)
 - [x] Timed sessions auto-submit at expiry (check-on-read/submit path).
 - [x] Results show score and explanations with sources.
 - [x] An expired/abandoned session cannot be resumed as active.
@@ -74,7 +74,7 @@ Out:
 - [x] Implement selection and snapshot service.
 - [x] Implement response upsert and submit service.
 - [x] Implement timer/expiry handling.
-- [ ] Implement API and UI. (API done; frontend practice screens are not built.)
+- [x] Implement API and UI. (API in KAB-104; practice screens in KAB-115.)
 - [x] Update docs and OpenAPI.
 
 ## 7. Testing checklist
@@ -84,8 +84,8 @@ Out:
 - [x] Timer expiry test (session expiry simulated by updating `expires_at`, not
       frozen time).
 - [x] IDOR tests.
-- [ ] E2E: start → answer → submit → results. (Needs the frontend screens.)
-- [ ] Mobile and keyboard check. (Needs the frontend screens.)
+- [x] E2E: start → answer → submit → results. (Added in KAB-115.)
+- [x] Mobile and keyboard check. (360 px keyboard-only E2E added in KAB-114.)
 
 ## 8. Validation evidence
 
@@ -114,15 +114,13 @@ Schema generated with 0 warnings and 0 errors.
 
 ## 9. Risks and notes
 
-- Use a transaction and row lock for submit.
+- Use a transaction and row lock for submit. (Done in KAB-114.)
 - Do not trust client timestamps; clamp elapsed time.
 - Snapshot items so question edits do not change history.
-- Timed sessions use a fixed 60-second limit until the per-exam duration is
-  specified.
-- History accepts `page`/`page_size` but returns a flat list, not the standard
-  pagination envelope.
-- Frontend practice UI and Playwright E2E remain before this ticket can move to
-  review.
+- Timed sessions use `PRACTICE_TIMED_LIMIT_SECONDS` (default 60) until the
+  per-exam duration is specified.
+- History returns the standard pagination envelope (KAB-114).
+- Frontend practice UI and Playwright E2E were delivered in KAB-115.
 
 ## 10. References
 

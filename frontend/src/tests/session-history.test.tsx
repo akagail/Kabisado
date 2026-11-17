@@ -14,17 +14,22 @@ describe("SessionHistory", () => {
   });
 
   it("lists sessions with their status and score", async () => {
-    getHistoryMock.mockResolvedValue([
-      {
-        id: "session-1",
-        status: "submitted",
-        mode: "timed",
-        started_at: "2026-11-16T00:00:00Z",
-        submitted_at: "2026-11-16T00:05:00Z",
-        score_correct: 3,
-        score_total: 5,
-      },
-    ]);
+    getHistoryMock.mockResolvedValue({
+      count: 1,
+      next: null,
+      previous: null,
+      results: [
+        {
+          id: "session-1",
+          status: "submitted",
+          mode: "timed",
+          started_at: "2026-11-16T00:00:00Z",
+          submitted_at: "2026-11-16T00:05:00Z",
+          score_correct: 3,
+          score_total: 5,
+        },
+      ],
+    });
 
     render(<SessionHistory />);
 
@@ -35,7 +40,7 @@ describe("SessionHistory", () => {
   });
 
   it("shows an empty state when there are no sessions", async () => {
-    getHistoryMock.mockResolvedValue([]);
+    getHistoryMock.mockResolvedValue({ count: 0, next: null, previous: null, results: [] });
 
     render(<SessionHistory />);
 

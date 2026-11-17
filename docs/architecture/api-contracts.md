@@ -2,7 +2,7 @@
 
 **Status:** Finalized — approved against SPEC-0001–0005 and database design
 **Owner:** Backend / Frontend
-**Last updated:** 2026-11-07
+**Last updated:** 2026-11-17
 **Approved by:** Repository owner
 **Approved on:** 2026-11-07
 
@@ -309,20 +309,29 @@ Score is an estimate, labelled as such. Computed once, stored.
   containing snapshot content and `saved_answer` (if any). Option `is_correct`
   is withheld until the session is submitted.
 - `PUT /practice-sessions/{id}/answers/{position}/` returns `204`; after the
-  server deadline it returns `409`.
+  server deadline it returns `409` with `error.code = "session_expired"`. A saved
+  answer can be changed until the session is submitted.
 - `POST /practice-sessions/{id}/submit/` returns the session object (status,
-  `submitted_at`, `score_correct`, `score_total`). The response is not yet
-  wrapped in `{result}`; the results endpoint returns the detailed result.
+  `submitted_at`, `score_correct`, `score_total`). The response is not wrapped in
+  `{result}`; the results endpoint returns the detailed result.
+- Submit locks the session row, so concurrent submits score once and write one
+  `practice_session_submitted` audit event.
 - A timed session past its deadline auto-submits when it is next read or
   submitted; saved answers are scored and unanswered items count as incorrect.
 - `GET /practice-sessions/{id}/results/` returns `{session_id,
   score_correct, score_total, items}` where each item includes the snapshot
-  question, selected option, correctness, explanation, and provenance.
-- `GET /practice-sessions/` returns a flat list of sessions (history) ordered by
-  `-started_at`; it accepts `page` and `page_size` but does not yet return the
-  standard pagination envelope.
-- Timed sessions currently use a fixed 60-second limit; the limit is stored on
-  the session and exposed via `expires_at`.
+  question, selected option, correctness, explanation, and provenance. Reading
+  results writes a `practice_result_viewed` audit event.
+- `GET /practice-sessions/` returns the standard pagination envelope
+  (`count`, `next`, `previous`, `results`) ordered by `-started_at`, using the
+  default page size (20, maximum 100).
+- Timed sessions use `PRACTICE_TIMED_LIMIT_SECONDS` (default 60). The limit is
+  stored on the session and exposed via `expires_at`.
+- The flat response shapes above are the contract; the `{session}` / `{result}`
+  wrappers in the earlier clarification table are superseded.
+- Audit events: `practice_session_started`, `practice_session_submitted`,
+  `practice_session_expired`, `practice_answer_saved`, `practice_result_viewed`.
+  `session_abandoned` is not emitted because no abandon action exists yet.
 - Snapshot content is copied at session start (ADR-0007) and results are
   computed once at submission.
 

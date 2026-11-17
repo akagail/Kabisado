@@ -22,17 +22,22 @@ const topics = {
   ],
 };
 
-const history = [
-  {
-    id: "session-1",
-    status: "submitted",
-    mode: "timed",
-    started_at: "2026-11-16T00:00:00Z",
-    submitted_at: "2026-11-16T00:05:00Z",
-    score_correct: 3,
-    score_total: 5,
-  },
-];
+const history = {
+  count: 1,
+  next: null,
+  previous: null,
+  results: [
+    {
+      id: "session-1",
+      status: "submitted",
+      mode: "timed",
+      started_at: "2026-11-16T00:00:00Z",
+      submitted_at: "2026-11-16T00:05:00Z",
+      score_correct: 3,
+      score_total: 5,
+    },
+  ],
+};
 
 test("shows subject accuracy, weak topics, and recent sessions", async ({ page }) => {
   await page.route("**/api/v1/**", async (route) => {
@@ -83,7 +88,9 @@ test("shows empty states before any practice", async ({ page }) => {
       return route.fulfill({ json: { topics: [] } });
     }
     if (path.endsWith("/practice-sessions/")) {
-      return route.fulfill({ json: [] });
+      return route.fulfill({
+        json: { count: 0, next: null, previous: null, results: [] },
+      });
     }
     return route.fulfill({
       status: 404,

@@ -1,3 +1,11 @@
+/** The DRF pagination envelope every list endpoint returns. */
+export interface Paginated<T> {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: T[];
+}
+
 export type ExamLevel = "professional" | "subprofessional";
 
 export interface User {

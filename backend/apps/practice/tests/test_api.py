@@ -8,6 +8,7 @@ from django.utils import timezone
 
 from apps.accounts.models import User
 from apps.catalog.models import Topic
+from apps.core.models import AuditEvent
 from apps.practice.models import PracticeSession
 from apps.questions.models import Question
 from apps.questions.services import create_question, review_question, submit_for_review
@@ -160,6 +161,7 @@ def test_save_answer_after_expiry_returns_409(api):
         format="json",
     )
     assert response.status_code == 409
+    assert response.json()["error"]["code"] == "session_expired"
 
 
 def test_expired_session_detail_auto_submits(api):
@@ -267,7 +269,7 @@ def test_history_returns_own_sessions(api):
 
     response = api.get(BASE)
     assert response.status_code == 200
-    assert len(response.json()) == 1
+    assert len(response.json()["results"]) == 1
 
 
 def test_history_excludes_other_users(api):
@@ -281,4 +283,121 @@ def test_history_excludes_other_users(api):
     api.force_authenticate(user=other)
     response = api.get(BASE)
     assert response.status_code == 200
-    assert response.json() == []
+    assert response.json()["results"] == []
+
+
+def test_save_answer_can_change_choice(api):
+    topic = _topic()
+    user = _user()
+    question = _create_published_question(topic, user)
+    api.force_authenticate(user=user)
+    session = _start_session(api, user, topic)
+    wrong = question.choices.get(is_correct=False)
+    right = question.choices.get(is_correct=True)
+
+    api.put(
+        f"{BASE}{session['id']}/answers/0/",
+        {"selected_option_id": str(wrong.id)},
+        format="json",
+    )
+    api.put(
+        f"{BASE}{session['id']}/answers/0/",
+        {"selected_option_id": str(right.id)},
+        format="json",
+    )
+
+    data = api.get(f"{BASE}{session['id']}/").json()
+    assert data["items"][0]["saved_answer"]["selected_option_id"] == str(right.id)
+
+    submitted = api.post(f"{BASE}{session['id']}/submit/", {}, format="json").json()
+    assert submitted["score_correct"] == 1
+
+
+def test_save_answer_writes_an_audit_event(api):
+    topic = _topic()
+    user = _user()
+    question = _create_published_question(topic, user)
+    api.force_authenticate(user=user)
+    session = _start_session(api, user, topic)
+    choice = question.choices.first()
+
+    api.put(
+        f"{BASE}{session['id']}/answers/0/",
+        {"selected_option_id": str(choice.id)},
+        format="json",
+    )
+
+    assert (
+        AuditEvent.objects.filter(
+            actor=user, action=AuditEvent.Action.PRACTICE_ANSWER_SAVED
+        ).count()
+        == 1
+    )
+
+
+def test_results_view_writes_an_audit_event(api):
+    topic = _topic()
+    user = _user()
+    _create_published_question(topic, user)
+    api.force_authenticate(user=user)
+    session = _start_session(api, user, topic)
+    api.post(f"{BASE}{session['id']}/submit/", {}, format="json")
+
+    api.get(f"{BASE}{session['id']}/results/")
+
+    assert (
+        AuditEvent.objects.filter(
+            actor=user, action=AuditEvent.Action.PRACTICE_RESULT_VIEWED
+        ).count()
+        == 1
+    )
+
+
+def test_repeated_submit_writes_one_submit_audit_event(api):
+    topic = _topic()
+    user = _user()
+    _create_published_question(topic, user)
+    api.force_authenticate(user=user)
+    session = _start_session(api, user, topic)
+
+    api.post(f"{BASE}{session['id']}/submit/", {}, format="json")
+    api.post(f"{BASE}{session['id']}/submit/", {}, format="json")
+
+    assert (
+        AuditEvent.objects.filter(
+            actor=user, action=AuditEvent.Action.PRACTICE_SESSION_SUBMITTED
+        ).count()
+        == 1
+    )
+
+
+def test_history_is_paginated(api):
+    topic = _topic()
+    user = _user()
+    api.force_authenticate(user=user)
+    for _ in range(25):
+        PracticeSession.objects.create(
+            user=user, exam_version=topic.subject.exam_version, mode="untimed"
+        )
+
+    first = api.get(BASE).json()
+
+    assert first["count"] == 25
+    assert len(first["results"]) == 20
+    assert first["next"]
+
+    second = api.get(BASE, {"page": 2}).json()
+    assert len(second["results"]) == 5
+    assert second["previous"]
+
+
+def test_timed_limit_comes_from_settings(api, settings):
+    settings.PRACTICE_TIMED_LIMIT_SECONDS = 120
+    topic = _topic()
+    user = _user()
+    _create_published_question(topic, user)
+    api.force_authenticate(user=user)
+
+    session = _start_session(api, user, topic, mode="timed")
+
+    assert session["time_limit_seconds"] == 120

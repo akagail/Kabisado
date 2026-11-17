@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from django.conf import settings
 from django.db import transaction
 from django.utils import timezone
 from rest_framework.exceptions import APIException, NotFound, PermissionDenied, ValidationError
@@ -14,6 +15,12 @@ class Conflict(APIException):
     status_code = 409
     default_detail = "The item is not in a state that allows that action."
     default_code = "conflict"
+
+
+class SessionExpired(APIException):
+    status_code = 409
+    default_detail = "Session expired."
+    default_code = "session_expired"
 
 
 def _require_auth(actor):
@@ -59,7 +66,9 @@ def start_session(actor, *, mode, topic_identifier, size=20):
         exam_version=exam_version,
         mode=mode,
         status=PracticeSession.Status.IN_PROGRESS,
-        time_limit_seconds=60 if mode == PracticeSession.Mode.TIMED else None,
+        time_limit_seconds=settings.PRACTICE_TIMED_LIMIT_SECONDS
+        if mode == PracticeSession.Mode.TIMED
+        else None,
         started_at=timezone.now(),
     )
     if session.mode == PracticeSession.Mode.TIMED:
@@ -168,23 +177,25 @@ def save_answer(actor, session_id, position, selected_choice_id):
         raise NotFound("Session item not found.") from None
     if session_item.session.user_id != actor.pk:
         raise PermissionDenied("You do not own this session.")
+    if _is_expired(session_item.session):
+        raise SessionExpired()
     if session_item.session.status != PracticeSession.Status.IN_PROGRESS:
         raise Conflict("Session is not in progress.")
-    if _is_expired(session_item.session):
-        raise Conflict("Session expired.")
     if selected_choice_id:
         try:
             session_item.question.choices.get(pk=selected_choice_id)
         except Question.DoesNotExist:
             raise ValidationError({"selected_choice_id": ["Invalid choice."]}) from None
-    answer, _ = AttemptAnswer.objects.get_or_create(
+    answer, _ = AttemptAnswer.objects.update_or_create(
         session_item=session_item,
-        defaults={"selected_choice_id": selected_choice_id, "answered_at": timezone.now()},
+        defaults={"selected_choice_id": selected_choice_id},
     )
-    if not answer.selected_choice_id and selected_choice_id:
-        answer.selected_choice_id = selected_choice_id
-        answer.answered_at = timezone.now()
-        answer.save()
+    _audit(
+        actor,
+        AuditEvent.Action.PRACTICE_ANSWER_SAVED,
+        session_item.session,
+        {"position": position},
+    )
     return answer
 
 
@@ -192,7 +203,9 @@ def save_answer(actor, session_id, position, selected_choice_id):
 def submit_session(actor, session_id):
     _require_auth(actor)
     try:
-        session = PracticeSession.objects.select_related("user").get(pk=session_id)
+        session = (
+            PracticeSession.objects.select_for_update().select_related("user").get(pk=session_id)
+        )
     except PracticeSession.DoesNotExist:
         raise NotFound("Practice session not found.") from None
     if session.user_id != actor.pk:
@@ -209,10 +222,8 @@ def submit_session(actor, session_id):
 def get_session_results(actor, session_id):
     _require_auth(actor)
     try:
-        session = (
-            PracticeSession.objects.select_related("user", "exam_version")
-            .prefetch_related("items__question__choices")
-            .get(pk=session_id, user=actor)
+        session = PracticeSession.objects.select_related("user", "exam_version").get(
+            pk=session_id, user=actor
         )
     except PracticeSession.DoesNotExist:
         raise NotFound("Practice session not found.") from None
@@ -220,6 +231,7 @@ def get_session_results(actor, session_id):
         _submit(session, actor, expired=True)
     if session.status != PracticeSession.Status.SUBMITTED:
         raise PermissionDenied("Results are only available after submission.")
+    _audit(actor, AuditEvent.Action.PRACTICE_RESULT_VIEWED, session)
     results = {
         "session_id": str(session.id),
         "score_correct": session.score_correct,
@@ -254,7 +266,6 @@ def get_session_results(actor, session_id):
     return results
 
 
-def get_session_history(actor, page=1, page_size=20):
+def get_session_history(actor):
     _require_auth(actor)
-    qs = PracticeSession.objects.filter(user=actor).order_by("-started_at")
-    return qs
+    return PracticeSession.objects.filter(user=actor).order_by("-started_at")

@@ -1,6 +1,6 @@
 # KAB-114: Practice Follow-ups: Faults, Gaps, and Cleanups
 
-**Status:** READY
+**Status:** REVIEW
 **Type:** task
 **Priority:** P1
 **Epic:** E4 Practice
@@ -9,7 +9,8 @@
 **Updated:** 2026-11-17
 **Specification:** SPEC-0004 (approved 2026-11-07)
 **Related ADRs:** ADR-0003, ADR-0007
-**GitHub issue:** none (create when work starts)
+**GitHub issue:** none (maintainer creates; agents do not)
+**Pull request:** https://github.com/akagail/Kabisado/pull/53
 
 ## 1. Description
 
@@ -77,73 +78,92 @@ Out:
 | Dependency | Type | Status |
 | --- | --- | --- |
 | KAB-104 | practice API | merged (PR #48) |
-| KAB-113 practice frontend | UI | merged (PR #49) |
+| KAB-115 practice frontend | UI | merged (PR #49) |
 | SPEC-0004 | approved specification | approved |
 | ADR-0007 | snapshot model | accepted |
 
 ## 5. Acceptance criteria
 
-- [ ] Changing a saved answer through the API persists and is returned on the
+- [x] Changing a saved answer through the API persists and is returned on the
       next read; a regression test fails before the fix.
-- [ ] Saving an answer after the deadline returns `409` with
+- [x] Saving an answer after the deadline returns `409` with
       `error.code = "session_expired"`.
-- [ ] Concurrent submit test shows scoring happens once and one submit audit
+- [x] Concurrent submit test shows scoring happens once and one submit audit
       event is written.
-- [ ] History pagination matches the documented contract, and the docs no longer
+- [x] History pagination matches the documented contract, and the docs no longer
       contradict the implementation.
-- [ ] The timed limit comes from configuration, not a literal `60`.
-- [ ] E2E: an expired timed session auto-submits and shows results.
-- [ ] E2E: another learner's session shows not-found.
-- [ ] Practice flow verified at mobile width and with keyboard-only input.
-- [ ] No ticket or branch uses `KAB-113` for two different pieces of work.
+- [x] The timed limit comes from configuration, not a literal `60`.
+- [x] E2E: an expired timed session auto-submits and shows results.
+- [x] E2E: another learner's session shows not-found.
+- [x] Practice flow verified at mobile width and with keyboard-only input.
+- [x] No ticket or branch uses `KAB-113` for two different pieces of work.
 - [ ] KAB-104 and the practice frontend ticket are in the correct folder, issue
-      #17 is closed, and the frontend ticket has a GitHub issue.
-- [ ] `pytest`, `ruff`, and the frontend checks pass.
+      #17 is closed, and the frontend ticket has a GitHub issue. (Tickets moved
+      to `tickets/review/`; issue closure and creation are maintainer actions.)
+- [x] `pytest`, `ruff`, and the frontend checks pass.
 
 ## 6. Implementation checklist
 
-- [ ] Fix `save_answer` update path and add the regression test.
-- [ ] Add the `session_expired` error code.
-- [ ] Add row locking to submit and the concurrency test.
-- [ ] Add or defer the missing audit events with a written reason.
-- [ ] Implement or remove history pagination.
-- [ ] Move the timed limit into configuration.
-- [ ] Resolve the response-shape deviation in the contract.
-- [ ] Renumber and rename the frontend ticket.
-- [ ] Add the missing E2E tests.
-- [ ] Remove the dead serializer and prefetch.
-- [ ] Update `docs/architecture/api-contracts.md` §5 and any spec notes.
-- [ ] Move tickets and close/open the GitHub issues.
+- [x] Fix `save_answer` update path and add the regression test.
+- [x] Add the `session_expired` error code.
+- [x] Add row locking to submit and the concurrency test.
+- [x] Add or defer the missing audit events with a written reason.
+- [x] Implement or remove history pagination.
+- [x] Move the timed limit into configuration.
+- [x] Resolve the response-shape deviation in the contract.
+- [x] Renumber and rename the frontend ticket.
+- [x] Add the missing E2E tests.
+- [x] Remove the dead serializer and prefetch.
+- [x] Update `docs/architecture/api-contracts.md` §5 and any spec notes.
+- [ ] Move tickets and close/open the GitHub issues. (Tickets moved; issues are
+      left to the maintainer.)
 
 ## 7. Testing checklist
 
-- [ ] Regression test for changing an answer.
-- [ ] Error-code test for expired saves.
-- [ ] Concurrency test for submit.
-- [ ] Pagination test for history.
-- [ ] Configured timed-limit test.
-- [ ] E2E expired session.
-- [ ] E2E not-found session.
-- [ ] Mobile and keyboard check.
-- [ ] Full backend and frontend suites.
+- [x] Regression test for changing an answer.
+- [x] Error-code test for expired saves.
+- [x] Concurrency test for submit. (PostgreSQL-only; skipped on local SQLite and
+      runs in backend CI.)
+- [x] Pagination test for history.
+- [x] Configured timed-limit test.
+- [x] E2E expired session.
+- [x] E2E not-found session.
+- [x] Mobile and keyboard check.
+- [x] Full backend and frontend suites.
 
 ## 8. Validation evidence
 
 ```text
-Not started.
+cd backend
+ruff format --check .  84 files already formatted
+ruff check .          All checks passed!
+manage.py check       System check identified no issues (0 silenced).
+makemigrations --check --dry-run   No changes detected
+pytest                107 passed, 1 skipped (PostgreSQL-only concurrency test)
+pytest apps/practice  31 passed, 1 skipped
+
+cd frontend
+npm run lint          passed
+npm run typecheck     passed
+npm test -- --run     15 files, 38 tests passed
+npm run build         passed
+npx playwright test   10 passed
 ```
 
 ## 9. Risks and notes
 
 - Row locking inside the existing transaction may interact with the audit write;
-  keep the lock scope small and verify no deadlock in the test.
-- Renumbering a merged ticket touches links; do it in one docs commit so no
-  reference is missed.
-- Pagination changes may require a small frontend update; coordinate with the
-  practice history screen.
-- The timed-duration decision is a product/spec question, not only code. If it
-  is unresolved, ship a setting with the current 60-second default and record
-  the open decision.
+  keep the lock scope small and verify no deadlock in the test. The lock is taken
+  before the status check, so a concurrent submit re-reads `submitted`.
+- Renumbering a merged ticket touches links; it is done in one commit and no
+  reference to the old practice-frontend KAB-113 remains.
+- Pagination changes required a small frontend update; `SessionHistory` now
+  reads `data.results` and the unit/E2E mocks use the envelope.
+- The timed-duration decision is still open. The setting ships with the current
+  60-second default; a per-exam duration needs a product decision.
+- Debouncing answer saves was not measured; one request per selection is kept
+  unchanged.
+- `session_abandoned` is deferred because there is no abandon action.
 
 ## 10. References
 
@@ -154,4 +174,4 @@ Not started.
 - `frontend/tests/e2e/practice.spec.ts`
 - `docs/specifications/SPEC-0004-practice-and-results.md`
 - `docs/architecture/api-contracts.md` §5
-- KAB-104, KAB-113 (practice frontend), KAB-113 (TypeScript ESLint compatibility)
+- KAB-104, KAB-115 (practice frontend), KAB-113 (TypeScript ESLint compatibility)

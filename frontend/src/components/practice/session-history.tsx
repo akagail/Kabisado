@@ -22,7 +22,7 @@ export function SessionHistory() {
     getHistory()
       .then((data) => {
         if (cancelled) return;
-        setSessions(data);
+        setSessions(data.results);
         setStatus("ready");
       })
       .catch(() => {

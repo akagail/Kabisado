@@ -1,5 +1,6 @@
 import { apiRequest } from "./client";
 import type {
+  Paginated,
   PracticeHistoryEntry,
   PracticeMode,
   PracticeResults,
@@ -43,6 +44,6 @@ export function getResults(sessionId: string): Promise<PracticeResults> {
   return apiRequest<PracticeResults>(`/practice-sessions/${sessionId}/results/`);
 }
 
-export function getHistory(): Promise<PracticeHistoryEntry[]> {
-  return apiRequest<PracticeHistoryEntry[]>("/practice-sessions/");
+export function getHistory(): Promise<Paginated<PracticeHistoryEntry>> {
+  return apiRequest<Paginated<PracticeHistoryEntry>>("/practice-sessions/");
 }
