@@ -6,7 +6,7 @@
 **Related ADRs:** ADR-0003, ADR-0004, ADR-0007
 **Approved by:** Repository owner
 **Approved on:** 2026-11-07
-**Last updated:** 2026-11-07
+**Last updated:** 2026-11-17
 
 ## 1. Problem
 
@@ -113,6 +113,12 @@ later.
 | POST | `/practice-sessions/{id}/submit/` | Session | — | `{result: {score_correct, score_total, items: [...]}}` | 401, 409?no, 409? idempotency |
 | GET | `/practice-sessions/{id}/results/` | Session | — | `{result}` | 401, 404 |
 | GET | `/practice-sessions/` | Session | `page` | `[{session, status, score, mode}]` | 401 |
+
+**Implementation note (KAB-114, 2026-11-17):** the delivered API returns the flat
+shapes documented in `docs/architecture/api-contracts.md` §5 (no `{session}` /
+`{result}` wrappers) and returns practice history in the standard pagination
+envelope. This is a recorded deviation from the table above and needs owner
+confirmation before this specification is treated as amended.
 
 ## 9. UI requirements
 
