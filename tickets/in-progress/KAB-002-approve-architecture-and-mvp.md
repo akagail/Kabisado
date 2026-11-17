@@ -10,6 +10,7 @@
 **Specification:** not required (decision ticket)
 **Related ADRs:** ADR-0001 … ADR-0008
 **GitHub issue:** https://github.com/akagail/Kabisado/issues/26
+**Pull request:** https://github.com/akagail/Kabisado/pull/59
 
 ## 1. Description
 
