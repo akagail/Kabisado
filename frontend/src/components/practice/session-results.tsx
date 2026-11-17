@@ -113,9 +113,12 @@ export function SessionResults({ sessionId }: { sessionId: string }) {
         })}
       </ol>
 
-      <p>
+      <p className="flex flex-wrap gap-4">
         <Link href="/practice" className="text-sm underline underline-offset-4">
           Back to your practice history
+        </Link>
+        <Link href="/progress" className="text-sm underline underline-offset-4">
+          See your progress
         </Link>
       </p>
     </div>

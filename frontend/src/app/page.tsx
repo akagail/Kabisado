@@ -34,6 +34,9 @@ export default function Home() {
         <a href="/exams" className="rounded-lg border px-4 py-2.5 text-sm font-semibold">
           Browse the catalogue
         </a>
+        <a href="/progress" className="rounded-lg border px-4 py-2.5 text-sm font-semibold">
+          Your progress
+        </a>
         <a
           href="/register"
           className="rounded-lg bg-foreground px-4 py-2.5 text-sm font-semibold text-background"

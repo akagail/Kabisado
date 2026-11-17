@@ -51,12 +51,9 @@ Out:
 
 - [x] Aggregates are correct for a known fixture.
 - [x] Weak topics use the documented rule and boundary values.
-- [ ] A user sees accuracy by subject and topic. (API returns it; the progress
-      screen is not built yet.)
-- [ ] A user sees recent sessions with dates and scores. (Practice history exists
-      from KAB-113; the progress screen is not built yet.)
-- [ ] Empty state is useful and not an error. (API returns empty lists; the UI
-      empty state is pending.)
+- [x] A user sees accuracy by subject and topic.
+- [x] A user sees recent sessions with dates and scores.
+- [x] Empty state is useful and not an error.
 - [x] Another user's analytics cannot be read (IDOR).
 - [x] Aggregates update after a submitted session.
 - [x] Query count is bounded for the dashboard.
@@ -67,7 +64,7 @@ Out:
 - [x] Write the technical design (on-the-fly aggregates; no aggregate tables).
 - [x] Implement selectors/aggregates.
 - [x] Implement endpoints.
-- [ ] Build dashboard/progress UI.
+- [x] Build dashboard/progress UI (`/progress`).
 - [x] Review indexes: no new index needed; existing foreign keys and unique
       constraints cover the joins.
 - [x] Update docs and OpenAPI.
@@ -78,8 +75,8 @@ Out:
 - [x] Aggregate correctness test.
 - [x] IDOR test.
 - [x] Query-count test.
-- [ ] Frontend states test (UI not built).
-- [ ] E2E: submit → see progress (UI not built).
+- [x] Frontend states test.
+- [x] E2E: submit → results → progress (API mocked, matching the suite).
 
 ## 8. Validation evidence
 
@@ -103,6 +100,22 @@ No changes detected
 .venv/Scripts/python.exe manage.py spectacular --file schema.yml
 Schema generated; /api/v1/analytics/summary/ and /api/v1/analytics/topics/
 present.
+
+cd frontend
+npm run typecheck
+tsc --noEmit: passed
+
+npm run lint
+eslint .: passed
+
+npm test -- --run
+15 files, 38 tests passed
+
+npm run build
+Next.js build passed; /progress generated
+
+npx playwright test
+7 tests passed
 ```
 
 ## 9. Risks and notes
@@ -117,7 +130,11 @@ present.
 - Catalogue topic rows (`/subjects/{id}/topics/`, `/topics/{id}/`) still return
   placeholder `accuracy`/`attempts`; wiring them to this selector is follow-up
   work, not part of this ticket.
-- The progress UI and its E2E test are the remaining acceptance criteria.
+- The progress UI lives at `/progress` and reuses the practice history list. The
+  per-session weak-topic count shown in SPEC-0005 §9 is not available from the
+  API; the history row shows date, mode, and score only.
+- E2E tests mock the API, consistent with the rest of the suite; the backend
+  aggregation is covered by pytest, not by a live end-to-end run.
 
 ## 10. References
 
