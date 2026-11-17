@@ -6,10 +6,11 @@
 **Epic:** none
 **Owner:** unassigned
 **Created:** 2026-11-07
-**Updated:** 2026-11-07
+**Updated:** 2026-11-17
 **Specification:** not applicable (toolchain fix)
 **Related ADRs:** none
 **GitHub issue:** none
+**Pull request:** https://github.com/akagail/Kabisado/pull/52
 
 ## 1. Description
 
@@ -86,6 +87,9 @@ npm run build                           passed (3 pages)
   the pin once `typescript-eslint` supports TypeScript 7.
 - TypeScript 7 native platform packages are removed from the lockfile as a
   result; expected.
+- Dependabot re-applied the TS 7 bump in PR #46 after the first fix, so PR #52
+  re-applies the pin and adds a Dependabot ignore for TypeScript major updates.
+  Remove that ignore together with the pin.
 
 ## 10. References
 
