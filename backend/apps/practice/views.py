@@ -6,9 +6,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.core.pagination import DefaultPagination
 from apps.practice import services
 from apps.practice.serializers import (
     PracticeSessionDetailSerializer,
+    PracticeSessionHistoryPageSerializer,
     PracticeSessionHistorySerializer,
     PracticeSessionResultsSerializer,
     PracticeSessionSaveAnswerSerializer,
@@ -37,13 +39,13 @@ class PracticeSessionStartView(APIView):
             PracticeSessionDetailSerializer(session).data, status=status.HTTP_201_CREATED
         )
 
-    @extend_schema(responses=PracticeSessionHistorySerializer(many=True))
+    @extend_schema(responses=PracticeSessionHistoryPageSerializer)
     def get(self, request):
-        page = int(request.query_params.get("page", 1))
-        page_size = min(int(request.query_params.get("page_size", 20)), 100)
-        qs = services.get_session_history(request.user, page=page, page_size=page_size)
-        serializer = PracticeSessionHistorySerializer(qs, many=True)
-        return Response(serializer.data)
+        queryset = services.get_session_history(request.user)
+        paginator = DefaultPagination()
+        page = paginator.paginate_queryset(queryset, request)
+        serializer = PracticeSessionHistorySerializer(page, many=True)
+        return paginator.get_paginated_response(serializer.data)
 
 
 class PracticeSessionDetailView(APIView):

@@ -27,7 +27,7 @@ def api_exception_handler(exc: Exception, context: dict[str, Any]) -> Any:
     elif status_code == 404:
         code = "not_found"
     elif status_code == 409:
-        code = "conflict"
+        code = "session_expired" if code == "session_expired" else "conflict"
     elif status_code == 429:
         code = "rate_limited"
 

@@ -9,12 +9,6 @@ class PracticeSessionStartSerializer(serializers.Serializer):
     size = serializers.IntegerField(min_value=1, max_value=50, default=20)
 
 
-class ChoiceSnapshotSerializer(serializers.Serializer):
-    id = serializers.UUIDField()
-    text = serializers.CharField()
-    is_correct = serializers.BooleanField()
-
-
 class PracticeSessionDetailSerializer(serializers.Serializer):
     id = serializers.UUIDField()
     mode = serializers.ChoiceField(choices=["untimed", "timed"])
@@ -80,3 +74,10 @@ class PracticeSessionHistorySerializer(serializers.Serializer):
     submitted_at = serializers.DateTimeField(allow_null=True)
     score_correct = serializers.IntegerField(allow_null=True)
     score_total = serializers.IntegerField(allow_null=True)
+
+
+class PracticeSessionHistoryPageSerializer(serializers.Serializer):
+    count = serializers.IntegerField()
+    next = serializers.URLField(allow_null=True)
+    previous = serializers.URLField(allow_null=True)
+    results = PracticeSessionHistorySerializer(many=True)

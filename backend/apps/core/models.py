@@ -54,6 +54,8 @@ class AuditEvent(UUIDModel):
         PRACTICE_SESSION_STARTED = "practice_session_started", "Practice session started"
         PRACTICE_SESSION_SUBMITTED = "practice_session_submitted", "Practice session submitted"
         PRACTICE_SESSION_EXPIRED = "practice_session_expired", "Practice session expired"
+        PRACTICE_ANSWER_SAVED = "practice_answer_saved", "Practice answer saved"
+        PRACTICE_RESULT_VIEWED = "practice_result_viewed", "Practice result viewed"
 
     actor = models.ForeignKey(
         settings.AUTH_USER_MODEL,

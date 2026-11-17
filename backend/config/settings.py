@@ -135,6 +135,9 @@ FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:3000")
 ANALYTICS_WEAK_TOPIC_MIN_ATTEMPTS = 3
 ANALYTICS_WEAK_TOPIC_ACCURACY_THRESHOLD = 70.0
 
+# Default duration for a timed practice session until the exam version carries one.
+PRACTICE_TIMED_LIMIT_SECONDS = 60
+
 EMAIL_BACKEND = os.getenv("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "noreply@localhost")
 
