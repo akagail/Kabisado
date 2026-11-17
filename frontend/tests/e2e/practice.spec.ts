@@ -131,7 +131,6 @@ async function mockApi(
       }
       return route.fulfill({ json: detail });
     }
-    }
     return route.fulfill({
       status: 404,
       json: { error: { code: "not_found", message: "Not found." } },
