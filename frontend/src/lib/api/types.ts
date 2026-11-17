@@ -165,3 +165,25 @@ export interface PracticeHistoryEntry {
   score_correct: number | null;
   score_total: number | null;
 }
+
+export interface SubjectAccuracy {
+  subject: { id: string; slug: string; name: string };
+  accuracy: number;
+  attempts: number;
+}
+
+export interface TopicAccuracy {
+  topic: { id: string; slug: string; name: string };
+  accuracy: number;
+  attempts: number;
+  weak_topic: boolean;
+  weak_reason: string | null;
+}
+
+export interface SubjectProgress {
+  subjects: SubjectAccuracy[];
+}
+
+export interface TopicProgress {
+  topics: TopicAccuracy[];
+}

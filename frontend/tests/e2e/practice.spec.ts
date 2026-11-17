@@ -96,6 +96,29 @@ test("start, answer, submit, and review a practice session", async ({ page }) =>
     if (path.endsWith("/results/")) {
       return route.fulfill({ json: results });
     }
+    if (path.endsWith("/analytics/summary/")) {
+      return route.fulfill({
+        json: {
+          subjects: [
+            {
+              subject: {
+                id: "subject-1",
+                slug: "numerical-ability",
+                name: "Numerical Ability",
+              },
+              accuracy: 100.0,
+              attempts: 1,
+            },
+          ],
+        },
+      });
+    }
+    if (path.endsWith("/analytics/topics/")) {
+      return route.fulfill({ json: { topics: [] } });
+    }
+    if (path.endsWith("/practice-sessions/")) {
+      return route.fulfill({ json: [] });
+    }
     return route.fulfill({
       status: 404,
       json: { error: { code: "not_found", message: "Not found." } },
@@ -115,6 +138,10 @@ test("start, answer, submit, and review a practice session", async ({ page }) =>
   await expect(page).toHaveURL(/\/practice\/session-1\/results$/);
   await expect(page.getByText(/score: 1 of 1/i)).toBeVisible();
   await expect(page.getByText(/two plus two is four/i)).toBeVisible();
+
+  await page.getByRole("link", { name: /see your progress/i }).click();
+  await expect(page).toHaveURL(/\/progress$/);
+  await expect(page.getByText("Numerical Ability")).toBeVisible();
 });
 
 test("shows the empty state when there is no practice history", async ({ page }) => {

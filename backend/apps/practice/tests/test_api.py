@@ -192,9 +192,7 @@ def test_saved_answer_survives_refetch(api):
         format="json",
     )
     response = api.get(f"{BASE}{session['id']}/")
-    assert response.json()["items"][0]["saved_answer"] == {
-        "selected_option_id": str(choice.id)
-    }
+    assert response.json()["items"][0]["saved_answer"] == {"selected_option_id": str(choice.id)}
 
 
 def test_save_answer_and_submit(api):
