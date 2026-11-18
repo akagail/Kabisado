@@ -1,8 +1,8 @@
 # Open Decisions Register
 
-**Status:** Active — Phase 2 decisions recorded, Phase 3 planning in progress
+**Status:** Active — KAB-002 approval recorded 2026-11-17; Phase 4 clearance in progress
 **Owner:** Product / Engineering
-**Last updated:** 2026-11-07
+**Last updated:** 2026-11-17
 
 This register tracks every unresolved decision from Phase 2 that affects
 architecture, product scope, or implementation readiness. No decision here is
@@ -300,8 +300,8 @@ None for code; only for external communication and resource planning.
 
 ## O7 — Exam-version reuse policy
 
-**Status:** Unresolved
-**Classification:** Requires ADR (before next CSC announcement is modelled)
+**Status:** Resolved — ADR-0008 approved with duplication default (2026-11-17)
+**Classification:** Requires ADR (resolved)
 **Affected:** `database-design.md` (ExamVersion → Subject → Topic),
 `cse-exam-reference.md`, SPEC-0002, KAB-102, content seeding
 
@@ -342,8 +342,8 @@ schema). The ADR is needed before a second version is modelled.
 
 ### Required approval
 
-**Yes.** This is an architectural data-model decision; write ADR-0008 and approve
-before SPEC-0002 is finalized for multi-version support.
+**Resolved.** ADR-0008 was approved on 2026-11-17 (KAB-002) with duplication as
+the default. Revisit only if seeding effort becomes a bottleneck.
 
 ---
 
@@ -460,7 +460,7 @@ roadmap.
 | **O5 Content curator** | Resolved for initial alpha — repository owner acts as curator (2026-11-07) | KAB-004 / KAB-103 / SPEC-0003 | Confirm workload remains manageable at alpha; appoint contractor later if needed |
 | **O1 AI provider + DPA** | Category C gate — block on feature release, not local development | KAB-107 / SPEC-0007 | Shortlist, obtain DPAs, evaluate, present comparison |
 | **O2 Object storage** | Category C gate — block on feature release, not local development | KAB-106 / SPEC-0006 | Evaluate S3-compatible options, pick one |
-| **O7 Exam-version reuse** | Requires ADR — before second version modelling | Second version / SPEC-0002 v2 | Write ADR-0008 with duplication as default |
+| **O7 Exam-version reuse** | Resolved — ADR-0008 approved 2026-11-17 | Second version / SPEC-0002 v2 | Duplication default; revisit if seeding effort grows |
 | **O4 Production host** | Blocking (Launch hardening) — Category C gate for production deployment | KAB-112 / `deployment.md` | Define NFRs, evaluate 2–3 platforms, pick one |
 
 Phase 4 clearance follows a staged model defined in [phase-4-clearance-model.md](../engineering/phase-4-clearance-model.md): Category A foundational prerequisites (specs, DB design, API contracts, threat model), Category B parallel planning, and Category C release gates.

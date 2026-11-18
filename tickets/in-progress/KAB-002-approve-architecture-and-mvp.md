@@ -120,22 +120,24 @@ Nothing in this packet is approved. Review the findings, mark a choice in
 
 Check one option per line, or reply with the letters.
 
+
+
 - [ ] **ADR-0001** — approve as-is.
-- [ ] **ADR-0002** — approve stack intent; resolve C1/C5 via ADR-0009.
+- [x] **ADR-0002** — approve stack intent; resolve C1/C5 via ADR-0009.
   - [ ] C1 option A: keep Django 6.1 + write ADR-0009 (recommended).
   - [ ] C1 option B: downgrade to Django 5.2 LTS.
-- [ ] **ADR-0003** — approve as-is.
-- [ ] **ADR-0004** — keep approved.
+- [x] **ADR-0003** — approve as-is.
+- [x] **ADR-0004** — keep approved.
   - [ ] C2 option A: implement 30-minute inactivity in a follow-up ticket (recommended).
   - [ ] C2 option B: supersede the condition.
-- [ ] **ADR-0005** — keep "Approved in Principle".
-- [ ] **ADR-0006** — keep approved; conditions become KAB-106 acceptance criteria.
-- [ ] **ADR-0008** — approve with duplication default (recommended).
+- [x] **ADR-0005** — keep "Approved in Principle".
+- [x] **ADR-0006** — keep approved; conditions become KAB-106 acceptance criteria.
+- [x] **ADR-0008** — approve with duplication default (recommended).
   - [ ] or: leave Draft until the next CSC announcement.
-- [ ] **MVP scope** — approve as written.
-- [ ] **Product requirements** — approve; replace stale §5.
-- [ ] **Launch exam** — confirm CSE Professional, 14 March 2027 CSE-PPT.
-- [ ] **SPEC-0004 §8 deviation** — acknowledge the delivered flat practice shapes and pagination envelope (already shipped in KAB-114).
+- [x] **MVP scope** — approve as written.
+- [x] **Product requirements** — approve; replace stale §5.
+- [x] **Launch exam** — confirm CSE Professional, 14 March 2027 CSE-PPT.
+- [x] **SPEC-0004 §8 deviation** — acknowledge the delivered flat practice shapes and pagination envelope (already shipped in KAB-114).
 
 ### 8.5 Amendments to apply after approval
 

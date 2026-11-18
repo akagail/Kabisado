@@ -7,7 +7,7 @@
 ## 1. Stack
 
 - Python 3.13
-- Django 5.2 LTS
+- Django 6.1 (feature release; see ADR-0009)
 - Django REST Framework 3.x
 - PostgreSQL (via `psycopg`)
 - Celery + Redis (wired when the first async feature lands)

@@ -1,8 +1,8 @@
 # MVP Scope
 
-**Status:** Proposed — requires approval (Phase 2, Checkpoint 3)
+**Status:** Approved (2026-11-17, KAB-002)
 **Owner:** Product
-**Last updated:** 2026-11-06
+**Last updated:** 2026-11-17
 
 ## 1. One definition of MVP
 
