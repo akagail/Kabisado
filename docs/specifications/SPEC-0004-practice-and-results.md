@@ -117,8 +117,8 @@ later.
 **Implementation note (KAB-114, 2026-11-17):** the delivered API returns the flat
 shapes documented in `docs/architecture/api-contracts.md` §5 (no `{session}` /
 `{result}` wrappers) and returns practice history in the standard pagination
-envelope. This is a recorded deviation from the table above and needs owner
-confirmation before this specification is treated as amended.
+envelope. This is a recorded deviation from the table above; the owner confirmed
+it on 2026-11-17 (KAB-002), so the note supersedes the table.
 
 ## 9. UI requirements
 

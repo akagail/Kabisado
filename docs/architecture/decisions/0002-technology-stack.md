@@ -5,6 +5,7 @@
 **Approved:** 2026-11-07
 **Deciders:** Engineering, Product
 **Supersedes:** none
+**Superseded rows:** version table superseded by ADR-0009 (2026-11-17)
 
 ## Context
 
@@ -15,6 +16,10 @@ upgrades so the repository is reproducible.
 ## Decision
 
 Adopt the following initial stack:
+
+**Note:** the version rows below are superseded by
+[ADR-0009](0009-version-baseline.md) (2026-11-17). They remain for history; the
+rest of this ADR still applies.
 
 | Layer | Choice |
 | --- | --- |

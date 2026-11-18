@@ -9,13 +9,14 @@ supersedes it and update the index.
 | ID | Title | Status |
 | --- | --- | --- |
 | [0001](0001-modular-monolith.md) | Modular monolith over microservices | **Approved** |
-| [0002](0002-technology-stack.md) | Initial technology stack and versions | **Approved** |
+| [0002](0002-technology-stack.md) | Initial technology stack and versions | **Approved** — version rows superseded by ADR-0009 (2026-11-17) |
 | [0003](0003-rest-api.md) | REST API with Django REST Framework | **Approved** |
 | [0004](0004-authentication.md) | Session authentication through a same-origin proxy | **Approved** — CSRF via JSON endpoint, session expiry/inactivity, SSR caching (2026-11-07) |
 | [0005](0005-ai-provider-abstraction.md) | Provider-independent AI adapter and RAG | **Approved in Principle** — conditions apply |
 | [0006](0006-file-uploads.md) | Presigned direct-to-object-storage uploads | **Approved** — ownership, idempotent completion, orphan cleanup, malware scanning (2026-11-07) |
 | [0007](0007-practice-attempt-snapshot.md) | Snapshot question content when a practice attempt starts | **Approved** |
-| [0008](0008-exam-version-reuse.md) | Exam-version topic reuse vs duplication | **Draft** — pending approval |
+| [0008](0008-exam-version-reuse.md) | Exam-version topic reuse vs duplication | **Approved** — duplication default (2026-11-17) |
+| [0009](0009-version-baseline.md) | Version baseline after ADR-0002 | **Approved** — Django 6.1, TypeScript 5.9.x (2026-11-17) |
 
 ## Creating an ADR
 

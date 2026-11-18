@@ -18,11 +18,11 @@ Dates require team capacity, content readiness, and funding decisions.
 - Minimal Next.js and Django scaffolds with health checks.
 - Security, testing, and deployment guidelines.
 
-**Exit criteria:** initialization report reviewed; architecture and MVP approved;
-CI green on the initial commit.
+**Exit criteria:** initialization report reviewed; architecture and MVP approved
+(KAB-002, 2026-11-17); CI green on the initial commit.
 
-**Outstanding from Phase 0:** Docker Compose has not been run (Docker not
-installed), and remote CI has not run because the repository is unpushed.
+**Outstanding from Phase 0:** Docker Compose has not been run (Docker is not
+installed on the development machine). Remote CI runs on every pull request.
 
 ## Phase 1 — Core practice loop (private alpha)
 

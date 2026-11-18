@@ -1,8 +1,8 @@
 # Product Requirements
 
-**Status:** Draft — requires approval
+**Status:** Approved (2026-11-17, KAB-002)
 **Owner:** Product
-**Last updated:** 2026-11-06
+**Last updated:** 2026-11-17
 
 Requirement IDs are stable. Add new requirements; do not renumber existing ones.
 Priority is relative to the release that introduces the area: `MUST` = required
@@ -202,13 +202,18 @@ See [mvp-scope.md](mvp-scope.md) for the authoritative list.
 - Users accept AI-generated practice items when provenance and review status are
   visible.
 
-## 5. Open questions
+## 5. Questions and resolutions
 
-1. Is personal upload in the MVP or a fast follow?
-2. Is email verification required at launch?
-3. What is the free-tier limit for AI generation?
-4. Which AI providers are approved for user documents?
-5. What data-retention period applies to uploaded materials?
-6. Is Filipino-language output required at launch?
-7. What is the policy for user-reported incorrect items?
-8. Which analytics events are allowed under the privacy policy?
+The original open questions are now answered by the approved MVP scope, the
+open-decisions register, or an ADR. Open items remain tracked, not dropped.
+
+| # | Question | Status | Where resolved |
+| --- | --- | --- | --- |
+| 1 | Personal upload in the MVP or a fast follow? | Resolved — fast-follow beta | `mvp-scope.md` §2, §6 (`MAT`), §10 |
+| 2 | Is email verification required at launch? | Resolved — `SHOULD`, fast-follow beta | AUTH-06, `mvp-scope.md` §6 |
+| 3 | Free-tier limit for AI generation? | Open — needs a product decision | KAB-107 / SPEC-0007; NFR-COST-01/02 |
+| 4 | Which AI providers are approved for user documents? | Open — provider + DPA | O1, KAB-003 |
+| 5 | Data-retention period for uploaded materials? | Open — depends on hosting/backup policy | O2, O8, KAB-106 |
+| 6 | Is Filipino-language output required at launch? | Resolved — no; English output for beta | O9, `ai-capabilities.md` §17 |
+| 7 | Policy for user-reported incorrect items? | Resolved — flag, review, retire/replace | SPEC-0003 review workflow, KAB-103 |
+| 8 | Which analytics events are allowed? | Resolved — first-party practice data only; no third-party tracking in the MVP | KAB-005 privacy review; revisit before public launch |

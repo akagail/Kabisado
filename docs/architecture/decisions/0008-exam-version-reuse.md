@@ -1,7 +1,8 @@
 # ADR-0008: Exam-version topic reuse vs duplication
 
-**Status:** Draft
+**Status:** Approved
 **Date:** 2026-11-07
+**Approved:** 2026-11-17
 **Deciders:** Product / Backend
 **Supersedes:** none
 **Related:** [database-design.md](../database-design.md), [cse-exam-reference.md](../../product/cse-exam-reference.md),
@@ -94,4 +95,5 @@ Mitigations:
 ## Approval
 
 Required before a second `ExamVersion` is modelled in SPEC-0002 or seeded in
-KAB-102. This ADR remains `Draft` until explicitly approved.
+KAB-102. Approved on 2026-11-17 by the repository owner as part of KAB-002,
+with duplication as the default.
